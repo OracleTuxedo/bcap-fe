@@ -1,30 +1,25 @@
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { ReactElement } from 'react';
 
-import { Seo } from '@/components/seo';
-
+import { Seo } from '@/components/atoms/seo';
 
 const LandingPage = () => {
-    const router = useRouter();
+  // const router = useRouter();
 
-    const onSuccess = () => {
-        const redirect = router.query.redirect as string;
-        router.replace(redirect || '/main');
-    };
+  // const onSuccess = () => {
+  //   const redirect = router.query.redirect as string;
+  //   router.replace(redirect || '/main');
+  // };
 
-    return (
-        <>
-        <Seo title="MAAS" />
-        <view>
-            HELLO WORLD
-        </view>
-        </>
-    );
+  return (
+    <>
+      <Seo title="MAAS" />
+      <view>HELLO WORLD</view>
+    </>
+  );
 };
 
-LandingPage.getLayout = function getLayout(
-  page: ReactElement
-) {
+LandingPage.getLayout = function getLayout(page: ReactElement) {
   return <>{page}</>;
 };
 
