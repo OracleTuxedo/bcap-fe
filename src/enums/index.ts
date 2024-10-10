@@ -15,6 +15,14 @@ export enum buttonVariantEnum {
   TEXT = 'text',
 }
 
+export enum containerSizeEnum {
+  EXTRASMALL = 'xs',
+  SMALL = 'sm',
+  MEDIUM = 'md',
+  LARGE = 'lg',
+  EXTRALARGE = 'xl',
+}
+
 export enum labelVariantEnum {
   H1 = 'h1',
   H2 = 'h2',
