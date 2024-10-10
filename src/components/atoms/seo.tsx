@@ -1,13 +1,15 @@
 import Head from 'next/head';
 
-export type SeoProps = {
+type SeoProps = {
     title: string;
 };
 
-export const Seo = ({ title }: SeoProps) => {
+const Seo = ({ title }: SeoProps) => {
     return (
         <Head>
             <title>{title}</title>
         </Head>
     );
 };
+
+export default Seo;

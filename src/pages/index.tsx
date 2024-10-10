@@ -1,20 +1,14 @@
 // import { useRouter } from 'next/router';
 import { ReactElement } from 'react';
 
-import { Seo } from '@/components/atoms/seo';
+import { CustomContainer, Seo } from '@/components/atoms';
 
 const LandingPage = () => {
-  // const router = useRouter();
-
-  // const onSuccess = () => {
-  //   const redirect = router.query.redirect as string;
-  //   router.replace(redirect || '/main');
-  // };
 
   return (
     <>
       <Seo title="MAAS" />
-      <view>HELLO WORLD</view>
+      <CustomContainer>HELLO WORLD</CustomContainer>
     </>
   );
 };
