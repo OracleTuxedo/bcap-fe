@@ -1,20 +1,26 @@
 import { Box } from '@mui/material';
-import { CustomContainer, InputDate } from '../../components/atoms';
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { getToday } from '@/utils/date';
-import { textFieldVariantEnum } from '@/enums';
-const today: string = getToday();
+import { buttonVariantEnum, textFieldVariantEnum } from '@/enums';
+import { CustomButton, InputDate } from '@/components/atoms';
 
 const Ui = () => {
+  const [date, setDate] = useState<string>(getToday());
+
   return (
-    <CustomContainer>
+    <Box>
       <InputDate
         title="input"
-        onChangeHandler={(e) => console.log(e.target.value)}
-        date={today}
+        onChangeHandler={(e) => setDate(e.target.value)}
+        date={date}
         variant={textFieldVariantEnum.FILLED}
       />
-    </CustomContainer>
+      <CustomButton
+        title="search"
+        variant={buttonVariantEnum.OUTLINED}
+        onClickHandler={() => console.log('test')}
+      />
+    </Box>
   );
 };
 

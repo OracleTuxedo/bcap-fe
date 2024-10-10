@@ -8,3 +8,9 @@ export enum textFieldVariantEnum {
   OUTLINED = 'outlined',
   STANDARD = 'standard',
 }
+
+export enum buttonVariantEnum {
+  CONTAINED = 'contained',
+  OUTLINED = 'outlined',
+  TEXT = 'text',
+}
