@@ -1,14 +1,21 @@
 import { Box } from '@mui/material';
 
-const Header = () => {
+type headerProps = {
+  title: string;
+};
+
+const Header = ({ title = 'title' }: headerProps) => {
   return (
     <Box
       sx={{
         width: '100vw',
-        height: '2vh',
+        height: '10vh',
         bgcolor: '#D7D7D7',
+        margin: '0 0 1em 0',
       }}
-    ></Box>
+    >
+      {title}
+    </Box>
   );
 };
 
