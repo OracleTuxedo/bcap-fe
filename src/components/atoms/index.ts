@@ -1,7 +1,7 @@
 import Seo from './seo';
-import CustomContainer from './Container';
+import BaseContainer from './BaseContainer';
 import InputDate from './InputDate';
-import CustomButton from './CustomButton';
+import BaseButton from './BaseButton';
 import Label from './Label';
 
-export { CustomContainer, Seo, InputDate, CustomButton, Label };
+export { BaseContainer, Seo, InputDate, BaseButton, Label };

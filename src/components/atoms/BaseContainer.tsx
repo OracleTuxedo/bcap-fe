@@ -5,8 +5,8 @@ type ContainerProps = {
   children: ReactNode;
 };
 
-const CustomContainer = ({ children }: ContainerProps) => {
+const BaseContainer = ({ children }: ContainerProps) => {
   return <Container>{children}</Container>;
 };
 
-export default CustomContainer;
+export default BaseContainer;

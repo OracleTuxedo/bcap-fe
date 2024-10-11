@@ -6,8 +6,8 @@ import {
   labelVariantEnum,
   textFieldVariantEnum,
 } from '@/enums';
-import { CustomButton, InputDate, Label } from '@/components/atoms';
-import Header from '@/components/molucules/header';
+import { BaseButton, InputDate, Label } from '@/components/atoms';
+import { Header } from '@/components/molecules';
 
 const Ui = () => {
   const [date, setDate] = useState<string>(getToday());
@@ -21,7 +21,7 @@ const Ui = () => {
         margin: 0,
       }}
     >
-      <Header />
+      <Header title='Header' />
       <Label variant={labelVariantEnum.SUBTITLE1}>TEST</Label>
       <InputDate
         title="input"
@@ -29,7 +29,7 @@ const Ui = () => {
         date={date}
         variant={textFieldVariantEnum.OUTLINED}
       />
-      <CustomButton
+      <BaseButton
         title="search"
         variant={buttonVariantEnum.CONTAINED}
         onClickHandler={() => console.log('test')}

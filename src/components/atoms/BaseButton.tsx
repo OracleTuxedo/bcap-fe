@@ -7,7 +7,7 @@ type buttonSearchProps = {
   onClickHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-const CustomButton = ({
+const BaseButton = ({
   variant,
   title,
   color,
@@ -26,4 +26,4 @@ const CustomButton = ({
   );
 };
 
-export default CustomButton;
+export default BaseButton;
