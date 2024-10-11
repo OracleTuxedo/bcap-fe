@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 type headerProps = {
   title: string;
@@ -14,7 +14,16 @@ const Header = ({ title = 'title' }: headerProps) => {
         margin: '0 0 1em 0',
       }}
     >
-      {title}
+      <Typography
+        variant="h5"
+        align="left"
+        sx={{
+          marginY: '0.5em',
+          marginLeft: '1.5em',
+        }}
+      >
+        {title}
+      </Typography>
     </Box>
   );
 };
