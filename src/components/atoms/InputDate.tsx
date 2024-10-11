@@ -16,13 +16,21 @@ const InputDate = ({
   onChangeHandler,
 }: inputDateProps) => {
   return (
-      <TextField
-        id={title}
-        type="date"
-        onChange={onChangeHandler}
-        value={date ?? new Date()}
-        variant={variant}
-      />
+    <TextField
+      sx={
+        {
+          // padding: '0.25rem 0.5rem',
+          // margin: '1rem 2rem',
+          // width: '10vw',
+          // height: '2vh',
+        }
+      }
+      id={title}
+      type="date"
+      onChange={onChangeHandler}
+      value={date ?? new Date()}
+      variant={variant}
+    />
   );
 };
 
