@@ -5,5 +5,6 @@ import BaseButton from './BaseButton';
 import Label from './Label';
 import InputText from './InputText';
 import InputTextSearch from './InputTextSearch';
+import Dropdown from './Dropdown';
 
-export { BaseContainer, Seo, InputDate, BaseButton, Label, InputText, InputTextSearch };
+export { BaseContainer, Seo, InputDate, BaseButton, Label, InputText, InputTextSearch, Dropdown };
