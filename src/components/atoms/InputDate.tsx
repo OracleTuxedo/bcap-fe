@@ -17,16 +17,10 @@ const InputDate = ({
 }: inputDateProps) => {
   return (
     <TextField
-      sx={
-        {
-          // padding: '0.25rem 0.5rem',
-          // margin: '1rem 2rem',
-          // width: '10vw',
-          // height: '2vh',
-        }
-      }
+      sx={{}}
       id={title}
       type="date"
+      label={title}
       onChange={onChangeHandler}
       value={date ?? new Date()}
       variant={variant}

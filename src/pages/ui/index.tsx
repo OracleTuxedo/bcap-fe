@@ -6,33 +6,40 @@ import {
   labelVariantEnum,
   textFieldVariantEnum,
 } from '@/enums';
-import { BaseButton, InputDate, Label } from '@/components/atoms';
-import { Header } from '@/components/molecules';
+import { BaseButton, Header, InputDate, InputText, Label } from '@/components';
 
 const Ui = () => {
   const [date, setDate] = useState<string>(getToday());
+  const [text, setText] = useState<string>('');
 
   return (
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        width: '8vw',
+        width: '100vw',
         margin: 0,
       }}
     >
       <Header title='Header' />
-      <Label variant={labelVariantEnum.SUBTITLE1}>TEST</Label>
+      <Label variant={labelVariantEnum.SUBTITLE1}>Label</Label>
       <InputDate
-        title="input"
+        title="DateInput"
         onChangeHandler={(e) => setDate(e.target.value)}
         date={date}
         variant={textFieldVariantEnum.OUTLINED}
       />
+      <InputText
+        title='TextInput'
+        onChangeHandler={(e) => setText(e.target.value)}
+        value={text}
+        variant={textFieldVariantEnum.FILLED}
+        full
+      />
       <BaseButton
-        title="search"
+        title="Button"
         variant={buttonVariantEnum.CONTAINED}
-        onClickHandler={() => console.log('test')}
+        onClickHandler={() => console.log('button is pressed')}
       />
     </Box>
   );
