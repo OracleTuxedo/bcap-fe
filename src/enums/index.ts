@@ -37,3 +37,10 @@ export enum labelVariantEnum {
   BUTTON = 'button',
   CAPTION = 'caption',
 }
+
+export enum iconEnum {
+  SEARCH = 'search',
+  PLUS = 'add',
+  MINUS = 'remove',
+  PERCENT = 'percent',
+}

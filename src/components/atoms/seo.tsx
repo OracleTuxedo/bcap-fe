@@ -7,6 +7,10 @@ type SeoProps = {
 const Seo = ({ title }: SeoProps) => {
     return (
         <Head>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
             <title>{title}</title>
         </Head>
     );

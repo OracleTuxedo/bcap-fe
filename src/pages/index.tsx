@@ -1,14 +1,14 @@
 // import { useRouter } from 'next/router';
 import { ReactElement } from 'react';
 
-import { CustomContainer, Seo } from '@/components/atoms';
+import { BaseContainer, Seo } from '@/components/atoms';
 
 const LandingPage = () => {
 
   return (
     <>
       <Seo title="MAAS" />
-      <CustomContainer>HELLO WORLD</CustomContainer>
+      <BaseContainer>HELLO WORLD</BaseContainer>
     </>
   );
 };
