@@ -1,10 +1,10 @@
 import { textFieldVariantEnum } from '@/enums';
-import { Search } from '@mui/icons-material';
 import { InputAdornment, TextField } from '@mui/material';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 type inputTextSearchProps = {
-    title: string;
+    id: string;
+    title?: string;
     value?: string;
     variant?: textFieldVariantEnum;
     full? : boolean;
@@ -13,6 +13,7 @@ type inputTextSearchProps = {
 };
 
 const InputTextSearch = ({
+    id,
     title,
     value,
     variant = textFieldVariantEnum.STANDARD,
@@ -23,7 +24,7 @@ const InputTextSearch = ({
     return (
         <TextField
             margin={'normal'}
-            id={title}
+            id={id}
             name={title}
             type="text"
             label={title}
@@ -35,7 +36,7 @@ const InputTextSearch = ({
                 input : {
                     endAdornment : (
                         <InputAdornment position='end'>
-                            <Search/>
+                            {icon}
                         </InputAdornment>
                     )
                 }

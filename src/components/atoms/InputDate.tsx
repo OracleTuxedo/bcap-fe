@@ -3,13 +3,15 @@ import { TextField } from '@mui/material';
 import React from 'react';
 
 type inputDateProps = {
-  title: string;
+  id: string;
+  title?: string;
   date?: string;
   variant?: textFieldVariantEnum;
   onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const InputDate = ({
+  id,
   title,
   date,
   variant = textFieldVariantEnum.STANDARD,
@@ -17,8 +19,7 @@ const InputDate = ({
 }: inputDateProps) => {
   return (
     <TextField
-      sx={{}}
-      id={title}
+      id={id}
       type="date"
       label={title}
       onChange={onChangeHandler}

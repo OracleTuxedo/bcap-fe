@@ -7,14 +7,15 @@ import {
   labelVariantEnum,
   textFieldVariantEnum,
 } from '@/enums';
-import { BaseButton, Dropdown, Header, InputDate, InputText, InputTextSearch, Label, Seo } from '@/components';
+import { BaseButton, Dropdown, Header, InputDate, InputRow, InputText, InputTextSearch, Label, Seo } from '@/components';
 import { selectOption } from '@/types';
+import { Search } from '@mui/icons-material';
 
 const Ui = () => {
   const [date, setDate] = useState<string>(getToday());
   const [text, setText] = useState<string>('');
   const [textSearch, setTextSearch] = useState<string>('');
-  const [SelectedOption, setSelectedOption] = useState<string>('');
+  const [selectedOption, setSelectedOption] = useState<string>('');
   const selectOptions : selectOption[] = [
     {
       label : 'test 1',
@@ -37,6 +38,7 @@ const Ui = () => {
       value : '5'
     },
   ]
+  const [inputRowValue, setInputRowValue] = useState<string>('');
 
   return (
     <>
@@ -52,34 +54,35 @@ const Ui = () => {
         <Header title='Header' />
         <Label variant={labelVariantEnum.SUBTITLE1}>Label</Label>
         <InputDate
+          id='date'
           title="DateInput"
           onChangeHandler={(e) => setDate(e.target.value)}
           date={date}
           variant={textFieldVariantEnum.OUTLINED}
         />
         <InputText
-          title='TextInput'
+          id='InputText'
           onChangeHandler={(e) => setText(e.target.value)}
           value={text}
-          variant={textFieldVariantEnum.FILLED}
+          variant={textFieldVariantEnum.OUTLINED}
           full
         />
         <InputTextSearch
-          title='InputTextSearch'
+          id='InputTextSearch'
           onChangeHandler={(e) => setTextSearch(e.target.value)}
           value={textSearch}
-          variant={textFieldVariantEnum.FILLED}
+          variant={textFieldVariantEnum.OUTLINED}
           full
-          icon={iconEnum.SEARCH}
+          icon={<Search/>}
         />
         <Dropdown
-          title='Dropdown'
-          value={SelectedOption}
+          id='Dropdown'
+          value={selectedOption}
           data={selectOptions}
           onChangeHandler={(event : SelectChangeEvent) => setSelectedOption(event.target.value)}
           full
-
         />
+        <InputRow id='InputRow' name='Input Row' value={inputRowValue} onChangeHandler={(event) => setInputRowValue(event.target.value)} />
         <BaseButton
           title="Button"
           variant={buttonVariantEnum.CONTAINED}

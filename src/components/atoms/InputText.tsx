@@ -3,7 +3,8 @@ import { TextField } from '@mui/material';
 import React from 'react';
 
 type inputTextProps = {
-    title: string;
+    id : string;
+    title?: string;
     value?: string;
     variant?: textFieldVariantEnum;
     full? : boolean;
@@ -11,6 +12,7 @@ type inputTextProps = {
 };
 
 const InputText = ({
+    id,
     title,
     value,
     variant = textFieldVariantEnum.STANDARD,
@@ -20,7 +22,7 @@ const InputText = ({
     return (
         <TextField
             margin={'normal'}
-            id={title}
+            id={id}
             name={title}
             type="text"
             label={title}
