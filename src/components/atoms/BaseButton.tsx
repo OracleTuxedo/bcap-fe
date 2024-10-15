@@ -1,8 +1,8 @@
-import { buttonVariantEnum } from '@/enums';
+import { ButtonVariantEnum } from '@/enums';
 import { Button } from '@mui/material';
 type buttonSearchProps = {
   title: string;
-  variant: buttonVariantEnum;
+  variant: ButtonVariantEnum;
   color?: string;
   onClickHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
