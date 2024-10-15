@@ -1,25 +1,27 @@
 import React, { ReactNode } from 'react';
-import { Container } from '@mui/material';
+import { Box } from '@mui/material';
 
 type ContainerProps = {
   row?: boolean;
+  color?: string;
   children: ReactNode;
 };
 
-const BaseContainer = ({ row = false, children }: ContainerProps) => {
+const BaseContainer = ({ row = false, color, children }: ContainerProps) => {
   return (
-    <Container
+    <Box
       sx={{
         display : 'flex',
         flex : 1,
-        bgcolor : 'red',
+        bgcolor : color,
         flexDirection : row ? 'row' : 'column',
         alignItems : 'center',
-        justifyContent : 'space-evenly'
+        justifyContent : 'space-evenly',
+        paddingX : 1
       }}
     >
       {children}
-    </Container>
+    </Box>
   );
 };
 

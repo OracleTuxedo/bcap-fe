@@ -65,14 +65,12 @@ const Ui = () => {
           onChangeHandler={(e) => setText(e.target.value)}
           value={text}
           variant={textFieldVariantEnum.OUTLINED}
-          full
         />
         <InputTextSearch
           id='InputTextSearch'
           onChangeHandler={(e) => setTextSearch(e.target.value)}
           value={textSearch}
           variant={textFieldVariantEnum.OUTLINED}
-          full
           icon={<Search/>}
         />
         <Dropdown
@@ -80,7 +78,6 @@ const Ui = () => {
           value={selectedOption}
           data={selectOptions}
           onChangeHandler={(event : SelectChangeEvent) => setSelectedOption(event.target.value)}
-          full
         />
         <InputRow id='InputRow' name='Input Row' value={inputRowValue} onChangeHandler={(event) => setInputRowValue(event.target.value)} />
         <BaseButton

@@ -19,6 +19,7 @@ const BaseButton = ({
         bgcolor: color,
         marginY : 2,
         paddingY : 2,
+        marginX : 1
       }}
       variant={variant}
       onClick={onClickHandler}

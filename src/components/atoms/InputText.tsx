@@ -30,6 +30,12 @@ const InputText = ({
             value={value}
             variant={variant}
             fullWidth={full}
+            sx={{
+                display : 'flex',
+                flex : 1,
+                marginY : 2,
+                marginX : 1,
+            }}
         />
     );
 };

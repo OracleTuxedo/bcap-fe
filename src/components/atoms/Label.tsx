@@ -11,7 +11,10 @@ const Label = ({ children, variant = labelVariantEnum.H2 }: TextProps) => {
     return (
         <Typography
             variant={variant}
-            gutterBottom
+            sx={{
+                marginY : 2,
+                marginX : 1,
+            }}
         >
             {children}
         </Typography>

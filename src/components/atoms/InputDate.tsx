@@ -25,6 +25,10 @@ const InputDate = ({
       onChange={onChangeHandler}
       value={date ?? new Date()}
       variant={variant}
+      sx={{
+        marginY : 2,
+        marginX : 1,
+      }}
     />
   );
 };

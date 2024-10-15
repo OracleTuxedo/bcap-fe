@@ -5,7 +5,13 @@ const palette = {
     main: '#013066',
   },
   secondary: {
-    main: '#266BA3',
+    main: '#E9F2FF',
+  },
+  tertiary: {
+    main: '#E1BC30',
+  },
+  success: {
+    main: "#5CC07F",
   },
   error: {
     main: "#FF00009E",

@@ -23,7 +23,10 @@ const Dropdown = ({
             onChange={onChangeHandler}
             value={value}
             fullWidth={full}
-            margin='dense'
+            sx={{
+                marginY : 2,
+                marginX : 1,
+            }}
         >
             {data.map((optionValue) => (
                 <MenuItem key={optionValue.value} value={optionValue.value}>
