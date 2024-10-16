@@ -3,6 +3,7 @@ import { createTheme } from '@mui/material/styles';
 const palette = {
   primary: {
     main: '#013066',
+    light : '#2196F3'
   },
   secondary: {
     main: '#E9F2FF',
@@ -10,11 +11,20 @@ const palette = {
   tertiary: {
     main: '#E1BC30',
   },
-  success: {
-    main: "#5CC07F",
-  },
   error: {
     main: "#FF00009E",
+  },
+  disabled : {
+    main : '#BCBCBC'
+  },
+  success : {
+    main : "#5CC07F"
+  },
+  warning : {
+    main : '#E1BC30'
+  },
+  danger : {
+    main : '#FF00009E'
   },
 };
 

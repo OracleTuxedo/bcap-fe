@@ -1,26 +1,57 @@
-import { Box, Typography } from '@mui/material';
+import { LabelVariantEnum } from '@/enums';
+import { Box, IconButton, Typography } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
 
 type headerProps = {
+  screenId : string;
   title: string;
+  isFavorite : Boolean;
+  onClickHandler : () => void;
 };
 
-const Header = ({ title = 'title' }: headerProps) => {
+const Header = ({ screenId, title, isFavorite, onClickHandler}: headerProps) => {
+  const TextStyle = {
+    marginX : 2
+  }
   return (
     <Box
       sx={{
-        width: '100vw',
-        height: '10vh',
-        bgcolor: '#D7D7D7',
-        margin: '0 0 1em 0',
+        height: '4em',
+        display : 'flex',
+        flex : 1,
+        flexDirection : 'row',
+        paddingY : '0.5em',
+        alignItems : 'center',
+        borderBottom : 1,
+        borderBottomColor : 'disabled.main'
       }}
     >
-      <Typography
-        variant="h5"
-        align="left"
+      <IconButton color={isFavorite ? 'warning' : 'default'} onClick={onClickHandler}>
+        <StarIcon />
+      </IconButton>
+      <Box
         sx={{
-          marginY: '0.5em',
-          marginLeft: '1.5em',
+          bgcolor : 'primary.light',
+          borderRadius : '4px'
         }}
+      >
+        <Typography
+          variant={LabelVariantEnum.BODY1}
+          align="left"
+          sx={{...TextStyle}}
+          color='white'
+          fontWeight={600}
+          fontSize={15}
+        >
+          {screenId}
+        </Typography>
+      </Box>
+      <Typography
+        variant={LabelVariantEnum.BODY1}
+        align="left"
+        sx={{...TextStyle}}
+        fontWeight={800}
+        fontSize={20}
       >
         {title}
       </Typography>

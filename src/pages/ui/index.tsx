@@ -2,10 +2,9 @@ import { Box, SelectChangeEvent } from '@mui/material';
 import { ReactElement, useState } from 'react';
 import { getToday } from '@/utils/date';
 import {
-  buttonVariantEnum,
-  iconEnum,
-  labelVariantEnum,
-  textFieldVariantEnum,
+  ButtonVariantEnum,
+  LabelVariantEnum,
+  TextFieldVariantEnum,
 } from '@/enums';
 import { BaseButton, Dropdown, Header, InputDate, InputRow, InputText, InputTextSearch, Label, Seo } from '@/components';
 import { selectOption } from '@/types';
@@ -39,7 +38,11 @@ const Ui = () => {
     },
   ]
   const [inputRowValue, setInputRowValue] = useState<string>('');
+  const [isFavorite, setIsFavorite] = useState<boolean>(true);
 
+  const favoriteHandler = () => {
+    setIsFavorite((prev) => !prev);
+  }
   return (
     <>
       <Seo title='MAAS UI' />
@@ -51,26 +54,31 @@ const Ui = () => {
           margin: 0,
         }}
       >
-        <Header title='Header' />
-        <Label variant={labelVariantEnum.SUBTITLE1}>Label</Label>
+        <Header
+          screenId='MC0201100'
+          title='Merchant Registration'
+          isFavorite={isFavorite}
+          onClickHandler={favoriteHandler}
+        />
+        <Label variant={LabelVariantEnum.SUBTITLE1}>Label</Label>
         <InputDate
           id='date'
           title="DateInput"
           onChangeHandler={(e) => setDate(e.target.value)}
           date={date}
-          variant={textFieldVariantEnum.OUTLINED}
+          variant={TextFieldVariantEnum.OUTLINED}
         />
         <InputText
           id='InputText'
           onChangeHandler={(e) => setText(e.target.value)}
           value={text}
-          variant={textFieldVariantEnum.OUTLINED}
+          variant={TextFieldVariantEnum.OUTLINED}
         />
         <InputTextSearch
           id='InputTextSearch'
           onChangeHandler={(e) => setTextSearch(e.target.value)}
           value={textSearch}
-          variant={textFieldVariantEnum.OUTLINED}
+          variant={TextFieldVariantEnum.OUTLINED}
           icon={<Search/>}
         />
         <Dropdown
@@ -82,7 +90,7 @@ const Ui = () => {
         <InputRow id='InputRow' name='Input Row' value={inputRowValue} onChangeHandler={(event) => setInputRowValue(event.target.value)} />
         <BaseButton
           title="Button"
-          variant={buttonVariantEnum.CONTAINED}
+          variant={ButtonVariantEnum.CONTAINED}
           onClickHandler={() => console.log('button is pressed')}
         />
       </Box>

@@ -11,7 +11,7 @@ export interface inputRowProps {
 
 const InputRow = ({ id, name, value, onChangeHandler } : inputRowProps) => {
     return (
-        <Grid2 container >
+        <Grid2 container>
             <Grid2 size={6}
                 bgcolor="#E9F2FF"
                 textAlign={'end'}
