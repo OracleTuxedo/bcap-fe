@@ -5,7 +5,7 @@ import React from 'react';
 type inputDateProps = {
   id: string;
   title?: string;
-  date?: string;
+  date?: string | undefined;
   variant?: TextFieldVariantEnum;
   onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -14,7 +14,7 @@ const InputDate = ({
   id,
   title,
   date,
-  variant = TextFieldVariantEnum.STANDARD,
+  variant = TextFieldVariantEnum.OUTLINED,
   onChangeHandler,
 }: inputDateProps) => {
   return (
@@ -26,8 +26,6 @@ const InputDate = ({
       value={date ?? new Date()}
       variant={variant}
       sx={{
-        marginY : 2,
-        marginX : 1,
       }}
     />
   );

@@ -4,17 +4,19 @@ import { LabelVariantEnum } from '@/enums';
 
 type TextProps = {
     children: string;
-    variant : LabelVariantEnum;
+    variant?: LabelVariantEnum;
+    size?: number;
+    weight? : number;
 };
 
-const Label = ({ children, variant = LabelVariantEnum.H2 }: TextProps) => {
+const Label = ({ children, variant = LabelVariantEnum.BODY1, size, weight }: TextProps) => {
     return (
         <Typography
             variant={variant}
             sx={{
-                marginY : 2,
-                marginX : 1,
             }}
+            fontSize={size}
+            fontWeight={weight}
         >
             {children}
         </Typography>

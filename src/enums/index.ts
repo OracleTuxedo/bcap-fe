@@ -44,3 +44,8 @@ export enum IconEnum {
   MINUS = "remove",
   PERCENT = "percent",
 }
+
+export enum TextFieldSizeEnum {
+  SMALL = 'small',
+  MEDIUM = 'medium'
+}

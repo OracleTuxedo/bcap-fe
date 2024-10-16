@@ -1,4 +1,4 @@
-import { TextFieldVariantEnum } from '@/enums';
+import { TextFieldSizeEnum, TextFieldVariantEnum } from '@/enums';
 import { TextField } from '@mui/material';
 import React from 'react';
 
@@ -7,6 +7,7 @@ type inputTextProps = {
     title?: string;
     value?: string;
     variant?: TextFieldVariantEnum;
+    size?: TextFieldSizeEnum;
     full? : boolean;
     onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -15,7 +16,8 @@ const InputText = ({
     id,
     title,
     value,
-    variant = TextFieldVariantEnum.STANDARD,
+    variant = TextFieldVariantEnum.OUTLINED,
+    size = TextFieldSizeEnum.SMALL,
     full = false,
     onChangeHandler,
 }: inputTextProps) => {
@@ -33,9 +35,8 @@ const InputText = ({
             sx={{
                 display : 'flex',
                 flex : 1,
-                marginY : 2,
-                marginX : 1,
             }}
+            size={size}
         />
     );
 };

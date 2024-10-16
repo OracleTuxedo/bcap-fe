@@ -16,7 +16,7 @@ const InputTextSearch = ({
     id,
     title,
     value,
-    variant = TextFieldVariantEnum.STANDARD,
+    variant = TextFieldVariantEnum.OUTLINED,
     full = false,
     icon,
     onChangeHandler,
@@ -33,8 +33,6 @@ const InputTextSearch = ({
             variant={variant}
             fullWidth={full}
             sx={{
-                marginY : 2,
-                marginX : 1,
             }}
             slotProps={{
                 input : {

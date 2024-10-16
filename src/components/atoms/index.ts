@@ -6,6 +6,7 @@ import Label from './Label';
 import InputText from './InputText';
 import InputTextSearch from './InputTextSearch';
 import Dropdown from './Dropdown';
+import Gap from './Gap';
 
 export {
     BaseContainer,
@@ -16,4 +17,5 @@ export {
     InputText,
     InputTextSearch,
     Dropdown,
+    Gap,
 };

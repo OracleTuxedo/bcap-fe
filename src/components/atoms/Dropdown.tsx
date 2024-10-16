@@ -24,8 +24,6 @@ const Dropdown = ({
             value={value}
             fullWidth={full}
             sx={{
-                marginY : 2,
-                marginX : 1,
             }}
         >
             {data.map((optionValue) => (
