@@ -1,4 +1,4 @@
-import { textFieldVariantEnum } from '@/enums';
+import { TextFieldVariantEnum } from '@/enums';
 import { TextField } from '@mui/material';
 import React from 'react';
 
@@ -6,7 +6,7 @@ type inputTextProps = {
     id : string;
     title?: string;
     value?: string;
-    variant?: textFieldVariantEnum;
+    variant?: TextFieldVariantEnum;
     full? : boolean;
     onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -15,7 +15,7 @@ const InputText = ({
     id,
     title,
     value,
-    variant = textFieldVariantEnum.STANDARD,
+    variant = TextFieldVariantEnum.STANDARD,
     full = false,
     onChangeHandler,
 }: inputTextProps) => {

@@ -1,4 +1,4 @@
-import { textFieldVariantEnum } from '@/enums';
+import { TextFieldVariantEnum } from '@/enums';
 import { TextField } from '@mui/material';
 import React from 'react';
 
@@ -6,7 +6,7 @@ type inputDateProps = {
   id: string;
   title?: string;
   date?: string;
-  variant?: textFieldVariantEnum;
+  variant?: TextFieldVariantEnum;
   onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -14,7 +14,7 @@ const InputDate = ({
   id,
   title,
   date,
-  variant = textFieldVariantEnum.STANDARD,
+  variant = TextFieldVariantEnum.STANDARD,
   onChangeHandler,
 }: inputDateProps) => {
   return (

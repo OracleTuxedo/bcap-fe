@@ -1,4 +1,4 @@
-import { textFieldVariantEnum } from '@/enums';
+import { TextFieldVariantEnum } from '@/enums';
 import { InputAdornment, TextField } from '@mui/material';
 import { ReactNode } from 'react';
 
@@ -6,7 +6,7 @@ type inputTextSearchProps = {
     id: string;
     title?: string;
     value?: string;
-    variant?: textFieldVariantEnum;
+    variant?: TextFieldVariantEnum;
     full? : boolean;
     icon : ReactNode;
     onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -16,7 +16,7 @@ const InputTextSearch = ({
     id,
     title,
     value,
-    variant = textFieldVariantEnum.STANDARD,
+    variant = TextFieldVariantEnum.STANDARD,
     full = false,
     icon,
     onChangeHandler,

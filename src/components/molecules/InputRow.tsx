@@ -1,5 +1,5 @@
-import { labelVariantEnum, textFieldVariantEnum } from "@/enums";
-import { BaseContainer, InputText, Label } from "../atoms"
+import { LabelVariantEnum, TextFieldVariantEnum } from "@/enums";
+import { InputText, Label } from "../atoms"
 import { Grid2 } from "@mui/material";
 
 export interface inputRowProps {
@@ -17,14 +17,14 @@ const InputRow = ({ id, name, value, onChangeHandler } : inputRowProps) => {
                 textAlign={'end'}
                 alignContent={'center'}
             >
-                <Label variant={labelVariantEnum.BODY1}>{name}</Label>
+                <Label variant={LabelVariantEnum.BODY1}>{name}</Label>
             </Grid2>
             <Grid2 size={6} >
                 <InputText
                     id={id}
                     onChangeHandler={onChangeHandler}
                     value={value}
-                    variant={textFieldVariantEnum.OUTLINED}
+                    variant={TextFieldVariantEnum.OUTLINED}
                 />
             </Grid2>
         </Grid2>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Typography } from '@mui/material';
-import { labelVariantEnum } from '@/enums';
+import { LabelVariantEnum } from '@/enums';
 
 type TextProps = {
     children: string;
-    variant : labelVariantEnum;
+    variant : LabelVariantEnum;
 };
 
-const Label = ({ children, variant = labelVariantEnum.H2 }: TextProps) => {
+const Label = ({ children, variant = LabelVariantEnum.H2 }: TextProps) => {
     return (
         <Typography
             variant={variant}
