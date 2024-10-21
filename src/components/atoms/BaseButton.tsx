@@ -1,6 +1,7 @@
 import { ButtonVariantEnum } from '@/enums';
 import { Button } from '@mui/material';
-type buttonSearchProps = {
+
+type buttonProps = {
   title: string;
   variant: ButtonVariantEnum;
   color?: string;
@@ -12,7 +13,7 @@ const BaseButton = ({
   title,
   color,
   onClickHandler,
-}: buttonSearchProps) => {
+}: buttonProps) => {
   return (
     <Button
       sx={{

@@ -62,7 +62,7 @@ const MC0402100 = () => {
                 </BaseContainer>
                 <Gap size={4} />
                 <BaseContainer isFlex flexSize={1}>
-                    <BaseButton title="Search" variant={ButtonVariantEnum.CONTAINED} onClickHandler={() => console.log('search is pressed')} />
+                    <BaseButton title="Search" variant={ButtonVariantEnum.CONTAINED} onClickHandler={() => {}} />
                 </BaseContainer>
             </BaseContainer>
         </BaseContainer>
