@@ -28,7 +28,8 @@ const Navbar = ({data, page} : NavbarProps) => {
             <Box
                 sx={{
                     mx : '1em',
-                    alignContent : 'center'
+                    mt : '1em',
+                    alignSelf : 'center'
                 }}
             >
                 <Image
@@ -38,11 +39,16 @@ const Navbar = ({data, page} : NavbarProps) => {
                     height={23}
                 />
             </Box>
-            {
-                domainName.map(item => (
-                    <NavbarItem domainName={data[item].default} navbarActive={item == page ? true : false} />
-                ))
-            }
+            <Box sx={{
+                position : 'relative',
+                alignContent : 'end'
+            }}>
+                {
+                    domainName.map(item => (
+                        <NavbarItem domainName={data[item].default} navbarActive={item == page ? true : false} />
+                    ))
+                }
+            </Box>
         </Box>
     )
 }
