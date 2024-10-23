@@ -24,6 +24,7 @@ const Navbar = ({data, page} : NavbarProps) => {
                 bgcolor : 'primary.main',
                 borderColor : 'tertiary.main',
             }}
+            key={'navbar-list'}
         >
             <Box
                 sx={{
@@ -44,8 +45,8 @@ const Navbar = ({data, page} : NavbarProps) => {
                 alignContent : 'end'
             }}>
                 {
-                    domainName.map(item => (
-                        <NavbarItem domainName={data[item].default} navbarActive={item == page ? true : false} />
+                    domainName.map((item, index) => (
+                        <NavbarItem key={index} domainName={data[item].default} navbarActive={item == page ? true : false} />
                     ))
                 }
             </Box>

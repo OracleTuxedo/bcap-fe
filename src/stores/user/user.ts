@@ -21,7 +21,7 @@ export type UserStore = {
     ) => void;
 }
 
-export const userStore = createStore<UserStore>((set, get) => ({
+export const userStore = createStore<UserStore>((set) => ({
     users : [],
     showUser : (user) => {
         const id = uid();

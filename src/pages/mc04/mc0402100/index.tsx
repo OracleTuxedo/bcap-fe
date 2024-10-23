@@ -57,14 +57,22 @@ const MC0402100 = () => {
                 <Header isFavorite={isFavorite} onClickHandler={favoriteHandler} screenId="MC0402100" title="Merchant Fraud Monitoring"/>
                 <BaseContainer isFlex row color="#D9D9D9">
                     <BaseContainer row isFlex flexSize={7}>
-                        <DropdownLabel id="monitor-type" data={selectOptions} name="Monitor Type" onChangeHandler={monitorChangeHandler} value={monitorType} required />
+                        <DropdownLabel
+                            id="monitor-type"
+                            data={selectOptions}
+                            name="Monitor Type"
+                            onChangeHandler={monitorChangeHandler}
+                            value={monitorType}
+                            required
+                            
+                        />
                         <InputDateLabel name="Inquiry Date" required
                             startId="start-date" startValue={startDate} StartOnChangeHandler={startDateHandler}
                             endId="end-date" endValue={endDate} EndOnChangeHandler={endDateHandler}
                         />
                     </BaseContainer>
-                    <Gap size={4} />
-                    <BaseContainer isFlex flexSize={1}>
+                    <Gap size={5} />
+                    <BaseContainer isFlex flexSize={1} >
                         <BaseButton title="Search" variant={ButtonVariantEnum.CONTAINED} onClickHandler={() => {}} />
                     </BaseContainer>
                 </BaseContainer>

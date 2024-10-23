@@ -34,6 +34,7 @@ const DropdownLabel = ({
                     value={value}
                     data={data}
                     onChangeHandler={onChangeHandler}
+                    full
                 />
             </BaseContainer>
         </BaseContainer>

@@ -5,7 +5,7 @@ import StarIcon from '@mui/icons-material/Star';
 type headerProps = {
   screenId : string;
   title: string;
-  isFavorite : Boolean;
+  isFavorite : boolean;
   onClickHandler : () => void;
 };
 

@@ -1,4 +1,4 @@
-import { Navbar } from "@/components/organism";
+import { Navbar, Sidebar } from "@/components/organism";
 import { domainMenu } from "@/config/menu";
 import { Box } from "@mui/material"
 import React, { ReactNode } from "react";
@@ -12,7 +12,13 @@ const DashboardLayout = ({page, children} : DashboardLayoutProps) => {
     return (
         <Box sx={{}}>
             <Navbar data={domainMenu} page={page} />
-            {children}
+            <Box sx={{
+                display : 'flex',
+                flexDirection : 'row',
+            }}>
+                <Sidebar />
+                {children}
+            </Box>
         </Box>
     )
 }

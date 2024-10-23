@@ -15,7 +15,8 @@ const Label = ({ children, variant = LabelVariantEnum.BODY1, color, size, weight
         <Typography
             variant={variant}
             sx={{
-                color
+                color,
+                mx : '1em'
             }}
             fontSize={size}
             fontWeight={weight}

@@ -22,7 +22,7 @@ const NavbarItem = ({
       borderTopRightRadius : 8,
       borderBottomLeftRadius : 0,
       borderBottomRightRadius : 0,
-    }}>
+    }} key={`${domainName}-navbar`}>
       <Box sx={{
         mx : '1em'
       }}>
