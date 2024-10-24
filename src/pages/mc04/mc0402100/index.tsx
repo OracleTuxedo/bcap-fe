@@ -1,8 +1,9 @@
-import { BaseButton, BaseContainer, DropdownLabel, Gap, Header, InputDateLabel } from "@/components"
+import { BaseButton, BaseContainer, DropdownLabel, Gap, Header, InputDateLabel, Seo } from "@/components"
 import { ButtonVariantEnum } from "@/enums";
+import { DashboardLayout } from "@/layout";
 import { selectOption } from "@/types";
 import { SelectChangeEvent } from "@mui/material";
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useState } from "react";
 
 const MC0402100 = () => {
     const [isFavorite, setIsFavorite] = useState<boolean>(false);
@@ -50,22 +51,33 @@ const MC0402100 = () => {
     }
 
     return (
-        <BaseContainer>
-            <Header isFavorite={isFavorite} onClickHandler={favoriteHandler} screenId="MC0402100" title="Merchant Fraud Monitoring"/>
-            <BaseContainer isFlex row color="#D9D9D9">
-                <BaseContainer row isFlex flexSize={7}>
-                    <DropdownLabel id="monitor-type" data={selectOptions} name="Monitor Type" onChangeHandler={monitorChangeHandler} value={monitorType} required />
-                    <InputDateLabel name="Inquiry Date" required
-                        startId="start-date" startValue={startDate} StartOnChangeHandler={startDateHandler}
-                        endId="end-date" endValue={endDate} EndOnChangeHandler={endDateHandler}
-                    />
-                </BaseContainer>
-                <Gap size={4} />
-                <BaseContainer isFlex flexSize={1}>
-                    <BaseButton title="Search" variant={ButtonVariantEnum.CONTAINED} onClickHandler={() => {}} />
+        <DashboardLayout page="MERCHANT">
+            <Seo title="Merchant Fraud Monitor" />
+            <BaseContainer>
+                <Header isFavorite={isFavorite} onClickHandler={favoriteHandler} screenId="MC0402100" title="Merchant Fraud Monitoring"/>
+                <BaseContainer isFlex row color="#D9D9D9">
+                    <BaseContainer row isFlex flexSize={7}>
+                        <DropdownLabel
+                            id="monitor-type"
+                            data={selectOptions}
+                            name="Monitor Type"
+                            onChangeHandler={monitorChangeHandler}
+                            value={monitorType}
+                            required
+                            
+                        />
+                        <InputDateLabel name="Inquiry Date" required
+                            startId="start-date" startValue={startDate} StartOnChangeHandler={startDateHandler}
+                            endId="end-date" endValue={endDate} EndOnChangeHandler={endDateHandler}
+                        />
+                    </BaseContainer>
+                    <Gap size={5} />
+                    <BaseContainer isFlex flexSize={1} >
+                        <BaseButton title="Search" variant={ButtonVariantEnum.CONTAINED} onClickHandler={() => {}} />
+                    </BaseContainer>
                 </BaseContainer>
             </BaseContainer>
-        </BaseContainer>
+        </DashboardLayout>
     )
 }
 

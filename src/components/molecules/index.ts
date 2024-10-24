@@ -3,6 +3,7 @@ import InputRow from "./InputRow";
 import InputTextLabel from "./InputTextLabel";
 import InputDateLabel from "./InputDateLabel";
 import DropdownLabel from "./DropdownLabel";
+import NavbarItem from "./NavbarItem";
 
 export {
     Header,
@@ -10,4 +11,5 @@ export {
     InputTextLabel,
     InputDateLabel,
     DropdownLabel,
+    NavbarItem,
 }

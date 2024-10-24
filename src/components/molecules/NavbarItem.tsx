@@ -1,49 +1,40 @@
-import { DomainHashmap, domainMenu } from '@/config/menu';
-import { Box, Typography } from '@mui/material';
-import { useState } from 'react';
+import { DomainHashmap } from '@/config/menu';
+import { Box, Button } from '@mui/material';
+import { Label } from '../atoms';
+import { FontWeightEnum, LabelVariantEnum } from '@/enums';
 
 type NavbarMenuProps = {
   domainName: string;
-  navbarActive: boolean;
-  extractedInfo: DomainHashmap;
+  navbarActive?: boolean;
+  extractedInfo?: DomainHashmap;
 };
 
-export const NavbarItem: React.FC<NavbarMenuProps> = ({
+const NavbarItem = ({
   domainName,
-  navbarActive,
-  extractedInfo,
-}) => {
-  const keys = Object.keys(extractedInfo);
-
+  navbarActive = false,
+} : NavbarMenuProps) => {
+  console.log("domainName", domainName);
   return (
-    <>
-      <Box
-        sx={{
-          position: 'relative',
-          display: 'flex',
-          flex: 1,
-          flexFlow: 'row',
-          justifyContent: 'space-between',
-          width: '100vw',
-        }}
-      >
-        <Box>
-          <Typography>test 1</Typography>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexFlow: 'row',
-          }}
-        >
-          {keys.map((key) => {
-            return <Typography key={key}>{key}</Typography>;
-          })}
-        </Box>
-        <Box>
-          <Typography>test 3</Typography>
-        </Box>
+    <Button sx={{
+      textTransform : 'none',
+      bgcolor : navbarActive ? 'tertiary.main' : '',
+      borderTopLeftRadius : 8,
+      borderTopRightRadius : 8,
+      borderBottomLeftRadius : 0,
+      borderBottomRightRadius : 0,
+    }} key={`${domainName}-navbar`}>
+      <Box sx={{
+        mx : '1em'
+      }}>
+        <Label
+          color={navbarActive ? '' : 'white'}
+          size={18}
+          variant={LabelVariantEnum.H4}
+          weight={navbarActive ? FontWeightEnum.BOLD : FontWeightEnum.NORMAL}
+        >{domainName}</Label>
       </Box>
-    </>
+    </Button>
   );
 };
+
+export default NavbarItem;

@@ -7,13 +7,16 @@ type TextProps = {
     variant?: LabelVariantEnum;
     size?: number;
     weight? : number;
+    color?: string;
 };
 
-const Label = ({ children, variant = LabelVariantEnum.BODY1, size, weight }: TextProps) => {
+const Label = ({ children, variant = LabelVariantEnum.BODY1, color, size, weight }: TextProps) => {
     return (
         <Typography
             variant={variant}
             sx={{
+                color,
+                mx : '1em'
             }}
             fontSize={size}
             fontWeight={weight}

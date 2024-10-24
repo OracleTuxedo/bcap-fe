@@ -8,7 +8,7 @@ const LandingPage = () => {
   return (
     <>
       <Seo title="MAAS" />
-      <BaseContainer>HELLO WORLD</BaseContainer>
+      <BaseContainer>MAAS Web Front End</BaseContainer>
     </>
   );
 };
