@@ -2,7 +2,6 @@ import CryptoJS from "crypto-js";
 
 const NEXT_PUBLIC_SECRET_KEY = process.env.NEXT_PUBLIC_SECRET_KEY as string;
 
-// Method to encode Base64 and then AES encrypt
 const encryptAESAndEncodeBase64 = (data: string) => {
   try {
     const ivRandom = CryptoJS.lib.WordArray.random(16);
@@ -21,7 +20,6 @@ const encryptAESAndEncodeBase64 = (data: string) => {
   }
 }
 
-// Method to decode Base64 first, then decrypt AES
 const decodeBase64AndDecryptAES = (encryptedData: string, ivData: string) => {
   try {
     const decodedBase64 = Buffer.from(encryptedData, 'base64').toString('utf8');
