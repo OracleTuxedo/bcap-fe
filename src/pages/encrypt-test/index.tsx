@@ -3,7 +3,7 @@ import { decodeBase64AndDecryptAES, encryptAESAndEncodeBase64 } from "./Encrypti
 import axios from "axios";
 
 const EncryptTest = () => {
-    const port = '5000';
+    const port = '8080';
     const [processText, setProcessText] = useState<string>('test');
     const [ivData, setIvData] = useState<string>('');
     const [xpMsg, setXpMsg] = useState<string>('');
@@ -41,9 +41,10 @@ const EncryptTest = () => {
         setIvData(iv);
         
         try {
-            const response = await axios.post(`http://127.0.0.1:${port}/`, { encryptedData, iv });
-            if (response.data && response.data.sent) {
-                const decryptedData = decodeBase64AndDecryptAES(response.data.sent.encryptedData, response.data.sent.iv);
+            const response = await axios.post(`http://127.0.0.1:${port}/example/process`, { encryptedData, iv });
+            if (response.data) {
+                
+                const decryptedData = decodeBase64AndDecryptAES(encryptedData, iv);
                 setResMsg(decryptedData);  // Set decrypted response message
             } else {
                 console.error('Unexpected response format:', response.data);
