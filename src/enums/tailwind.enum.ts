@@ -53,3 +53,23 @@ export enum InputTypeEnum {
     SEARCH      = "search",
     DATETIME    = "datetime-local"
 }
+
+export enum BorderRadiusEnum {
+    SMALL       = "rounded-sm",
+    DEFAULT     = "rounded",
+    MEDIUM      = "rounded-md",
+    LARGE       = "rounded-lg",
+    EXTRALARGE  = "rounded-xl",
+    DOUBLELARGE = "rounded-2xl",
+    TRIPLELARGE = "rounded-3xl",
+    FULL        = "rounded-full"
+}
+
+export enum FontSizeEnum {
+    SMALL       = "text-sm",
+    DEFAULT     = "text-base",
+    LARGE       = "text-lg",
+    EXTRALARGE  = "text-xl",
+    DOUBLELARGE = "text-2xl",
+    TRIPLELARGE = "text-3xl"
+}

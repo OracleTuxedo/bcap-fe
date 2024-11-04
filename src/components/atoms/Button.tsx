@@ -1,13 +1,20 @@
+import { PaddingEnum } from "@/enums/tailwind.enum";
+import { ReactNode } from "react";
+
 export interface ButtonInterface {
-    text : string
+    children : ReactNode;
 }
 
-const Button = ( {text} : ButtonInterface ) => {
+const Button = ( {children} : ButtonInterface ) => {
     return (
         <button
-            className="px-3 bg-blue-500"
+            className={`
+                flex flex-1
+                bg-sky-600
+                p-4
+            `}
         >
-            {text}
+            {children}
         </button>
     )
 }

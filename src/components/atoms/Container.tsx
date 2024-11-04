@@ -8,7 +8,6 @@ const Container = ( {children} : ContainerInterface ) => {
     return (
         <div
             className={`
-            bg-amber-600
             `}
         >
             {children}
