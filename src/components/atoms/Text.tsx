@@ -6,7 +6,7 @@ const Text = ( {children} : TextInterface ) => {
     return (
         <p
             className={`
-            text-slate-100
+            text-white
             `}
         >
             {children}
