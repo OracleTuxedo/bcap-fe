@@ -1,7 +1,9 @@
-import { Badge, Button, Container, Seo, Text } from '@/components';
+import { Badge, Button, Container, Checkbox, Seo, Text } from '@/components';
 import { SizeEnum, TextColorEnum } from '@/enums';
+import { useState } from 'react';
 
 const UiPage = () => {
+    const [CheckboxState, setCheckboxState] = useState<boolean>(false);
 
 return (
         <Container>
@@ -14,6 +16,7 @@ return (
                 <Badge>
                     <Text>Tester</Text>
                 </Badge>
+                <Checkbox name='test' value={CheckboxState} onClickHandler={() => {setCheckboxState((prev) => !prev)}}/>
             </Container>
         </Container>
     );
