@@ -4,6 +4,7 @@ import Button from "./Button";
 import Text from "./Text";
 import Badge from "./Badge";
 import Checkbox from "./Checkbox";
+import Date from "./Date";
 
 export {
     Seo,
@@ -12,4 +13,5 @@ export {
     Text,
     Badge,
     Checkbox,
+    Date,
 }

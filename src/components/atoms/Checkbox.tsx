@@ -1,12 +1,12 @@
 export interface CheckBoxInterface {
     name : string;
     value : boolean;
-    onClickHandler : () => void;
+    onChangeHandler : () => void;
 }
 
-const CheckBox = ({ name, value, onClickHandler } : CheckBoxInterface ) => {
+const CheckBox = ({ name, value, onChangeHandler } : CheckBoxInterface ) => {
     return(
-        <input type="checkbox" name={`CheckBox-${name}`} checked={value} onClick={onClickHandler} />
+        <input type="checkbox" name={`CheckBox-${name}`} checked={value} onChange={onChangeHandler} />
     )
 }
 
