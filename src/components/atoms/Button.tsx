@@ -7,7 +7,7 @@ export interface ButtonInterface {
     onClickHandler : () => void;
 }
 
-const Button = ( {type, onClickHandler, children} : ButtonInterface ) => {
+const Button = ( { type, onClickHandler, children} : ButtonInterface ) => {
     let color : string = 'bg-main-normal hover:bg-main-active';
     switch (type) {
         case ButtonTypeEnum.WARNING:
@@ -25,7 +25,8 @@ const Button = ( {type, onClickHandler, children} : ButtonInterface ) => {
         default:
             break;
     }
-    const style = `flex flex-1 py-2 px-8 rounded-full ${color}`
+    const style = `flex flex-1 px-8 py-2 rounded-full ${color}`;
+
     return (
         <button onClick={onClickHandler}
             className={style}
