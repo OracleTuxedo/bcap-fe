@@ -1,10 +1,11 @@
-import { Badge, Button, Container, Checkbox, Seo, Text, Date } from '@/components';
-import { SizeEnum, TextColorEnum } from '@/enums';
+import { Badge, Button, Container, Checkbox, Seo, Text, Date, Input } from '@/components';
+import { InputTypeEnum, SizeEnum, TextColorEnum } from '@/enums';
 import { useState } from 'react';
 
 const UiPage = () => {
     const [CheckboxState, setCheckboxState] = useState<boolean>(false);
     const [DateState, setDateState] = useState<string>('');
+    const [InputState, setInputState] = useState<string>('');
 
 return (
         <Container>
@@ -19,6 +20,7 @@ return (
                 </Badge>
                 <Checkbox name='test' value={CheckboxState} onChangeHandler={() => {setCheckboxState((prev) => !prev)}}/>
                 <Date name='date-test' value={DateState} onChangeHandler={(e : React.FormEvent<HTMLInputElement>) => setDateState(e.currentTarget.value)} />
+                <Input name='input-test' type={InputTypeEnum.TEXT} value={InputState} onChangeHandler={(e : React.FormEvent<HTMLInputElement>) => setInputState(e.currentTarget.value)} />
             </Container>
         </Container>
     );

@@ -21,3 +21,14 @@ export enum SizeEnum {
     DOUBLELARGE = '2xl',
     TRIPLELARGE = '3xl',
 }
+
+export enum InputTypeEnum {
+    TEXT        = "text",
+    PASSWORD    = "password",
+    EMAIL       = "email",
+    NUMBER      = "number",
+    URL         = "url",
+    RANGE       = "range",
+    RADIO       = "radio",
+    SEARCH      = "search",
+}
