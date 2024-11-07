@@ -5,11 +5,14 @@ export interface BadgeInterface {
 }
 
 const Badge = ( {  children} : BadgeInterface ) => {
-    const style = `px-8 py-2 rounded-lg bg-main-normal hover:bg-main-active`;
 
     return (
         <div
-            className={style}
+            className={`
+                px-8 py-2
+                rounded-lg
+                bg-main-normal hover:bg-main-active
+            `}
         >
             {children}
         </div>

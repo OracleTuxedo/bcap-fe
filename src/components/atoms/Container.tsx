@@ -8,7 +8,10 @@ export interface ContainerInterface {
 const Container = ( {row = false, children} : ContainerInterface ) => {
     return (
         <div
-            className={`flex ${row ? 'flex-row' : 'flex-col'}`}
+            className={`
+                flex ${row ? 'flex-row' : 'flex-col'}
+                mx-2 my-1
+            `}
         >
             {children}
         </div>

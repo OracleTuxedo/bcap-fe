@@ -25,11 +25,15 @@ const Button = ( { type, onClickHandler, children} : ButtonInterface ) => {
         default:
             break;
     }
-    const style = `flex flex-1 px-8 py-2 rounded-full ${color}`;
 
     return (
         <button onClick={onClickHandler}
-            className={style}
+            className={`
+                flex flex-1
+                px-8 py-2
+                rounded-full
+                ${color}
+            `}
         >
             {children}
         </button>
