@@ -30,6 +30,7 @@ const Button = ( { type, onClickHandler, children} : ButtonInterface ) => {
         <button onClick={onClickHandler}
             className={`
                 flex flex-1
+                mx-2 my-1
                 px-8 py-2
                 rounded-full
                 ${color}

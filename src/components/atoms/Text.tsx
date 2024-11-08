@@ -39,10 +39,13 @@ const Text = ( {color, size, children} : TextInterface ) => {
             break;
     }
 
-    const style = `${textColor} ${textSize}`
     return (
         <p
-            className={style}
+            className={`
+                mx-2 my-1
+                ${textColor}
+                ${textSize}
+            `}
         >
             {children}
         </p>

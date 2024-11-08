@@ -1,3 +1,6 @@
+import Container from "./Container";
+import Text from "./Text";
+
 export interface CheckBoxInterface {
     name : string;
     value : boolean;
@@ -6,7 +9,7 @@ export interface CheckBoxInterface {
 
 const CheckBox = ({ name, value, onChangeHandler } : CheckBoxInterface ) => {
     return(
-        <input type="checkbox" name={`CheckBox-${name}`} checked={value} onChange={onChangeHandler} />
+            <input type="checkbox" name={`CheckBox-${name}`} checked={value} onChange={onChangeHandler} />
     )
 }
 

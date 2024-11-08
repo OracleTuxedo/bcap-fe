@@ -2,15 +2,18 @@ import { ReactNode } from "react"
 
 export interface ContainerInterface {
     row? : boolean;
+    gap? : boolean;
+    border? : boolean;
     children : ReactNode
 }
 
-const Container = ( {row = false, children} : ContainerInterface ) => {
+const Container = ( {row = false, gap = true, border = false, children} : ContainerInterface ) => {
     return (
         <div
             className={`
                 flex ${row ? 'flex-row' : 'flex-col'}
-                mx-2 my-1
+                ${gap ? 'mx-2 my-1' : 'm-0'}
+                ${border ? 'border' : ''}
             `}
         >
             {children}
