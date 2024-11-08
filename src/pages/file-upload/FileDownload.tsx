@@ -34,10 +34,38 @@ const FileDownload: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>File Download</h1>
-      <button onClick={handleFileDownload}>Download File</button>
-    </div>
+    <div
+          style={{
+            maxWidth: '500px',
+            margin: '0 auto',
+            padding: '20px',
+            border: '1px solid #ccc',
+            borderRadius: '8px',
+            backgroundColor: '#f9f9f9',
+            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+            textAlign: 'center',
+          }}
+        >
+          <h1 style={{ color: '#333', marginBottom: '15px' }}>File Download</h1>
+          <button
+            onClick={handleFileDownload}
+            style={{
+              padding: '10px 20px',
+              fontSize: '16px',
+              color: '#fff',
+              backgroundColor: '#007bff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              transition: 'background-color 0.3s ease',
+            }}
+            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#0056b3')}
+            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#007bff')}
+          >
+            Download File
+          </button>
+        </div>
   );
 };
 
