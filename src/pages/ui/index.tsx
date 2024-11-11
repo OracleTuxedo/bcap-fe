@@ -51,7 +51,7 @@ return (
 
                 <Container row gap>
 
-                    <InputCell label='Test Checkbox'>
+                    <InputCell label='Test Checkbox' required>
                         <Checkbox
                             name='test-checkbox-cell'
                             onChangeHandler={() => {setCheckboxCellState((prev) => !prev)}}
