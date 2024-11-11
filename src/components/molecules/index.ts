@@ -1,5 +1,5 @@
-import CheckboxCell from "./CheckboxCell";
+import InputCell from "./InputCell";
 
 export {
-    CheckboxCell,
+    InputCell,
 }

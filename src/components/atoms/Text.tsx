@@ -42,7 +42,7 @@ const Text = ( {color, size, children} : TextInterface ) => {
     return (
         <p
             className={`
-                mx-2 my-1
+                px-2 py-1
                 ${textColor}
                 ${textSize}
             `}

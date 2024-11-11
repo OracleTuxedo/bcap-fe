@@ -1,6 +1,3 @@
-import Container from "./Container";
-import Text from "./Text";
-
 export interface CheckBoxInterface {
     name : string;
     value : boolean;
@@ -9,7 +6,22 @@ export interface CheckBoxInterface {
 
 const CheckBox = ({ name, value, onChangeHandler } : CheckBoxInterface ) => {
     return(
-            <input type="checkbox" name={`CheckBox-${name}`} checked={value} onChange={onChangeHandler} />
+        <div className={`
+            flex
+            flex-1
+            px-6
+            items-center
+        `}>
+            <input
+                type="checkbox"
+                className={`
+                        size-5
+                    `}
+                name={`CheckBox-${name}`}
+                checked={value}
+                onChange={onChangeHandler}
+            />
+        </div>
     )
 }
 

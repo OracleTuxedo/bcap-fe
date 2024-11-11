@@ -4,15 +4,19 @@ export interface ContainerInterface {
     row? : boolean;
     gap? : boolean;
     border? : boolean;
+    round? : boolean;
     children : ReactNode
 }
 
-const Container = ( {row = false, gap = true, border = false, children} : ContainerInterface ) => {
+const Container = ( {row = false, gap = false, border = false, round = false, children} : ContainerInterface ) => {
     return (
         <div
             className={`
-                flex ${row ? 'flex-row' : 'flex-col'}
-                ${gap ? 'mx-2 my-1' : 'm-0'}
+                flex
+                flex-1
+                ${row ? 'flex-row' : 'flex-col'}
+                ${!gap ? 'mx-2 my-1' : ''}
+                ${round ? 'rounded-md' : ''}
                 ${border ? 'border' : ''}
             `}
         >
