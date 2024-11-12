@@ -31,6 +31,7 @@ const config: Config = {
         "normal" : "#DC2626",
         "active" : "#991b1b",
       },
+      "yellow" : "#E1BC30",
     }
   },
   plugins: [],
