@@ -1,26 +1,124 @@
-import { Badge, Button, Container, Checkbox, Seo, Text, Date } from '@/components';
-import { SizeEnum, TextColorEnum } from '@/enums';
+import { Seo, Text } from '@/components';
+import { TextColorEnum } from '@/enums';
 import { useState } from 'react';
 
+export enum TabEnum {
+    SFA         = "SFA",
+    MERCHANT    = "Merchant",
+    MMP         = "MMP",
+    TMS         = "TMS",
+    WDS         = "WDS",
+    AUTH        = "Authorization",
+    CS          = "C & S",
+    METERING    = "Metering",
+    ADMIN       = "Admin",
+    EXTERNAL    = "External",
+    EDUTEST     = "Edu & Test",
+}
+
 const UiPage = () => {
-    const [CheckboxState, setCheckboxState] = useState<boolean>(false);
-    const [DateState, setDateState] = useState<string>('');
+
+    const [activeTab, setActiveTab] = useState<TabEnum>(TabEnum.MERCHANT)
 
 return (
-        <Container>
-            <Seo title="MAAS UI" />
-            <Container>
-                <Text>MAAS Web Front End and UI Page</Text>
-                <Button onClickHandler={() => console.log('button is pressed')}>
-                    <Text color={TextColorEnum.WHITE} size={SizeEnum.NORMAL}>TEST</Text>
-                </Button>
-                <Badge>
-                    <Text>Tester</Text>
-                </Badge>
-                <Checkbox name='test' value={CheckboxState} onChangeHandler={() => {setCheckboxState((prev) => !prev)}}/>
-                <Date name='date-test' value={DateState} onChangeHandler={(e : React.FormEvent<HTMLInputElement>) => setDateState(e.currentTarget.value)} />
-            </Container>
-        </Container>
+    <>
+        <Seo title="MAAS UI" />
+        <div className={`flex flex-1`}>
+            <div className={`bg-secondary flex flex-1 flex-row justify-between border-b-4 border-b-warning-normal`}>
+                <img src='/maas-system-it.svg' alt='logo' className='flex p-3' />
+                <div className={`flex flex-1 flex-row items-end ml-12`}>
+                    <div className={`
+                        px-4 py-1
+                        ${activeTab == TabEnum.SFA && 'bg-warning-normal rounded-t-md'}
+                    `}>
+                        <Text 
+                        color={activeTab == TabEnum.SFA ? TextColorEnum.BLACK: TextColorEnum.WHITE}
+                    >{TabEnum.SFA}</Text>
+                    </div>
+                    <div className={`
+                        px-4 py-1
+                        ${activeTab == TabEnum.MERCHANT && 'bg-warning-normal rounded-t-md'}
+                    `}>
+                        <Text 
+                        color={activeTab == TabEnum.MERCHANT ? TextColorEnum.BLACK: TextColorEnum.WHITE}
+                    >{TabEnum.MERCHANT}</Text>
+                    </div>
+                    <div className={`
+                        px-4 py-1
+                        ${activeTab == TabEnum.MMP && 'bg-warning-normal rounded-t-md'}
+                    `}>
+                        <Text 
+                        color={activeTab == TabEnum.MMP ? TextColorEnum.BLACK: TextColorEnum.WHITE}
+                    >{TabEnum.MMP}</Text>
+                    </div>
+                    <div className={`
+                        px-4 py-1
+                        ${activeTab == TabEnum.TMS && 'bg-warning-normal rounded-t-md'}
+                    `}>
+                        <Text 
+                        color={activeTab == TabEnum.TMS ? TextColorEnum.BLACK: TextColorEnum.WHITE}
+                    >{TabEnum.TMS}</Text>
+                    </div>
+                    <div className={`
+                        px-4 py-1
+                        ${activeTab == TabEnum.WDS && 'bg-warning-normal rounded-t-md'}
+                    `}>
+                        <Text 
+                        color={activeTab == TabEnum.WDS ? TextColorEnum.BLACK: TextColorEnum.WHITE}
+                    >{TabEnum.WDS}</Text>
+                    </div>
+                    <div className={`
+                        px-4 py-1
+                        ${activeTab == TabEnum.AUTH && 'bg-warning-normal rounded-t-md'}
+                    `}>
+                        <Text 
+                        color={activeTab == TabEnum.AUTH ? TextColorEnum.BLACK: TextColorEnum.WHITE}
+                    >{TabEnum.AUTH}</Text>
+                    </div>
+                    <div className={`
+                        px-4 py-1
+                        ${activeTab == TabEnum.CS && 'bg-warning-normal rounded-t-md'}
+                    `}>
+                        <Text 
+                        color={activeTab == TabEnum.CS ? TextColorEnum.BLACK: TextColorEnum.WHITE}
+                    >{TabEnum.CS}</Text>
+                    </div>
+                    <div className={`
+                        px-4 py-1
+                        ${activeTab == TabEnum.METERING && 'bg-warning-normal rounded-t-md'}
+                    `}>
+                        <Text 
+                        color={activeTab == TabEnum.METERING ? TextColorEnum.BLACK: TextColorEnum.WHITE}
+                    >{TabEnum.METERING}</Text>
+                    </div>
+                    <div className={`
+                        px-4 py-1
+                        ${activeTab == TabEnum.ADMIN && 'bg-warning-normal rounded-t-md'}
+                    `}>
+                        <Text 
+                        color={activeTab == TabEnum.ADMIN ? TextColorEnum.BLACK: TextColorEnum.WHITE}
+                    >{TabEnum.ADMIN}</Text>
+                    </div>
+                    <div className={`
+                        px-4 py-1
+                        ${activeTab == TabEnum.EXTERNAL && 'bg-warning-normal rounded-t-md'}
+                    `}>
+                        <Text 
+                        color={activeTab == TabEnum.EXTERNAL ? TextColorEnum.BLACK: TextColorEnum.WHITE}
+                    >{TabEnum.EXTERNAL}</Text>
+                    </div>
+                    <div className={`
+                        px-4 py-1
+                        ${activeTab == TabEnum.EDUTEST && 'bg-warning-normal rounded-t-md'}
+                    `}>
+                        <Text 
+                        color={activeTab == TabEnum.EDUTEST ? TextColorEnum.BLACK: TextColorEnum.WHITE}
+                    >{TabEnum.EDUTEST}</Text>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </>
     );
 };
 
