@@ -7,7 +7,12 @@ export interface ButtonInterface {
     onClickHandler : () => void;
 }
 
-const Button = ( { type, onClickHandler, children} : ButtonInterface ) => {
+const Button = ( {
+    type,
+    onClickHandler,
+    children
+} : ButtonInterface ) => {
+
     let color : string = 'bg-main-normal hover:bg-main-active';
     switch (type) {
         case ButtonTypeEnum.WARNING:
@@ -38,7 +43,8 @@ const Button = ( { type, onClickHandler, children} : ButtonInterface ) => {
         >
             {children}
         </button>
-    )
+    );
+
 }
 
 export default Button;

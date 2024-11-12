@@ -4,7 +4,12 @@ export interface DateInterface {
     onChangeHandler : (e : React.FormEvent<HTMLInputElement>) => void;
 }
 
-const Date = ({ name, value, onChangeHandler } : DateInterface) => {
+const Date = ({
+        name,
+        value,
+        onChangeHandler
+} : DateInterface) => {
+
     return (
         <input 
             className={`
@@ -23,7 +28,8 @@ const Date = ({ name, value, onChangeHandler } : DateInterface) => {
             value={value}
             onChange={onChangeHandler}
         />
-    )
+    );
+
 }
 
 export default Date;

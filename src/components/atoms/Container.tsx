@@ -8,7 +8,14 @@ export interface ContainerInterface {
     children : ReactNode
 }
 
-const Container = ( {row = false, gap = false, border = false, round = false, children} : ContainerInterface ) => {
+const Container = ( {
+    row = false,
+    gap = false,
+    border = false,
+    round = false,
+    children
+} : ContainerInterface ) => {
+
     return (
         <div
             className={`
@@ -22,7 +29,8 @@ const Container = ( {row = false, gap = false, border = false, round = false, ch
         >
             {children}
         </div>
-    )
+    );
+
 }
 
 export default Container;

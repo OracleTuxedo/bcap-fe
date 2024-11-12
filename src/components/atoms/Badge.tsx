@@ -4,7 +4,9 @@ export interface BadgeInterface {
     children : ReactNode;
 }
 
-const Badge = ( {  children} : BadgeInterface ) => {
+const Badge = ( {
+    children
+} : BadgeInterface ) => {
 
     return (
         <div
@@ -17,7 +19,8 @@ const Badge = ( {  children} : BadgeInterface ) => {
         >
             {children}
         </div>
-    )
+    );
+
 }
 
 export default Badge;

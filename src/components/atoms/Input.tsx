@@ -7,7 +7,13 @@ export interface InputInterface {
     onChangeHandler : (e : React.FormEvent<HTMLInputElement>) => void
 }
 
-const Input = ({ name, type, value, onChangeHandler} : InputInterface) => {
+const Input = ({
+    name,
+    type,
+    value,
+    onChangeHandler
+} : InputInterface) => {
+
     return(
         <input
             className={`
@@ -26,7 +32,8 @@ const Input = ({ name, type, value, onChangeHandler} : InputInterface) => {
             value={value}
             onChange={onChangeHandler}
         />
-    )
+    );
+
 }
 
 export default Input;

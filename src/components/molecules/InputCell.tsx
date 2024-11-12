@@ -8,7 +8,12 @@ export interface InputCellInterface {
     children : ReactNode
 }
 
-const InputCell = ({ label, required = false, children } : InputCellInterface) => {
+const InputCell = ({
+    label,
+    required = false,
+    children
+} : InputCellInterface) => {
+
     return(
         <Container border row round>
             <div className={`
@@ -28,7 +33,8 @@ const InputCell = ({ label, required = false, children } : InputCellInterface) =
             </div>
             {children}
         </Container>
-    )
+    );
+
 }
 
 export default InputCell;

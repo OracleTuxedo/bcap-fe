@@ -4,7 +4,12 @@ export interface CheckBoxInterface {
     onChangeHandler : () => void;
 }
 
-const CheckBox = ({ name, value, onChangeHandler } : CheckBoxInterface ) => {
+const CheckBox = ({
+    name,
+    value,
+    onChangeHandler
+} : CheckBoxInterface ) => {
+
     return(
         <div className={`
             flex
@@ -22,7 +27,8 @@ const CheckBox = ({ name, value, onChangeHandler } : CheckBoxInterface ) => {
                 onChange={onChangeHandler}
             />
         </div>
-    )
+    );
+
 }
 
 export default CheckBox;

@@ -49,7 +49,7 @@ return (
                     onChangeHandler={(e : React.FormEvent<HTMLInputElement>) => setInputState(e.currentTarget.value)}
                 />
 
-                <Container row gap>
+                <Container gap>
 
                     <InputCell label='Test Checkbox' required>
                         <Checkbox
