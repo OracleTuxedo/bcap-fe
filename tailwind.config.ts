@@ -37,6 +37,7 @@ const config: Config = {
         "active"  : "#BCBCBC",
         "dark"    : "#474747",
       },
+      "badge"     : "#2196F3",
     }
   },
   plugins: [],
