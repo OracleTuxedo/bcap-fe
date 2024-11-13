@@ -78,7 +78,7 @@ const WMC0302500 = () => {
         </div>
         <div
           id="list"
-          className="relative flex flex-col justify-between border rounded-md w-[95%] h-auto mt-8  text-lg"
+          className="relative flex flex-col justify-start border rounded-md w-[95%] h-[20rem] mt-8  text-lg"
         >
           <div id="table-header" className="flex flex-row justify-between mt-4">
             <label className="basis-1/2 ml-8">List</label>
@@ -91,7 +91,10 @@ const WMC0302500 = () => {
               </Button>
             </div>
           </div>
-          <table id="table-list" className="table-auto my-4">
+          <table
+            id="table-list"
+            className="table-auto my-4 overflow-y-auto overflow-x-auto"
+          >
             <thead>
               <tr>
                 <th>
@@ -117,10 +120,13 @@ const WMC0302500 = () => {
         </div>
         <div
           id="detail-list"
-          className="relative flex flex-col justify-between border rounded-md w-[95%] h-auto mt-8  text-lg"
+          className="relative flex flex-col justify-start border rounded-md w-[95%] h-[20rem] mt-8  text-lg"
         >
           <label className="mt-4 ml-8">Detail List</label>
-          <table id="table-detail-list" className="table auto my-4">
+          <table
+            id="table-detail-list"
+            className="table auto my-4 overflow-x-auto"
+          >
             <thead>
               <tr>
                 <th>Change Type</th>
