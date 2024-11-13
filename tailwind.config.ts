@@ -16,22 +16,27 @@ const config: Config = {
       "white"     : "#ffffff",
       "black"     : "#000000",
       "main"      : {
-        "normal" : "#4DACD8",
-        "active" : "#36A1D3",
+        "normal"  : "#4DACD8",
+        "active"  : "#36A1D3",
       },
       "success"   : {
-        "normal" : "#22C55E",
-        "active" : "#15803D",
+        "normal"  : "#22C55E",
+        "active"  : "#15803D",
       },
       "warning"   : {
-        "normal" : "#F59E0B",
-        "active" : "#D97706",
+        "normal"  : "#F59E0B",
+        "active"  : "#D97706",
       },
       "danger"    : {
-        "normal" : "#DC2626",
-        "active" : "#991b1b",
+        "normal"  : "#DC2626",
+        "active"  : "#991b1b",
       },
-      "yellow" : "#E1BC30",
+      "yellow"    : "#E1BC30",
+      "sidebar"   : {
+        "normal"  : "#717171",
+        "active"  : "#BCBCBC",
+        "dark"    : "#474747",
+      },
     }
   },
   plugins: [],

@@ -8,11 +8,10 @@ export interface NavbarInterface {
 
 const Navbar = ({activeTab, setState} : NavbarInterface) => {
     return(
-        <div className={`flex flex-1`}>
+        <div className={`flex`}>
         <div
             className={`
-                flex flex-1 flex-row
-                justify-between
+                flex flex-row w-full
                 bg-secondary
                 border-b-4
                 border-b-yellow
@@ -21,11 +20,11 @@ const Navbar = ({activeTab, setState} : NavbarInterface) => {
             <img
                 src='/maas-system-it.svg'
                 alt='logo'
-                className='flex p-3'
+                className='p-3'
                 onClick={() => setState(TabEnum.MERCHANT)}
             />
 
-            <div className={`flex flex-1 flex-row items-end ml-12`}>
+            <div className={`flex  flex-row items-end ml-12`}>
                 <TabItem active={activeTab} tabName={TabEnum.SFA} onClickHandler={() => setState(TabEnum.SFA)}/>
                 <TabItem active={activeTab} tabName={TabEnum.MERCHANT} onClickHandler={() => setState(TabEnum.MERCHANT)}/>
                 <TabItem active={activeTab} tabName={TabEnum.MMP} onClickHandler={() => setState(TabEnum.MMP)}/>
