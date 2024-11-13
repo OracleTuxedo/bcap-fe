@@ -16,7 +16,6 @@ const Header = ({ screenId, screenName, isFavorite, favoriteHandler } : HeaderIn
                 my-2 pb-2
                 flex flex-row
                 h-14
-                w-screen
                 items-center
                 border-b
             `}

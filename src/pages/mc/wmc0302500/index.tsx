@@ -1,4 +1,5 @@
-import { Header } from '@/components';
+import { Button, Header } from '@/components';
+import { ButtonTypeEnum } from '@/enums';
 import { MainLayout } from '@/layout';
 import { ReactElement, useState } from 'react';
 
@@ -16,13 +17,13 @@ const WMC0302500 = () => {
   };
 
   return (
-    <MainLayout title='Merchant Info. Change History'>
-      <Header
-        screenId='MC0302500'
-        screenName='Merchant Info. Change History'
-        isFavorite={isFavorite}
-        favoriteHandler={favoriteHandler}
-      />
+    <MainLayout
+      screenId='MC0302500'
+      screenName='Merchant Info. Change History'
+      isFavorite={isFavorite}
+      favoriteHandler={favoriteHandler}
+    >
+      test
     </MainLayout>
   );
 };

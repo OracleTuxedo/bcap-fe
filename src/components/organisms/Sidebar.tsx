@@ -37,7 +37,8 @@ const Sidebar = () => {
         <div
             className={`
                 bg-sidebar-normal
-                text-white ${isCollapsed ? 'w-12' : 'w-60'}
+                text-white
+                ${isCollapsed ? 'w-12' : 'w-60'}
                 transition-width duration-300 p-0
             `}
         >

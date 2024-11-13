@@ -21,6 +21,7 @@ const Navbar = ({activeTab, setState} : NavbarInterface) => {
                 src='/maas-system-it.svg'
                 alt='logo'
                 className='p-3'
+                width={180}
                 onClick={() => setState(TabEnum.MERCHANT)}
             />
 
