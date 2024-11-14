@@ -1,30 +1,128 @@
-import { Button, Header } from '@/components';
-import { ButtonTypeEnum } from '@/enums';
-import { MainLayout } from '@/layout';
-import { ReactElement, useState } from 'react';
+import { Button, Header } from "@/components";
+import { SMC03F054RInVo, SMC03F054ROutVo } from "@/dto/SMC03F054R";
+import { ButtonTypeEnum } from "@/enums";
+import { MainLayout } from "@/layout";
+import { convertStringToObject } from "@/sky/mapper/Decoder";
+import { convertObjectToString } from "@/sky/mapper/Encoder";
+import { makeSkyIn, makeSkyUserDataInput } from "@/sky/util";
+import { SkyIn, SkyOut, SkyUserDataInput } from "@/sky/vo";
+import axios from "axios";
+import { ReactElement, useState, useEffect } from "react";
 
 const onClickSearch = () => {
-  console.log('test');
+  console.log("test");
 };
 
 const handlerDownloadButton = () => {};
 
 const WMC0302500 = () => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [outVoSMC03F054R, setOutVoSMC03F054R] = useState<SMC03F054ROutVo>();
 
   const favoriteHandler = () => {
-      setIsFavorite((prev) => !prev);
+    setIsFavorite((prev) => !prev);
   };
+
+  const encodeSMC03F054R = (): string | null => {
+    const inVo: SMC03F054RInVo = new SMC03F054RInVo();
+    inVo.std_date = "20220101";
+    inVo.end_date = "20241211";
+    inVo.apfm_pgrs_stat_cd = "70";
+    inVo.mid = "71000638409";
+    inVo.page_size = 20;
+
+    const userDataInput: SkyUserDataInput = makeSkyUserDataInput({
+      tuxedoCode: "SMC03F054R",
+      screenId: "WMC0302500",
+    });
+
+    const skyIn: SkyIn<SMC03F054RInVo> | null = makeSkyIn<SMC03F054RInVo>({
+      typeClass: SMC03F054RInVo,
+      data: inVo,
+      userDataInput: userDataInput,
+    });
+
+    if (!skyIn) return null;
+
+    const resultString = convertObjectToString(skyIn);
+
+    return resultString;
+  };
+
+  const decodeSMC03F054R = (
+    responseFromTuxedo: string
+  ): SkyOut<SMC03F054ROutVo> | null => {
+    const parsed: SkyOut<SMC03F054ROutVo> | null = convertStringToObject<
+      SkyOut<SMC03F054ROutVo>
+    >({
+      index: 0,
+      input: responseFromTuxedo,
+      classInstance: new SkyOut(SMC03F054ROutVo),
+    });
+    return parsed;
+  };
+
+  const callSMC03F054R = async () => {
+    console.log("ENCODER START");
+    const requestToTuxedo: string | null = encodeSMC03F054R();
+    if (!requestToTuxedo) return;
+
+    let responseFromTuxedo = "";
+
+    try {
+      const response = await axios.post<string>(
+        "http://localhost:8080/example/message",
+        requestToTuxedo,
+        {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
+      );
+      responseFromTuxedo = response.data;
+    } catch (error) {
+      console.log("error");
+      console.log(error);
+      return;
+    }
+    console.log(`[${requestToTuxedo}]`);
+    console.log("-----------------------------------------------------------");
+    console.log(`[${responseFromTuxedo}]`);
+
+    console.log("ENCODER END");
+    console.log("-----------------------------------------------------------");
+    console.log("-----------------------------------------------------------");
+    console.log("-----------------------------------------------------------");
+    console.log("DECODER START");
+
+    const parsed = decodeSMC03F054R(responseFromTuxedo);
+    console.log(parsed);
+    console.log("-----------------------------------------------------------");
+    console.log(parsed?.data.data);
+    console.log("-----------------------------------------------------------");
+    console.log(parsed?.data.data.sub1_vos);
+    console.log("DECODER END");
+    setOutVoSMC03F054R(parsed?.data.data);
+  };
+
+  useEffect(() => {
+    callSMC03F054R();
+  }, []);
+
+  useEffect(() => {
+    console.log('outVoSMC03F054R');
+    console.log(outVoSMC03F054R);
+  }, [outVoSMC03F054R]);
 
   return (
     <MainLayout
-      screenId='MC0302500'
-      screenName='Merchant Info. Change History'
+      screenId="MC0302500"
+      screenName="Merchant Info. Change History"
       isFavorite={isFavorite}
       favoriteHandler={favoriteHandler}
     >
       <div
-        id='content'
+        id="content"
         className={`
           w-full
         `}
@@ -50,14 +148,13 @@ const WMC0302500 = () => {
                 items-center
               `}
             >
-
               <label
                 className={`
                   mx-2
                 `}
-                >
-                  Approval Date
-                </label>
+              >
+                Approval Date
+              </label>
 
               <input
                 type="date"
@@ -88,7 +185,6 @@ const WMC0302500 = () => {
                   shadow-sm
                 `}
               />
-
             </div>
 
             <div
@@ -108,7 +204,7 @@ const WMC0302500 = () => {
               >
                 MID
               </label>
-              
+
               <input
                 type="search"
                 className={`
@@ -119,10 +215,9 @@ const WMC0302500 = () => {
                 `}
               />
             </div>
-
           </div>
 
-          <div 
+          <div
             id="searchButton"
             className={`
               mx-2
@@ -158,7 +253,6 @@ const WMC0302500 = () => {
               items-center
             `}
           >
-
             <label
               className={`
                 mx-8
@@ -167,13 +261,12 @@ const WMC0302500 = () => {
               List
             </label>
 
-            <div 
+            <div
               id="download-button"
               className={`
                 px-8
               `}
             >
-
               <Button
                 type={ButtonTypeEnum.SUCCESS}
                 onClickHandler={handlerDownloadButton}
@@ -181,79 +274,78 @@ const WMC0302500 = () => {
               >
                 Download
               </Button>
-
             </div>
           </div>
 
-            <table
-              id="table-list"
-              className={`
+          <table
+            id="table-list"
+            className={`
                 m-2
                 table-fixed
                 text-left
                 text-wrap
                 border-collapse
               `}
-            >
-              <thead
-                className={`
+          >
+            <thead
+              className={`
                   bg-main-normal
                 `}
+            >
+              <tr>
+                <th>
+                  <input type="checkbox" />
+                </th>
+                <th>No</th>
+                <th>Apply Sequence No</th>
+                <th>MID</th>
+                <th>Request Date</th>
+                <th>Request PIC</th>
+                <th>Memo</th>
+                <th>Status</th>
+                <th>Authorization Status</th>
+                <th>Complete Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                className={`
+                    even:bg-main-active
+                  `}
               >
-                <tr>
-                  <th>
-                    <input type="checkbox" />
-                  </th>
-                  <th>No</th>
-                  <th>Apply Sequence No</th>
-                  <th>MID</th>
-                  <th>Request Date</th>
-                  <th>Request PIC</th>
-                  <th>Memo</th>
-                  <th>Status</th>
-                  <th>Authorization Status</th>
-                  <th>Complete Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  className={`
+                <td>
+                  <input type="checkbox" />
+                </td>
+                <td>1</td>
+                <td>1231251342</td>
+                <td>0980708679</td>
+                <td>14-11-2024</td>
+                <td>14-11-2024</td>
+                <td className={`text-wrap`}>This memo content</td>
+                <td>status value</td>
+                <td>auth status value</td>
+                <td>14-11-2024</td>
+              </tr>
+              <tr
+                className={`
                     even:bg-main-active
                   `}
-                >
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>1</td>
-                  <td>1231251342</td>
-                  <td>0980708679</td>
-                  <td>14-11-2024</td>
-                  <td>14-11-2024</td>
-                  <td className={`text-wrap`}>This memo content</td>
-                  <td>status value</td>
-                  <td>auth status value</td>
-                  <td>14-11-2024</td>
-                </tr>
-                <tr
-                  className={`
-                    even:bg-main-active
-                  `}
-                >
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>2</td>
-                  <td>1231251342</td>
-                  <td>0980708679</td>
-                  <td>14-11-2024</td>
-                  <td>14-11-2024</td>
-                  <td className={`text-wrap`}>This memo content is long.</td>
-                  <td>status value</td>
-                  <td>auth status value</td>
-                  <td>14-11-2024</td>
-                </tr>
-              </tbody>
-            </table>
+              >
+                <td>
+                  <input type="checkbox" />
+                </td>
+                <td>2</td>
+                <td>1231251342</td>
+                <td>0980708679</td>
+                <td>14-11-2024</td>
+                <td>14-11-2024</td>
+                <td className={`text-wrap`}>This memo content is long.</td>
+                <td>status value</td>
+                <td>auth status value</td>
+                <td>14-11-2024</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         <div
@@ -276,7 +368,6 @@ const WMC0302500 = () => {
               items-center
             `}
           >
-
             <label
               className={`
                 mx-8
@@ -286,50 +377,49 @@ const WMC0302500 = () => {
             </label>
           </div>
 
-            <table
-              id="table-detail"
-              className={`
+          <table
+            id="table-detail"
+            className={`
                 m-2
                 table-fixed
                 text-left
                 text-wrap
                 border-collapse
               `}
-            >
-              <thead
-                className={`
+          >
+            <thead
+              className={`
                   bg-main-normal
                 `}
-              >
-                <tr>
-                  <th>Change Type</th>
-                  <th>Old Value</th>
-                  <th>New Value</th>
-                </tr>
-              </thead>
-              <tbody>
+            >
+              <tr>
+                <th>Change Type</th>
+                <th>Old Value</th>
+                <th>New Value</th>
+              </tr>
+            </thead>
+            <tbody>
               <tr
-                  className={`
+                className={`
                     even:bg-main-active
                   `}
-                >
-                  <td>change</td>
-                  <td>old</td>
-                  <td>new</td>
-                </tr>
-                <tr
-                  className={`
+              >
+                <td>change</td>
+                <td>old</td>
+                <td>new</td>
+              </tr>
+              <tr
+                className={`
                     even:bg-main-active
                   `}
-                >
-                  <td>type</td>
-                  <td>old</td>
-                  <td>new</td>
-                </tr>
-              </tbody>
-            </table>
+              >
+                <td>type</td>
+                <td>old</td>
+                <td>new</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
       </div>
     </MainLayout>
   );
