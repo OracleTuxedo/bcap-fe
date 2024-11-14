@@ -72,10 +72,11 @@ const Sidebar = () => {
 
                 <button
                     className={`
+                        flex
                         h-12 w-12
                         text-xl
                         hover:bg-sidebar-active
-                        justify-items-center
+                        justify-center items-center
                     `}
                     onClick={toggleCollapse}
                 >

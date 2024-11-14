@@ -3,33 +3,39 @@ import { ReactNode } from "react";
 
 export interface ButtonInterface {
     type?: ButtonTypeEnum;
+    white? : boolean
     children : ReactNode;
     onClickHandler : () => void;
 }
 
-const Button = ( { type, onClickHandler, children} : ButtonInterface ) => {
-    let color : string = 'bg-main-normal hover:bg-main-active';
+const Button = ( { type, white, onClickHandler, children} : ButtonInterface ) => {
+    let bgColor : string = 'bg-main-normal hover:bg-main-active';
     switch (type) {
         case ButtonTypeEnum.WARNING:
-            color = 'bg-warning-normal hover:bg-warning-active'
+            bgColor = 'bg-warning-normal hover:bg-warning-active'
             break;
         case ButtonTypeEnum.DISABLE:
-            color = 'bg-disable'
+            bgColor = 'bg-disable'
             break;
         case ButtonTypeEnum.DANGER:
-            color = 'bg-danger-normal hover:bg-danger-active'
+            bgColor = 'bg-danger-normal hover:bg-danger-active'
             break;
         case ButtonTypeEnum.SUCCESS:
-            color = 'bg-success-normal hover:bg-success-active'
+            bgColor = 'bg-success-normal hover:bg-success-active'
             break;
         default:
             break;
     }
-    const style = `flex flex-1 px-8 py-2 rounded-full ${color}`;
 
     return (
         <button onClick={onClickHandler}
-            className={style}
+            className={`
+                flex flex-1
+                px-8 py-2
+                rounded-lg
+                ${bgColor}
+                ${white ? 'text-white' : 'text-black'}
+            `}
         >
             {children}
         </button>
