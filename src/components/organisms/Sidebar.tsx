@@ -21,7 +21,7 @@ const menuItems: MenuItem[] = [
 
 const Sidebar = () => {
 
-    const [activeItem, setActiveItem] = useState<string | null>(null);
+    const [activeItem, setActiveItem] = useState<string | null>('Merchant');
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [favoriteTab, setFavoriteTab] = useState<MenuTabEnum>(MenuTabEnum.MENU);
 

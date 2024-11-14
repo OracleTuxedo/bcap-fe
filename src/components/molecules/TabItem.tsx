@@ -9,7 +9,7 @@ export interface TabItemInterface {
 
 const TabItem = ({active, tabName, onClickHandler} : TabItemInterface) => {
     return(
-        <div
+        <button
             className={`
                 px-4 py-1
                 ${active === tabName && 'bg-yellow rounded-t-md'}
@@ -21,7 +21,7 @@ const TabItem = ({active, tabName, onClickHandler} : TabItemInterface) => {
                 size={SizeEnum.MEDIUM}
                 weight={active === tabName ? WeightEnum.BOLD : WeightEnum.NORMAL}
             >{tabName}</Text>
-        </div>
+        </button>
     );
 }
 

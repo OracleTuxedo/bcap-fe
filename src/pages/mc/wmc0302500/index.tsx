@@ -1,4 +1,5 @@
 import { Button, Header } from "@/components";
+import { BACKEND_ENDPOINT } from "@/config/constants";
 import { SMC03F054RInVo, SMC03F054ROutVo } from "@/dto/SMC03F054R";
 import { SMC03F055RInVo, SMC03F055ROutVo } from "@/dto/SMC03F055R";
 import { ButtonTypeEnum } from "@/enums";
@@ -7,19 +8,46 @@ import { convertStringToObject } from "@/sky/mapper/Decoder";
 import { convertObjectToString } from "@/sky/mapper/Encoder";
 import { makeSkyIn, makeSkyUserDataInput } from "@/sky/util";
 import { SkyIn, SkyOut, SkyUserDataInput } from "@/sky/vo";
+import { exportToExcel } from "@/utils";
 import axios from "axios";
+import moment from "moment";
 import { ReactElement, useState, useEffect } from "react";
 
-const onClickSearch = () => {
-  console.log("test");
-};
-
-const handlerDownloadButton = () => {};
+export interface queryDataInterface {
+  start : string;
+  end : string;
+}
 
 const WMC0302500 = () => {
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const screenId = 'WMC0302500'
   const [outVoSMC03F054R, setOutVoSMC03F054R] = useState<SMC03F054ROutVo>();
   const [outVoSMC03F055R, setOutVoSMC03F055R] = useState<SMC03F055ROutVo>();
+  
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [queryDate, setQueryDate] = useState<queryDataInterface>({
+    start : "20220101",
+    end : "20241211"
+  })
+  const [mid, setMid] = useState<string>("71000638409");
+  const [pageSize, setPageSize] = useState<string>("70");
+  
+  const handlerDownloadButton = async () => {
+    if (outVoSMC03F054R) {
+      const data = outVoSMC03F054R?.sub1_vos.map((item, index) => ({
+        "no"                    : ++index,
+        "Apply Sequence No"     : item.aplc_seq_no,
+        "MID"                   : item.mid,
+        "Request Date"          : `${item.data_inp_dttm}`,
+        "Request PIC"           : `${item.inp_usr_id}(${item.chng_emp_nm})`,
+        "Memo"                  : item.apfm_memo_ctnts,
+        "Status"                : item.apfm_pgrs_stat_cd,
+        "Authorization Status"  : item.apfm_auth_stat_cd,
+        "Complete Date"         : `${item.data_chng_dttm}`,
+      }));
+  
+      exportToExcel(data!, screenId);
+    }
+  };
 
   const favoriteHandler = () => {
     setIsFavorite((prev) => !prev);
@@ -27,15 +55,15 @@ const WMC0302500 = () => {
 
   const encodeSMC03F054R = (): string | null => {
     const inVo: SMC03F054RInVo = new SMC03F054RInVo();
-    inVo.std_date = "20220101";
-    inVo.end_date = "20241211";
-    inVo.apfm_pgrs_stat_cd = "70";
-    inVo.mid = "71000638409";
+    inVo.std_date = queryDate.start;
+    inVo.end_date = queryDate.end;
+    inVo.apfm_pgrs_stat_cd = pageSize;
+    inVo.mid = mid;
     inVo.page_size = 20;
-
+    
     const userDataInput: SkyUserDataInput = makeSkyUserDataInput({
       tuxedoCode: "SMC03F054R",
-      screenId: "WMC0302500",
+      screenId,
     });
 
     const skyIn: SkyIn<SMC03F054RInVo> | null = makeSkyIn<SMC03F054RInVo>({
@@ -65,7 +93,6 @@ const WMC0302500 = () => {
   };
 
   const callSMC03F054R = async () => {
-    // console.log("ENCODER START");
     const requestToTuxedo: string | null = encodeSMC03F054R();
     if (!requestToTuxedo) return;
 
@@ -73,37 +100,23 @@ const WMC0302500 = () => {
 
     try {
       const response = await axios.post<string>(
-        "http://localhost:8080/example/message",
+        `${BACKEND_ENDPOINT}example/message`,
         requestToTuxedo,
         {
           headers: {
             "Content-Type": "text/plain",
+            "Access-Control-Allow-Origin" : "*",
+            "ngrok-skip-browser-warning" : "*"
           },
         }
       );
       responseFromTuxedo = response.data;
     } catch (error) {
-      console.log("error");
-      console.log(error);
+      console.log("error", error);
       return;
     }
-    // console.log(`[${requestToTuxedo}]`);
-    // console.log("-----------------------------------------------------------");
-    // console.log(`[${responseFromTuxedo}]`);
-
-    // console.log("ENCODER END");
-    // console.log("-----------------------------------------------------------");
-    // console.log("-----------------------------------------------------------");
-    // console.log("-----------------------------------------------------------");
-    // console.log("DECODER START");
 
     const parsed = decodeSMC03F054R(responseFromTuxedo);
-    // console.log(parsed);
-    // console.log("-----------------------------------------------------------");
-    // console.log(parsed?.data.data);
-    // console.log("-----------------------------------------------------------");
-    // console.log(parsed?.data.data.sub1_vos);
-    // console.log("DECODER END");
 
     setOutVoSMC03F054R(parsed?.data.data);
 
@@ -117,7 +130,7 @@ const WMC0302500 = () => {
 
     const userDataInput: SkyUserDataInput = makeSkyUserDataInput({
       tuxedoCode: "SMC03F055R",
-      screenId: "WMC0302500",
+      screenId,
     });
 
     const skyIn: SkyIn<SMC03F055RInVo> | null = makeSkyIn<SMC03F055RInVo>({
@@ -147,7 +160,6 @@ const WMC0302500 = () => {
   };
 
   const callSMC03F055R = async () => {
-    // console.log("ENCODER START");
     const requestToTuxedo: string | null = encodeSMC03F055R();
     if (!requestToTuxedo) return;
 
@@ -155,54 +167,33 @@ const WMC0302500 = () => {
 
     try {
       const response = await axios.post<string>(
-        "http://localhost:8080/example/message",
+        `${BACKEND_ENDPOINT}example/message`,
         requestToTuxedo,
         {
           headers: {
             "Content-Type": "text/plain",
+            "Access-Control-Allow-Origin" : "*",
+            "ngrok-skip-browser-warning" : "*"
           },
         }
       );
       responseFromTuxedo = response.data;
     } catch (error) {
-      console.log("error");
-      console.log(error);
+      console.log("error", error);
       return;
     }
-    // console.log(`[${requestToTuxedo}]`);
-    // console.log("-----------------------------------------------------------");
-    // console.log(`[${responseFromTuxedo}]`);
-
-    // console.log("ENCODER END");
-    // console.log("-----------------------------------------------------------");
-    // console.log("-----------------------------------------------------------");
-    // console.log("-----------------------------------------------------------");
-    // console.log("DECODER START");
 
     const parsed = decodeSMC03F055R(responseFromTuxedo);
-    // console.log(parsed);
-    // console.log("-----------------------------------------------------------");
-    // console.log(parsed?.data.data);
-    // console.log("-----------------------------------------------------------");
-    // console.log(parsed?.data.data.sub1_vos);
-    // console.log("DECODER END");
 
     setOutVoSMC03F055R(parsed?.data.data);
   };
 
-  useEffect(() => {
+  const onClickSearch = () => {
+    console.log("queryDate", queryDate);
+    console.log("mid", mid);
+    console.log("pageSize", pageSize);
     callSMC03F054R();
-  }, []);
-
-  useEffect(() => {
-    console.log("outVoSMC03F054R");
-    console.log(outVoSMC03F054R);
-  }, [outVoSMC03F054R]);
-
-  useEffect(() => {
-    console.log("outVoSMC03F055R");
-    console.log(outVoSMC03F055R);
-  }, [outVoSMC03F055R]);
+  };
 
   return (
     <MainLayout
@@ -220,8 +211,7 @@ const WMC0302500 = () => {
         <div
           id="search"
           className={`
-            mx-2
-            py-2
+            mx-2 py-2
             flex flex-row
             border
             text-md
@@ -249,12 +239,13 @@ const WMC0302500 = () => {
               <input
                 type="date"
                 className={`
-                  mx-2
-                  p-1
+                  mx-2 p-1
                   h-fit
                   border border-sidebar-normal
                   shadow-sm
                 `}
+                value={moment(queryDate.start).format("YYYY-MM-DD")}
+                onChange={(e) => setQueryDate((prev) => ({...prev, start : moment(e.target.value).format("YYYYMMDD")}))}
               />
 
               <label
@@ -274,6 +265,8 @@ const WMC0302500 = () => {
                   border border-sidebar-normal
                   shadow-sm
                 `}
+                value={moment(queryDate.end).format("YYYY-MM-DD")}
+                onChange={(e) => setQueryDate((prev) => ({...prev, end : moment(e.target.value).format("YYYYMMDD")}))}
               />
             </div>
 
@@ -317,6 +310,7 @@ const WMC0302500 = () => {
               type={ButtonTypeEnum.DEFAULT}
               onClickHandler={onClickSearch}
               white
+              disable={outVoSMC03F054R ? true : false}
             >
               Search
             </Button>
@@ -361,8 +355,9 @@ const WMC0302500 = () => {
                 type={ButtonTypeEnum.SUCCESS}
                 onClickHandler={handlerDownloadButton}
                 white
+                disable={outVoSMC03F054R ? false : true}
               >
-                Download
+                Export
               </Button>
             </div>
           </div>
@@ -398,42 +393,32 @@ const WMC0302500 = () => {
               </tr>
             </thead>
             <tbody>
-              <tr
-                className={`
-                    even:bg-main-active
-                  `}
-              >
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>1</td>
-                <td>1231251342</td>
-                <td>0980708679</td>
-                <td>14-11-2024</td>
-                <td>14-11-2024</td>
-                <td className={`text-wrap`}>This memo content</td>
-                <td>status value</td>
-                <td>auth status value</td>
-                <td>14-11-2024</td>
-              </tr>
-              <tr
-                className={`
-                    even:bg-main-active
-                  `}
-              >
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>2</td>
-                <td>1231251342</td>
-                <td>0980708679</td>
-                <td>14-11-2024</td>
-                <td>14-11-2024</td>
-                <td className={`text-wrap`}>This memo content is long.</td>
-                <td>status value</td>
-                <td>auth status value</td>
-                <td>14-11-2024</td>
-              </tr>
+              { outVoSMC03F054R && outVoSMC03F054R.sub1_vos.map((item, index) => {
+                return(
+                  <tr
+                    key={`list-data-SMC03F054R-${++index}`}
+                    className={`
+                        even:bg-main-active
+                        hover
+                      `}
+                      onClick={callSMC03F055R}
+                  >
+                    <td>
+                      <input type="checkbox" />
+                    </td>
+                    <td>{++index}</td>
+                    <td>{item.aplc_seq_no}</td>
+                    <td>{item.mid}</td>
+                    <td>{item.data_inp_dttm}</td>
+                    <td>{`${item.inp_usr_id}(${item.chng_emp_nm})`}</td>
+                    <td className={`text-wrap`}>{item.apfm_memo_ctnts}</td>
+                    <td>{item.apfm_pgrs_stat_cd}</td>
+                    <td>{item.apfm_auth_stat_cd}</td>
+                    <td>{item.data_chng_dttm}</td>
+                  </tr>
+                )
+              })
+              }
             </tbody>
           </table>
         </div>
@@ -489,24 +474,21 @@ const WMC0302500 = () => {
               </tr>
             </thead>
             <tbody>
-              <tr
-                className={`
-                    even:bg-main-active
-                  `}
-              >
-                <td>change</td>
-                <td>old</td>
-                <td>new</td>
-              </tr>
-              <tr
-                className={`
-                    even:bg-main-active
-                  `}
-              >
-                <td>type</td>
-                <td>old</td>
-                <td>new</td>
-              </tr>
+              { outVoSMC03F055R && outVoSMC03F055R.sub1_vos.map((item, index) => {
+                return(
+                  <tr
+                    key={`list-detail-data-SMC03F055R-${++index}`}
+                    className={`
+                        even:bg-main-active
+                      `}
+                  >
+                    <td>{item.info_chng_tp_cd}</td>
+                    <td>{item.chng_bef_ctnts ? item.chng_bef_ctnts : '-'}</td>
+                    <td>{item.chng_aftr_ctnts}</td>
+                  </tr>
+                );
+              })
+              }
             </tbody>
           </table>
         </div>

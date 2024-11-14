@@ -4,11 +4,12 @@ import { ReactNode } from "react";
 export interface ButtonInterface {
     type?: ButtonTypeEnum;
     white? : boolean
+    disable? : boolean
     children : ReactNode;
     onClickHandler : () => void;
 }
 
-const Button = ( { type, white, onClickHandler, children} : ButtonInterface ) => {
+const Button = ( { type, white, disable = false, onClickHandler, children} : ButtonInterface ) => {
     let bgColor : string = 'bg-main-normal hover:bg-main-active';
     switch (type) {
         case ButtonTypeEnum.WARNING:
@@ -36,6 +37,7 @@ const Button = ( { type, white, onClickHandler, children} : ButtonInterface ) =>
                 ${bgColor}
                 ${white ? 'text-white' : 'text-black'}
             `}
+            disabled={disable}
         >
             {children}
         </button>
