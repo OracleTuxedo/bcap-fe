@@ -1,5 +1,6 @@
 import { Button, Header } from "@/components";
 import { SMC03F054RInVo, SMC03F054ROutVo } from "@/dto/SMC03F054R";
+import { SMC03F055RInVo, SMC03F055ROutVo } from "@/dto/SMC03F055R";
 import { ButtonTypeEnum } from "@/enums";
 import { MainLayout } from "@/layout";
 import { convertStringToObject } from "@/sky/mapper/Decoder";
@@ -18,6 +19,7 @@ const handlerDownloadButton = () => {};
 const WMC0302500 = () => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [outVoSMC03F054R, setOutVoSMC03F054R] = useState<SMC03F054ROutVo>();
+  const [outVoSMC03F055R, setOutVoSMC03F055R] = useState<SMC03F055ROutVo>();
 
   const favoriteHandler = () => {
     setIsFavorite((prev) => !prev);
@@ -63,7 +65,7 @@ const WMC0302500 = () => {
   };
 
   const callSMC03F054R = async () => {
-    console.log("ENCODER START");
+    // console.log("ENCODER START");
     const requestToTuxedo: string | null = encodeSMC03F054R();
     if (!requestToTuxedo) return;
 
@@ -85,24 +87,107 @@ const WMC0302500 = () => {
       console.log(error);
       return;
     }
-    console.log(`[${requestToTuxedo}]`);
-    console.log("-----------------------------------------------------------");
-    console.log(`[${responseFromTuxedo}]`);
+    // console.log(`[${requestToTuxedo}]`);
+    // console.log("-----------------------------------------------------------");
+    // console.log(`[${responseFromTuxedo}]`);
 
-    console.log("ENCODER END");
-    console.log("-----------------------------------------------------------");
-    console.log("-----------------------------------------------------------");
-    console.log("-----------------------------------------------------------");
-    console.log("DECODER START");
+    // console.log("ENCODER END");
+    // console.log("-----------------------------------------------------------");
+    // console.log("-----------------------------------------------------------");
+    // console.log("-----------------------------------------------------------");
+    // console.log("DECODER START");
 
     const parsed = decodeSMC03F054R(responseFromTuxedo);
-    console.log(parsed);
-    console.log("-----------------------------------------------------------");
-    console.log(parsed?.data.data);
-    console.log("-----------------------------------------------------------");
-    console.log(parsed?.data.data.sub1_vos);
-    console.log("DECODER END");
+    // console.log(parsed);
+    // console.log("-----------------------------------------------------------");
+    // console.log(parsed?.data.data);
+    // console.log("-----------------------------------------------------------");
+    // console.log(parsed?.data.data.sub1_vos);
+    // console.log("DECODER END");
+
     setOutVoSMC03F054R(parsed?.data.data);
+
+  };
+
+  const encodeSMC03F055R = (): string | null => {
+    const inVo: SMC03F055RInVo = new SMC03F055RInVo();
+    inVo.aplc_seq_no = "20000059176";
+    inVo.next_key_val = "20240717035444506768";
+    inVo.page_size = 20;
+
+    const userDataInput: SkyUserDataInput = makeSkyUserDataInput({
+      tuxedoCode: "SMC03F055R",
+      screenId: "WMC0302500",
+    });
+
+    const skyIn: SkyIn<SMC03F055RInVo> | null = makeSkyIn<SMC03F055RInVo>({
+      typeClass: SMC03F055RInVo,
+      data: inVo,
+      userDataInput: userDataInput,
+    });
+
+    if (!skyIn) return null;
+
+    const resultString = convertObjectToString(skyIn);
+
+    return resultString;
+  };
+
+  const decodeSMC03F055R = (
+    responseFromTuxedo: string
+  ): SkyOut<SMC03F055ROutVo> | null => {
+    const parsed: SkyOut<SMC03F055ROutVo> | null = convertStringToObject<
+      SkyOut<SMC03F055ROutVo>
+    >({
+      index: 0,
+      input: responseFromTuxedo,
+      classInstance: new SkyOut(SMC03F055ROutVo),
+    });
+    return parsed;
+  };
+
+  const callSMC03F055R = async () => {
+    // console.log("ENCODER START");
+    const requestToTuxedo: string | null = encodeSMC03F055R();
+    if (!requestToTuxedo) return;
+
+    let responseFromTuxedo = "";
+
+    try {
+      const response = await axios.post<string>(
+        "http://localhost:8080/example/message",
+        requestToTuxedo,
+        {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
+      );
+      responseFromTuxedo = response.data;
+    } catch (error) {
+      console.log("error");
+      console.log(error);
+      return;
+    }
+    // console.log(`[${requestToTuxedo}]`);
+    // console.log("-----------------------------------------------------------");
+    // console.log(`[${responseFromTuxedo}]`);
+
+    // console.log("ENCODER END");
+    // console.log("-----------------------------------------------------------");
+    // console.log("-----------------------------------------------------------");
+    // console.log("-----------------------------------------------------------");
+    // console.log("DECODER START");
+
+    const parsed = decodeSMC03F055R(responseFromTuxedo);
+    // console.log(parsed);
+    // console.log("-----------------------------------------------------------");
+    // console.log(parsed?.data.data);
+    // console.log("-----------------------------------------------------------");
+    // console.log(parsed?.data.data.sub1_vos);
+    // console.log("DECODER END");
+
+    setOutVoSMC03F055R(parsed?.data.data);
   };
 
   useEffect(() => {
@@ -110,9 +195,14 @@ const WMC0302500 = () => {
   }, []);
 
   useEffect(() => {
-    console.log('outVoSMC03F054R');
+    console.log("outVoSMC03F054R");
     console.log(outVoSMC03F054R);
   }, [outVoSMC03F054R]);
+
+  useEffect(() => {
+    console.log("outVoSMC03F055R");
+    console.log(outVoSMC03F055R);
+  }, [outVoSMC03F055R]);
 
   return (
     <MainLayout
