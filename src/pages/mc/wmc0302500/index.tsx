@@ -26,7 +26,6 @@ const WMC0302500 = () => {
       <div
         id='content'
         className={`
-          bg-danger-normal
           w-full
         `}
       >
@@ -138,6 +137,199 @@ const WMC0302500 = () => {
             </Button>
           </div>
         </div>
+
+        <div
+          id="list"
+          className={`
+            flex flex-col
+            justify-start
+            border
+            h-72
+            m-2
+            text-lg
+          `}
+        >
+          <div
+            id="table-header"
+            className={`
+              mt-4
+              flex flex-row
+              justify-between
+              items-center
+            `}
+          >
+
+            <label
+              className={`
+                mx-8
+              `}
+            >
+              List
+            </label>
+
+            <div 
+              id="download-button"
+              className={`
+                px-8
+              `}
+            >
+
+              <Button
+                type={ButtonTypeEnum.SUCCESS}
+                onClickHandler={handlerDownloadButton}
+                white
+              >
+                Download
+              </Button>
+
+            </div>
+          </div>
+
+            <table
+              id="table-list"
+              className={`
+                m-2
+                table-fixed
+                text-left
+                text-wrap
+                border-collapse
+              `}
+            >
+              <thead
+                className={`
+                  bg-main-normal
+                `}
+              >
+                <tr>
+                  <th>
+                    <input type="checkbox" />
+                  </th>
+                  <th>No</th>
+                  <th>Apply Sequence No</th>
+                  <th>MID</th>
+                  <th>Request Date</th>
+                  <th>Request PIC</th>
+                  <th>Memo</th>
+                  <th>Status</th>
+                  <th>Authorization Status</th>
+                  <th>Complete Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  className={`
+                    even:bg-main-active
+                  `}
+                >
+                  <td>
+                    <input type="checkbox" />
+                  </td>
+                  <td>1</td>
+                  <td>1231251342</td>
+                  <td>0980708679</td>
+                  <td>14-11-2024</td>
+                  <td>14-11-2024</td>
+                  <td className={`text-wrap`}>This memo content</td>
+                  <td>status value</td>
+                  <td>auth status value</td>
+                  <td>14-11-2024</td>
+                </tr>
+                <tr
+                  className={`
+                    even:bg-main-active
+                  `}
+                >
+                  <td>
+                    <input type="checkbox" />
+                  </td>
+                  <td>2</td>
+                  <td>1231251342</td>
+                  <td>0980708679</td>
+                  <td>14-11-2024</td>
+                  <td>14-11-2024</td>
+                  <td className={`text-wrap`}>This memo content is long.</td>
+                  <td>status value</td>
+                  <td>auth status value</td>
+                  <td>14-11-2024</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+        <div
+          id="detail-list"
+          className={`
+            flex flex-col
+            justify-start
+            border
+            h-72
+            m-2
+            text-lg
+          `}
+        >
+          <div
+            id="table-header"
+            className={`
+              mt-4
+              flex flex-row
+              justify-between
+              items-center
+            `}
+          >
+
+            <label
+              className={`
+                mx-8
+              `}
+            >
+              Detail List
+            </label>
+          </div>
+
+            <table
+              id="table-detail"
+              className={`
+                m-2
+                table-fixed
+                text-left
+                text-wrap
+                border-collapse
+              `}
+            >
+              <thead
+                className={`
+                  bg-main-normal
+                `}
+              >
+                <tr>
+                  <th>Change Type</th>
+                  <th>Old Value</th>
+                  <th>New Value</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr
+                  className={`
+                    even:bg-main-active
+                  `}
+                >
+                  <td>change</td>
+                  <td>old</td>
+                  <td>new</td>
+                </tr>
+                <tr
+                  className={`
+                    even:bg-main-active
+                  `}
+                >
+                  <td>type</td>
+                  <td>old</td>
+                  <td>new</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
       </div>
     </MainLayout>
   );
