@@ -1,4 +1,4 @@
-import { Field } from "../../parser/decorator";
+import { Field } from "../../utils/parser/decorator";
 
 export class SMC03F054ROutSub1Vo {
   @Field({ type: "STRING", length: 11, trim: "RTRIM" })

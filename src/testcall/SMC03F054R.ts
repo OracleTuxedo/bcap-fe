@@ -1,8 +1,5 @@
+import { convertObjectToString, convertStringToObject, makeParserInput, makeParserUserDataInput, ParserInput, ParserOutput, ParserUserDataInput } from "@/utils";
 import { SMC03F054ROutVo, SMC03F054RInVo } from "../dto/SMC03F054R";
-import { convertStringToObject } from "../parser/mapper/Decoder";
-import { convertObjectToString } from "../parser/mapper/Encoder";
-import { makeSkyIn, makeSkyUserDataInput } from "../parser/util";
-import { SkyIn, SkyOut, SkyUserDataInput } from "../parser/vo";
 import axios from "axios";
 
 /// Request Unit Test
@@ -21,33 +18,33 @@ export function encodeSMC03F054R(): string | null {
   inVo.mid = "71000638409";
   inVo.page_size = 20;
 
-  const userDataInput: SkyUserDataInput = makeSkyUserDataInput({
+  const userDataInput: ParserUserDataInput = makeParserUserDataInput({
     tuxedoCode: "SMC03F054R",
     screenId: "WMC0302500",
   });
 
-  const skyIn: SkyIn<SMC03F054RInVo> | null = makeSkyIn<SMC03F054RInVo>({
+  const ParserIn: ParserInput<SMC03F054RInVo> | null = makeParserInput<SMC03F054RInVo>({
     typeClass: SMC03F054RInVo,
     data: inVo,
     userDataInput: userDataInput,
   });
 
-  if (!skyIn) return null;
+  if (!ParserIn) return null;
 
-  const resultString = convertObjectToString(skyIn);
+  const resultString = convertObjectToString(ParserIn);
 
   return resultString;
 }
 
 export function decodeSMC03F054R(
   responseFromTuxedo: string
-): SkyOut<SMC03F054ROutVo> | null {
-  const parsed: SkyOut<SMC03F054ROutVo> | null = convertStringToObject<
-    SkyOut<SMC03F054ROutVo>
+): ParserOutput<SMC03F054ROutVo> | null {
+  const parsed: ParserOutput<SMC03F054ROutVo> | null = convertStringToObject<
+    ParserOutput<SMC03F054ROutVo>
   >({
     index: 0,
     input: responseFromTuxedo,
-    classInstance: new SkyOut(SMC03F054ROutVo),
+    classInstance: new ParserOutput(SMC03F054ROutVo),
   });
   return parsed;
 }

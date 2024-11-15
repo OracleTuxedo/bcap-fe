@@ -1,8 +1,5 @@
+import { convertObjectToString, convertStringToObject, makeParserInput, makeParserUserDataInput, ParserInput, ParserOutput, ParserUserDataInput } from "@/utils";
 import { SAC02F452RInVo, SAC02F452ROutVo } from "../dto/SAC02F452R";
-import { convertStringToObject } from "../parser/mapper/Decoder";
-import { convertObjectToString } from "../parser/mapper/Encoder";
-import { makeSkyUserDataInput, makeSkyIn } from "../parser/util";
-import { SkyIn, SkyOut, SkyUserDataInput } from "../parser/vo";
 import axios from "axios";
 
 /// Request Unit Test
@@ -20,33 +17,33 @@ export function encodeSAC02F452R(): string | null {
   inVo.auth_strt_date = "20240101";
   inVo.auth_end_date = "20240919";
 
-  const userDataInput: SkyUserDataInput = makeSkyUserDataInput({
+  const userDataInput: ParserUserDataInput = makeParserUserDataInput({
     tuxedoCode: "SAC02F452R",
     screenId: "WMC0302500",
   });
 
-  const skyIn: SkyIn<SAC02F452RInVo> | null = makeSkyIn<SAC02F452RInVo>({
+  const ParserIn: ParserInput<SAC02F452RInVo> | null = makeParserInput<SAC02F452RInVo>({
     typeClass: SAC02F452RInVo,
     data: inVo,
     userDataInput: userDataInput,
   });
 
-  if (!skyIn) return null;
+  if (!ParserIn) return null;
 
-  const resultString = convertObjectToString(skyIn);
+  const resultString = convertObjectToString(ParserIn);
 
   return resultString;
 }
 
 export function decodeSAC02F452R(
   responseFromTuxedo: string
-): SkyOut<SAC02F452ROutVo> | null {
-  const parsed: SkyOut<SAC02F452ROutVo> | null = convertStringToObject<
-    SkyOut<SAC02F452ROutVo>
+): ParserOutput<SAC02F452ROutVo> | null {
+  const parsed: ParserOutput<SAC02F452ROutVo> | null = convertStringToObject<
+    ParserOutput<SAC02F452ROutVo>
   >({
     index: 0,
     input: responseFromTuxedo,
-    classInstance: new SkyOut(SAC02F452ROutVo),
+    classInstance: new ParserOutput(SAC02F452ROutVo),
   });
   return parsed;
 }

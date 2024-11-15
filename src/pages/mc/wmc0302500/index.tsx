@@ -1,19 +1,11 @@
 import { Button, DateRange, InputText } from "@/components";
-import { BACKEND_ENDPOINT } from "@/config/constants";
-import { SMC03F054RInVo, SMC03F054ROutVo } from "@/dto/SMC03F054R";
-import { SMC03F055RInVo, SMC03F055ROutVo } from "@/dto/SMC03F055R";
+import { SMC03F054ROutVo } from "@/dto/SMC03F054R";
+import { SMC03F055ROutVo } from "@/dto/SMC03F055R";
 import { ButtonTypeEnum } from "@/enums";
 import { MainLayout } from "@/layout";
-import {
-  convertObjectToString,
-  convertStringToObject,
-  makeParserInput,
-  makeParserUserDataInput,
-  ParserInput, ParserOutput,
-  ParserUserDataInput 
-} from "@/parser";
+import { callSMC03F054R } from "@/services";
+import callSMC03F055R from "@/services/SMC03F055R";
 import { exportToExcel } from "@/utils";
-import axios from "axios";
 import moment from "moment";
 import { ReactElement, useState } from "react";
 
@@ -57,147 +49,49 @@ const WMC0302500 = () => {
     setIsFavorite((prev) => !prev);
   };
 
-  const encodeSMC03F054R = (): string | null => {
-    const inVo: SMC03F054RInVo = new SMC03F054RInVo();
-    inVo.std_date = queryDate.start;
-    inVo.end_date = queryDate.end;
-    inVo.apfm_pgrs_stat_cd = pageSize;
-    inVo.mid = mid;
-    inVo.page_size = 20;
-    
-    const userDataInput: ParserUserDataInput = makeParserUserDataInput({
-      tuxedoCode: "SMC03F054R",
-      screenId,
-    });
-
-    const ParserIn: ParserInput<SMC03F054RInVo> | null = makeParserInput<SMC03F054RInVo>({
-      typeClass: SMC03F054RInVo,
-      data: inVo,
-      userDataInput: userDataInput,
-    });
-
-    if (!ParserIn) return null;
-
-    const resultString = convertObjectToString(ParserIn);
-
-    return resultString;
-  };
-
-  const decodeSMC03F054R = (
-    responseFromTuxedo: string
-  ): ParserOutput<SMC03F054ROutVo> | null => {
-    const parsed: ParserOutput<SMC03F054ROutVo> | null = convertStringToObject<
-      ParserOutput<SMC03F054ROutVo>
-    >({
-      index: 0,
-      input: responseFromTuxedo,
-      classInstance: new ParserOutput(SMC03F054ROutVo),
-    });
-    return parsed;
-  };
-
-  const callSMC03F054R = async () => {
-    const requestToTuxedo: string | null = encodeSMC03F054R();
-    if (!requestToTuxedo) return;
-
-    let responseFromTuxedo = "";
-
-    try {
-      const response = await axios.post<string>(
-        `${BACKEND_ENDPOINT}example/message`,
-        requestToTuxedo,
-        {
-          headers: {
-            "Content-Type": "text/plain",
-            "Access-Control-Allow-Origin" : "*",
-            "ngrok-skip-browser-warning" : "*"
-          },
-        }
-      );
-      responseFromTuxedo = response.data;
-    } catch (error) {
-      console.log("error", error);
-      return;
-    }
-
-    const parsed = decodeSMC03F054R(responseFromTuxedo);
-
-    setOutVoSMC03F054R(parsed?.data.data);
-
-  };
-
-  const encodeSMC03F055R = (): string | null => {
-    const inVo: SMC03F055RInVo = new SMC03F055RInVo();
-    inVo.aplc_seq_no = "20000059176";
-    inVo.next_key_val = "20240717035444506768";
-    inVo.page_size = 20;
-
-    const userDataInput: ParserUserDataInput = makeParserUserDataInput({
-      tuxedoCode: "SMC03F055R",
-      screenId,
-    });
-
-    const ParserIn: ParserInput<SMC03F055RInVo> | null = makeParserInput<SMC03F055RInVo>({
-      typeClass: SMC03F055RInVo,
-      data: inVo,
-      userDataInput: userDataInput,
-    });
-
-    if (!ParserIn) return null;
-
-    const resultString = convertObjectToString(ParserIn);
-
-    return resultString;
-  };
-
-  const decodeSMC03F055R = (
-    responseFromTuxedo: string
-  ): ParserOutput<SMC03F055ROutVo> | null => {
-    const parsed: ParserOutput<SMC03F055ROutVo> | null = convertStringToObject<
-      ParserOutput<SMC03F055ROutVo>
-    >({
-      index: 0,
-      input: responseFromTuxedo,
-      classInstance: new ParserOutput(SMC03F055ROutVo),
-    });
-    return parsed;
-  };
-
-  const callSMC03F055R = async () => {
-    const requestToTuxedo: string | null = encodeSMC03F055R();
-    if (!requestToTuxedo) return;
-
-    let responseFromTuxedo = "";
-
-    try {
-      const response = await axios.post<string>(
-        `${BACKEND_ENDPOINT}example/message`,
-        requestToTuxedo,
-        {
-          headers: {
-            "Content-Type": "text/plain",
-            "Access-Control-Allow-Origin" : "*",
-            "ngrok-skip-browser-warning" : "*"
-          },
-        }
-      );
-      responseFromTuxedo = response.data;
-    } catch (error) {
-      console.log("error", error);
-      return;
-    }
-
-    const parsed = decodeSMC03F055R(responseFromTuxedo);
-
-    setOutVoSMC03F055R(parsed?.data.data);
-  };
-
-  const onClickSearch = () => {
+  const onClickSearch = async () => {
     console.log("queryDate", queryDate);
     console.log("mid", mid);
     console.log("pageSize", pageSize);
-    // callSMC03F054R();
-  };
+    try {
+
+      const listData = await callSMC03F054R({
+        screenId,
+        mid,
+        startDate : queryDate.start,
+        endDate : queryDate.end,
+        pageSize})
+        .catch (err => {
+          throw new Error(err)
+        });
+
+        setOutVoSMC03F054R(listData);
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
+    
+    const onRowClick = async (aplc_seq_no : string, next_key_val : string, page_size : number) => {
+    console.log("aplc_seq_no", aplc_seq_no);
+    console.log("next_key_val", next_key_val);
+    console.log("page_size", page_size);
+    try {
+
+      const detailListData = await callSMC03F055R({
+        screenId,
+        aplc_seq_no,
+        next_key_val,
+        page_size,
+      })
+      .catch (err => {
+        throw new Error(err)
+      });
+
+      setOutVoSMC03F055R(detailListData);
+    } catch (error) {
+      console.log('error', error);
+    }
+  }
 
   return (
     <MainLayout
@@ -294,11 +188,11 @@ const WMC0302500 = () => {
         <div
           id="list"
           className={`
+            h-72
+            m-2
             flex flex-col
             justify-start
             border
-            h-72
-            m-2
             text-lg
           `}
         >
@@ -375,7 +269,7 @@ const WMC0302500 = () => {
                         even:bg-main-active
                         hover
                       `}
-                      onClick={callSMC03F055R}
+                      onClick={() => onRowClick('20000059176', "20240717035444506768", 20)}
                   >
                     <td>
                       <input type="checkbox" />

@@ -1,4 +1,4 @@
-import { Field, FieldNumber } from "../../parser/decorator";
+import { Field, FieldNumber } from "../../utils/parser/decorator";
 import { SMC03F054ROutSub1Vo } from "./SMC03F054ROutSub1Vo";
 
 export class SMC03F054ROutVo {
