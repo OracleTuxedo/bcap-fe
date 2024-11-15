@@ -1,6 +1,7 @@
+import { NEXT_PUBLIC_SECRET_KEY } from "@/config/constants";
 import CryptoJS from "crypto-js";
 
-const NEXT_PUBLIC_SECRET_KEY = process.env.NEXT_PUBLIC_SECRET_KEY as string;
+
 
 export interface EncryptDecryptParam {
   encryptedMessage: string;
