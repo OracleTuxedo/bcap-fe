@@ -25,7 +25,7 @@ const WMC0302500 = () => {
     end : "20241211"
   })
   const [mid, setMid] = useState<string>("71000638409");
-  const [pageSize, setPageSize] = useState<string>("70");
+  const pageSize:string = "70"
   
   const handlerDownloadButton = async () => {
     if (outVoSMC03F054R) {
