@@ -1,6 +1,6 @@
-import { Field } from "../sky/decorator/Field";
-import { FieldList } from "../sky/decorator/FieldList";
-import { FieldNumber } from "../sky/decorator/FieldNumber";
+import { Field } from "../parser/decorator/Field";
+import { FieldList } from "../parser/decorator/FieldList";
+import { FieldNumber } from "../parser/decorator/FieldNumber";
 
 export class Tire {
   @Field({ type: "STRING", length: 10, trim: "RTRIM" })

@@ -1,6 +1,6 @@
 import { Field, FieldNumber } from "../decorator";
 
-export class SkyHeader {
+export class ParserHeader {
   @Field({ type: "NUMBER", length: 8, trim: "LTRIM" })
   @FieldNumber({ type: "INT", decimal: 0 })
   msg_len: number;

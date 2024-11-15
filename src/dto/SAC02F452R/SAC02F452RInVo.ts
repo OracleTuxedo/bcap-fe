@@ -1,4 +1,4 @@
-import { Field, FieldNumber } from "../../sky/decorator";
+import { Field, FieldNumber } from "../../parser/decorator";
 
 export class SAC02F452RInVo {
   @Field({ type: "NUMBER", length: 6, trim: "LTRIM" })

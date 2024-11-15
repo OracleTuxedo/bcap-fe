@@ -1,4 +1,4 @@
-export class SkyUserDataInput {
+export class ParserUserDataInput {
   tx_code: string;
 
   client_ip_no: string;

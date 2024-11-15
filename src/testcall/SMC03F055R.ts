@@ -1,8 +1,8 @@
 import { SMC03F055RInVo, SMC03F055ROutVo } from "../dto/SMC03F055R";
-import { convertStringToObject } from "../sky/mapper/Decoder";
-import { convertObjectToString } from "../sky/mapper/Encoder";
-import { makeSkyIn, makeSkyUserDataInput } from "../sky/util";
-import { SkyIn, SkyOut, SkyUserDataInput } from "../sky/vo";
+import { convertStringToObject } from "../parser/mapper/Decoder";
+import { convertObjectToString } from "../parser/mapper/Encoder";
+import { makeSkyIn, makeSkyUserDataInput } from "../parser/util";
+import { SkyIn, SkyOut, SkyUserDataInput } from "../parser/vo";
 import axios from "axios";
 
 // Request Unit Test

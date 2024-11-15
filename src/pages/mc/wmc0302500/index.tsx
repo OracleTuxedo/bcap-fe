@@ -1,17 +1,21 @@
-import { Button, Header } from "@/components";
+import { Button, DateRange, InputText } from "@/components";
 import { BACKEND_ENDPOINT } from "@/config/constants";
 import { SMC03F054RInVo, SMC03F054ROutVo } from "@/dto/SMC03F054R";
 import { SMC03F055RInVo, SMC03F055ROutVo } from "@/dto/SMC03F055R";
 import { ButtonTypeEnum } from "@/enums";
 import { MainLayout } from "@/layout";
-import { convertStringToObject } from "@/sky/mapper/Decoder";
-import { convertObjectToString } from "@/sky/mapper/Encoder";
-import { makeSkyIn, makeSkyUserDataInput } from "@/sky/util";
-import { SkyIn, SkyOut, SkyUserDataInput } from "@/sky/vo";
+import {
+  convertObjectToString,
+  convertStringToObject,
+  makeParserInput,
+  makeParserUserDataInput,
+  ParserInput, ParserOutput,
+  ParserUserDataInput 
+} from "@/parser";
 import { exportToExcel } from "@/utils";
 import axios from "axios";
 import moment from "moment";
-import { ReactElement, useState, useEffect } from "react";
+import { ReactElement, useState } from "react";
 
 export interface queryDataInterface {
   start : string;
@@ -61,33 +65,33 @@ const WMC0302500 = () => {
     inVo.mid = mid;
     inVo.page_size = 20;
     
-    const userDataInput: SkyUserDataInput = makeSkyUserDataInput({
+    const userDataInput: ParserUserDataInput = makeParserUserDataInput({
       tuxedoCode: "SMC03F054R",
       screenId,
     });
 
-    const skyIn: SkyIn<SMC03F054RInVo> | null = makeSkyIn<SMC03F054RInVo>({
+    const ParserIn: ParserInput<SMC03F054RInVo> | null = makeParserInput<SMC03F054RInVo>({
       typeClass: SMC03F054RInVo,
       data: inVo,
       userDataInput: userDataInput,
     });
 
-    if (!skyIn) return null;
+    if (!ParserIn) return null;
 
-    const resultString = convertObjectToString(skyIn);
+    const resultString = convertObjectToString(ParserIn);
 
     return resultString;
   };
 
   const decodeSMC03F054R = (
     responseFromTuxedo: string
-  ): SkyOut<SMC03F054ROutVo> | null => {
-    const parsed: SkyOut<SMC03F054ROutVo> | null = convertStringToObject<
-      SkyOut<SMC03F054ROutVo>
+  ): ParserOutput<SMC03F054ROutVo> | null => {
+    const parsed: ParserOutput<SMC03F054ROutVo> | null = convertStringToObject<
+      ParserOutput<SMC03F054ROutVo>
     >({
       index: 0,
       input: responseFromTuxedo,
-      classInstance: new SkyOut(SMC03F054ROutVo),
+      classInstance: new ParserOutput(SMC03F054ROutVo),
     });
     return parsed;
   };
@@ -128,33 +132,33 @@ const WMC0302500 = () => {
     inVo.next_key_val = "20240717035444506768";
     inVo.page_size = 20;
 
-    const userDataInput: SkyUserDataInput = makeSkyUserDataInput({
+    const userDataInput: ParserUserDataInput = makeParserUserDataInput({
       tuxedoCode: "SMC03F055R",
       screenId,
     });
 
-    const skyIn: SkyIn<SMC03F055RInVo> | null = makeSkyIn<SMC03F055RInVo>({
+    const ParserIn: ParserInput<SMC03F055RInVo> | null = makeParserInput<SMC03F055RInVo>({
       typeClass: SMC03F055RInVo,
       data: inVo,
       userDataInput: userDataInput,
     });
 
-    if (!skyIn) return null;
+    if (!ParserIn) return null;
 
-    const resultString = convertObjectToString(skyIn);
+    const resultString = convertObjectToString(ParserIn);
 
     return resultString;
   };
 
   const decodeSMC03F055R = (
     responseFromTuxedo: string
-  ): SkyOut<SMC03F055ROutVo> | null => {
-    const parsed: SkyOut<SMC03F055ROutVo> | null = convertStringToObject<
-      SkyOut<SMC03F055ROutVo>
+  ): ParserOutput<SMC03F055ROutVo> | null => {
+    const parsed: ParserOutput<SMC03F055ROutVo> | null = convertStringToObject<
+      ParserOutput<SMC03F055ROutVo>
     >({
       index: 0,
       input: responseFromTuxedo,
-      classInstance: new SkyOut(SMC03F055ROutVo),
+      classInstance: new ParserOutput(SMC03F055ROutVo),
     });
     return parsed;
   };
@@ -192,7 +196,7 @@ const WMC0302500 = () => {
     console.log("queryDate", queryDate);
     console.log("mid", mid);
     console.log("pageSize", pageSize);
-    callSMC03F054R();
+    // callSMC03F054R();
   };
 
   return (
@@ -236,38 +240,16 @@ const WMC0302500 = () => {
                 Approval Date
               </label>
 
-              <input
-                type="date"
-                className={`
-                  mx-2 p-1
-                  h-fit
-                  border border-sidebar-normal
-                  shadow-sm
-                `}
-                value={moment(queryDate.start).format("YYYY-MM-DD")}
-                onChange={(e) => setQueryDate((prev) => ({...prev, start : moment(e.target.value).format("YYYYMMDD")}))}
+              <DateRange
+                startName={"start-date"} startValue={queryDate.start} startOnChangeHandler={(e) => setQueryDate(
+                  (prev) => ({...prev, start : moment(e.target.value).format("YYYYMMDD")})
+                )}
+
+                endName={"end-date"} endValue={queryDate.end} endOnChangeHandler={(e) => setQueryDate(
+                  (prev) => ({...prev, end : moment(e.target.value).format("YYYYMMDD")})
+                )}
               />
 
-              <label
-                className={`
-                  mx-2
-                `}
-              >
-                ~
-              </label>
-
-              <input
-                type="date"
-                className={`
-                  mx-2
-                  p-1
-                  h-fit
-                  border border-sidebar-normal
-                  shadow-sm
-                `}
-                value={moment(queryDate.end).format("YYYY-MM-DD")}
-                onChange={(e) => setQueryDate((prev) => ({...prev, end : moment(e.target.value).format("YYYYMMDD")}))}
-              />
             </div>
 
             <div
@@ -288,15 +270,7 @@ const WMC0302500 = () => {
                 MID
               </label>
 
-              <input
-                type="search"
-                className={`
-                  mx-2
-                  p-1
-                  border border-sidebar-normal
-                  shadow-sm
-                `}
-              />
+              <InputText name="mid" value={mid} onChangeHandler={(e) => setMid(e.target.value)} />
             </div>
           </div>
 

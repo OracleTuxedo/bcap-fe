@@ -1,22 +1,22 @@
 import { ClassConstructor } from "class-transformer";
-import { SkyHeader, SkyIn, SkyInData, SkyUserDataInput } from "../vo";
 import { FieldParam, Meta } from "../decorator";
 import {
   globalSeq,
   getMicroTime,
   makeOriginalGid,
   getPacketSize,
-} from "./SkyUtil";
+} from "./Util";
 import moment from "moment";
+import { ParserHeader, ParserInput, ParserInputData, ParserUserDataInput } from "../vo";
 
-export function makeSkyUserDataInput({
+export function makeParserUserDataInput({
   tuxedoCode,
   screenId,
 }: {
   tuxedoCode: string;
   screenId: string;
-}): SkyUserDataInput {
-  const userDataInput: SkyUserDataInput = new SkyUserDataInput();
+}): ParserUserDataInput {
+  const userDataInput: ParserUserDataInput = new ParserUserDataInput();
   userDataInput.tx_code = tuxedoCode;
   userDataInput.scrn_id = screenId;
   userDataInput.client_ip_no = "172.16.20.11"; /// TODO get client IP browser / server
@@ -29,61 +29,61 @@ export function makeSkyUserDataInput({
   return userDataInput;
 }
 
-export function makeSkyIn<I>({
+export function makeParserInput<I>({
   typeClass,
   data,
   userDataInput,
 }: {
   typeClass: ClassConstructor<I>;
   data: I;
-  userDataInput: SkyUserDataInput;
-}): SkyIn<I> | null {
-  const skyHeader: SkyHeader | null = makeSkyHeader({
+  userDataInput: ParserUserDataInput;
+}): ParserInput<I> | null {
+  const ParserHeader: ParserHeader | null = makeParserHeader({
     userDataInput: userDataInput,
   });
-  const skyInData: SkyInData<I> | null = makeSkyInData({
+  const ParserInData: ParserInputData<I> | null = makeParserInputData({
     typeClass: typeClass,
     data: data,
   });
 
-  if (!skyHeader || !skyInData) return null;
+  if (!ParserHeader || !ParserInData) return null;
 
-  const skyIn: SkyIn<I> = new SkyIn(typeClass);
-  skyIn.header = skyHeader;
-  skyIn.data = skyInData;
+  const ParserIn: ParserInput<I> = new ParserInput(typeClass);
+  ParserIn.header = ParserHeader;
+  ParserIn.data = ParserInData;
 
-  const countSkyIn = getPacketSize(skyIn);
+  const countParserIn = getPacketSize(ParserIn);
 
-  if (!countSkyIn) return null;
+  if (!countParserIn) return null;
 
-  skyIn.header.msg_len = countSkyIn - 8;
+  ParserIn.header.msg_len = countParserIn - 8;
 
-  return skyIn;
+  return ParserIn;
 }
 
-function makeSkyInData<I>({
+function makeParserInputData<I>({
   typeClass,
   data,
 }: {
   typeClass: ClassConstructor<I>;
   data: I;
-}): SkyInData<I> | null {
-  const skyInData: SkyInData<I> = new SkyInData<I>(typeClass);
-  skyInData.data_type = "D";
-  skyInData.data = data;
-  const count = getPacketSize(skyInData);
+}): ParserInputData<I> | null {
+  const ParserInData: ParserInputData<I> = new ParserInputData<I>(typeClass);
+  ParserInData.data_type = "D";
+  ParserInData.data = data;
+  const count = getPacketSize(ParserInData);
   if (!count) return null;
 
-  skyInData.length = count - 9; // TODO Buat apa ada angka 9 ?
-  return skyInData;
+  ParserInData.length = count - 9; // TODO Buat apa ada angka 9 ?
+  return ParserInData;
 }
 
-function makeSkyHeader({
+function makeParserHeader({
   userDataInput,
 }: {
-  userDataInput: SkyUserDataInput;
-}): SkyHeader | null {
-  const header: SkyHeader = new SkyHeader();
+  userDataInput: ParserUserDataInput;
+}): ParserHeader | null {
+  const header: ParserHeader = new ParserHeader();
 
   const fields: Array<FieldParam> | undefined = Reflect.getMetadata(
     Meta.FIELD,

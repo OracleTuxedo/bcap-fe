@@ -1,9 +1,9 @@
 import { Field, FieldList, FieldNumber } from "../decorator";
-import { SkyMessageSub } from "./SkyMessageSub";
+import { ParserMessageSub } from "./ParserMessageSub";
 
-export class SkyMessage {
+export class ParserMessage {
   constructor() {
-    this.list = [new SkyMessageSub()];
+    this.list = [new ParserMessageSub()];
   }
 
   @Field({ type: "STRING", length: 1, trim: "RTRIM" })
@@ -35,5 +35,5 @@ export class SkyMessage {
 
   @Field({ type: "LIST", length: 0, trim: "NONE" })
   @FieldList({ length: 2 })
-  list: Array<SkyMessageSub>;
+  list: Array<ParserMessageSub>;
 }

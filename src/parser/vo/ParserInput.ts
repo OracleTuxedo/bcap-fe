@@ -1,18 +1,18 @@
 import { ClassConstructor } from "class-transformer";
 import { Field } from "../decorator";
-import { SkyHeader } from "./SkyHeader";
-import { SkyInData } from "./SkyInData";
+import { ParserHeader } from "./ParserHeader";
+import { ParserInputData } from "./ParserInputData";
 
-export class SkyIn<I> {
+export class ParserInput<I> {
   constructor(typeClass: ClassConstructor<I>) {
-    this.header = new SkyHeader();
-    this.data = new SkyInData(typeClass);
+    this.header = new ParserHeader();
+    this.data = new ParserInputData(typeClass);
   }
   @Field({ type: "VO", length: 0, trim: "NONE" })
-  header: SkyHeader;
+  header: ParserHeader;
 
   @Field({ type: "VO", length: 0, trim: "NONE" })
-  data: SkyInData<I>;
+  data: ParserInputData<I>;
 
   @Field({ type: "STRING", length: 2, trim: "RTRIM" })
   tail: string = "@@";

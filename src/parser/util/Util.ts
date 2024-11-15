@@ -5,7 +5,7 @@ import {
   FieldParam,
   Meta,
 } from "../decorator";
-import { SkyHeader } from "../vo";
+import { ParserHeader } from "../vo";
 
 export function getMicroTime(): string {
   return moment().format("YYYYMMDDSSSSSS");
@@ -16,7 +16,7 @@ export function globalSeq(): string {
 }
 
 export function makeOriginalGid(
-  header: SkyHeader,
+  header: ParserHeader,
   fields: Array<FieldParam>
 ): string {
   let originalGid = "";

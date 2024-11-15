@@ -1,8 +1,8 @@
 import { ClassConstructor } from "class-transformer";
 import { Field, FieldNumber } from "../decorator";
 
-export class SkyOutData<O> {
-  constructor(typeClass: ClassConstructor<O>) {
+export class ParserInputData<I> {
+  constructor(typeClass: ClassConstructor<I>) {
     this.data = new typeClass();
   }
 
@@ -17,5 +17,5 @@ export class SkyOutData<O> {
   reserved: string;
 
   @Field({ type: "VO", length: 0, trim: "NONE" })
-  data: O;
+  data: I;
 }
