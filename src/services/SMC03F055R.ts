@@ -1,6 +1,7 @@
 import { BACKEND_ENDPOINT } from "@/config/constants";
 import { SMC03F055RInVo, SMC03F055ROutVo } from "@/dto";
 import { convertObjectToString, convertStringToObject, makeParserInput, makeParserUserDataInput, ParserInput, ParserOutput, ParserUserDataInput } from "@/utils";
+import { decryption, EncryptDecryptParam, encryption } from "@/utils/EncryptionDecryption";
 import axios from "axios";
 
 export interface SMC03F055RInputInterface{
@@ -59,26 +60,30 @@ const callSMC03F055R = async (inputRequest : SMC03F055RInputInterface) => {
 
     let responseFromTuxedo = "";
 
+    const body: EncryptDecryptParam = encryption(requestToTuxedo);
+    
+
     try {
-        const response = await axios.post<string>(
-            `${BACKEND_ENDPOINT}example/message`,
-            requestToTuxedo,
+        const response = await axios.post(
+            `${BACKEND_ENDPOINT}message`,
+            body,
             {
                 headers: {
-                    "Content-Type": "text/plain",
+                    "Content-Type": "application/json",
                     "Access-Control-Allow-Origin" : "*",
                     "ngrok-skip-browser-warning" : "*"
                 },
             }
         );
-        responseFromTuxedo = response.data;
+        const originalMessage: string = decryption(response.data);
+        responseFromTuxedo = originalMessage;
     } catch (error) {
         console.log("error", error);
         return;
     }
 
     const parsed = decodeSMC03F055R(responseFromTuxedo);
-
+    
     return(parsed?.data.data);
 };
 
