@@ -1,4 +1,4 @@
-import { convertObjectToString, convertStringToObject, makeTelegramInput, makeTelegramUserDataInput, TelegramInput, TelegramOutput, TelegramUserDataInput } from "@/utils";
+import { convertObjectToString, convertStringToObject, makeTelegramIn, makeTelegramUserDataIn, TelegramIn, TelegramOut, TelegramUserDataIn } from "@/utils";
 import { SAC02F452RInVo, SAC02F452ROutVo } from "../dto/SAC02F452R";
 import axios from "axios";
 
@@ -17,39 +17,39 @@ export function encodeSAC02F452R(): string | null {
   inVo.auth_strt_date = "20240101";
   inVo.auth_end_date = "20240919";
 
-  const userDataInput: TelegramUserDataInput = makeTelegramUserDataInput({
+  const userDataInput: TelegramUserDataIn = makeTelegramUserDataIn({
     tuxedoCode: "SAC02F452R",
     screenId: "WMC0302500",
   });
 
-  const TelegramIn: TelegramInput<SAC02F452RInVo> | null = makeTelegramInput<SAC02F452RInVo>({
+  const telegramIn: TelegramIn<SAC02F452RInVo> | null = makeTelegramIn<SAC02F452RInVo>({
     typeClass: SAC02F452RInVo,
     data: inVo,
     userDataInput: userDataInput,
   });
 
-  if (!TelegramIn) return null;
+  if (!telegramIn) return null;
 
-  const resultString = convertObjectToString(TelegramIn);
+  const resultString = convertObjectToString(telegramIn);
 
   return resultString;
 }
 
 export function decodeSAC02F452R(
   responseFromTuxedo: string
-): TelegramOutput<SAC02F452ROutVo> | null {
-  const parsed: TelegramOutput<SAC02F452ROutVo> | null = convertStringToObject<
-    TelegramOutput<SAC02F452ROutVo>
+): TelegramOut<SAC02F452ROutVo> | null {
+  const parsed: TelegramOut<SAC02F452ROutVo> | null = convertStringToObject<
+    TelegramOut<SAC02F452ROutVo>
   >({
     index: 0,
     input: responseFromTuxedo,
-    classInstance: new TelegramOutput(SAC02F452ROutVo),
+    classInstance: new TelegramOut(SAC02F452ROutVo),
   });
   return parsed;
 }
 
 export async function callSAC02F452R() {
-  console.log("ENCODER START");
+  
 
   const requestToTuxedo: string | null = encodeSAC02F452R();
 
@@ -67,28 +67,28 @@ export async function callSAC02F452R() {
         },
       }
     );
-    // console.log(response);
+    // 
     responseFromTuxedo = response.data;
   } catch (error) {
-    console.log("error");
-    console.log(error);
+    
+    
     return;
   }
-  console.log(`[${requestToTuxedo}]`);
-  console.log("-----------------------------------------------------------");
-  console.log(`[${responseFromTuxedo}]`);
+  
+  
+  
 
-  console.log("ENCODER END");
-  console.log("-----------------------------------------------------------");
-  console.log("-----------------------------------------------------------");
-  console.log("-----------------------------------------------------------");
-  console.log("DECODER START");
+  
+  
+  
+  
+  
 
   const parsed = decodeSAC02F452R(responseFromTuxedo);
-  console.log(parsed);
-  console.log("-----------------------------------------------------------");
-  console.log(parsed?.data.data);
-  console.log("-----------------------------------------------------------");
-  console.log(parsed?.data.data.sub1_vos);
-  console.log("DECODER END");
+  
+  
+  
+  
+  
+  
 }

@@ -2,7 +2,7 @@ import { BACKEND_ENDPOINT } from "@/config/constants";
 import { SMC03F054RInVo, SMC03F054ROutVo } from "@/dto";
 import { convertObjectToString, convertStringToObject, makeTelegramIn, makeTelegramUserDataIn, TelegramIn, TelegramOut, TelegramUserDataIn } from "@/utils";
 import { decryption, EncryptDecryptParam, encryption } from "@/utils/EncryptionDecryption";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 export interface SMC03F054RInputInterface{
     screenId    : string;
@@ -26,20 +26,28 @@ const encodeSMC03F054R = ({
     inVo.mid = mid;
     inVo.page_size = 20;
 
+    
+
     const userDataInput: TelegramUserDataIn = makeTelegramUserDataIn({
         tuxedoCode: "SMC03F054R",
         screenId,
     });
 
-    const TelegramIn: TelegramIn<SMC03F054RInVo> | null = makeTelegramIn<SMC03F054RInVo>({
+    
+
+    const telegramIn: TelegramIn<SMC03F054RInVo> | null = makeTelegramIn<SMC03F054RInVo>({
         typeClass: SMC03F054RInVo,
         data: inVo,
         userDataInput: userDataInput,
     });
 
-    if (!TelegramIn) return null;
+    if (!telegramIn) return null;
 
-    const resultString = convertObjectToString(TelegramIn);
+    
+
+    const resultString = convertObjectToString(telegramIn);
+
+    
 
     return resultString;
 };
@@ -58,9 +66,10 @@ const decodeSMC03F054R = (
 };
 
 const callSMC03F054R = async (inputRequest : SMC03F054RInputInterface) => {
+    
     const requestToTuxedo: string | null = encodeSMC03F054R(inputRequest);
     if (!requestToTuxedo) return;
-
+    
     let responseFromTuxedo = "";
 
     const body: EncryptDecryptParam = encryption(requestToTuxedo);
@@ -80,12 +89,12 @@ const callSMC03F054R = async (inputRequest : SMC03F054RInputInterface) => {
         const originalMessage: string = decryption(response.data);
         responseFromTuxedo = originalMessage;
     } catch (error) {
-        console.log("error", error);
+        
         return;
     }
     
     const parsed = decodeSMC03F054R(responseFromTuxedo);
-    console.log(parsed);
+    
 
     return(parsed?.data.data);
 };

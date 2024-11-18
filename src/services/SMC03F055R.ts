@@ -27,15 +27,15 @@ const encodeSMC03F055R = ({
         screenId,
     });
 
-    const TelegramIn: TelegramIn<SMC03F055RInVo> | null = makeTelegramIn<SMC03F055RInVo>({
+    const telegramIn: TelegramIn<SMC03F055RInVo> | null = makeTelegramIn<SMC03F055RInVo>({
         typeClass: SMC03F055RInVo,
         data: inVo,
         userDataInput: userDataInput,
     });
 
-    if (!TelegramIn) return null;
+    if (!telegramIn) return null;
 
-    const resultString = convertObjectToString(TelegramIn);
+    const resultString = convertObjectToString(telegramIn);
 
     return resultString;
 };
@@ -78,7 +78,7 @@ const callSMC03F055R = async (inputRequest : SMC03F055RInputInterface) => {
         const originalMessage: string = decryption(response.data);
         responseFromTuxedo = originalMessage;
     } catch (error) {
-        console.log("error", error);
+        
         return;
     }
 

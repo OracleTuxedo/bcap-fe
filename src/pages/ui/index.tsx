@@ -35,7 +35,7 @@ const UiPage = () => {
   ];
 
   const handleClick = (data: dataColumns) => {
-    console.log(data);
+    
   };
 
   return (

@@ -50,9 +50,7 @@ const WMC0302500 = () => {
   };
 
   const onClickSearch = async () => {
-    console.log("queryDate", queryDate);
-    console.log("mid", mid);
-    console.log("pageSize", pageSize);
+    
     try {
       const listData = await callSMC03F054R({
         screenId,
@@ -66,7 +64,7 @@ const WMC0302500 = () => {
 
       setOutVoSMC03F054R(listData);
     } catch (error) {
-      console.log("error", error);
+      console.log(error);
     }
   };
 
@@ -75,9 +73,7 @@ const WMC0302500 = () => {
     next_key_val: string,
     page_size: number
   ) => {
-    console.log("aplc_seq_no", aplc_seq_no);
-    console.log("next_key_val", next_key_val);
-    console.log("page_size", page_size);
+
     try {
       const detailListData = await callSMC03F055R({
         screenId,
@@ -90,7 +86,7 @@ const WMC0302500 = () => {
 
       setOutVoSMC03F055R(detailListData);
     } catch (error) {
-      console.log("error", error);
+      console.log(error);
     }
   };
 

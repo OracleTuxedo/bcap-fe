@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "noEmit": true,
@@ -13,19 +17,26 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
-    
     /* Experimental Options */
-    "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
-    "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
+    "experimentalDecorators": true, /* Enables experimental support for ES7 decorators. */
+    "emitDecoratorMetadata": true, /* Enables experimental support for emitting type metadata for decorators. */
+    "strict": false
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"],
-
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
   /* Strict Type-Checking Options */
-  "strict": true,                           /* Enable all strict type-checking options. */
-  "noImplicitAny": true,                    /* Raise error on expressions and declarations with an implied 'any' type. */
-  "strictNullChecks": true,                 /* Enable strict null checks. */
-  "noImplicitThis": true,                   /* Raise error on 'this' expressions with an implied 'any' type. */
+  "strict": true, /* Enable all strict type-checking options. */
+  "noImplicitAny": true, /* Raise error on expressions and declarations with an implied 'any' type. */
+  "strictNullChecks": true, /* Enable strict null checks. */
+  "noImplicitThis": true /* Raise error on 'this' expressions with an implied 'any' type. */
 }

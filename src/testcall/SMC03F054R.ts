@@ -1,4 +1,4 @@
-import { convertObjectToString, convertStringToObject, makeTelegramInput, makeTelegramUserDataInput, TelegramInput, TelegramOutput, TelegramUserDataInput } from "@/utils";
+import { convertObjectToString, convertStringToObject, makeTelegramIn, makeTelegramUserDataIn, TelegramIn, TelegramOut, TelegramUserDataIn } from "@/utils";
 import { SMC03F054ROutVo, SMC03F054RInVo } from "../dto/SMC03F054R";
 import axios from "axios";
 
@@ -18,39 +18,39 @@ export function encodeSMC03F054R(): string | null {
   inVo.mid = "71000638409";
   inVo.page_size = 20;
 
-  const userDataInput: TelegramUserDataInput = makeTelegramUserDataInput({
+  const userDataInput: TelegramUserDataIn = makeTelegramUserDataIn({
     tuxedoCode: "SMC03F054R",
     screenId: "WMC0302500",
   });
 
-  const TelegramIn: TelegramInput<SMC03F054RInVo> | null = makeTelegramInput<SMC03F054RInVo>({
+  const telegramIn: TelegramIn<SMC03F054RInVo> | null = makeTelegramIn<SMC03F054RInVo>({
     typeClass: SMC03F054RInVo,
     data: inVo,
     userDataInput: userDataInput,
   });
 
-  if (!TelegramIn) return null;
+  if (!telegramIn) return null;
 
-  const resultString = convertObjectToString(TelegramIn);
+  const resultString = convertObjectToString(telegramIn);
 
   return resultString;
 }
 
 export function decodeSMC03F054R(
   responseFromTuxedo: string
-): TelegramOutput<SMC03F054ROutVo> | null {
-  const parsed: TelegramOutput<SMC03F054ROutVo> | null = convertStringToObject<
-    TelegramOutput<SMC03F054ROutVo>
+): TelegramOut<SMC03F054ROutVo> | null {
+  const parsed: TelegramOut<SMC03F054ROutVo> | null = convertStringToObject<
+    TelegramOut<SMC03F054ROutVo>
   >({
     index: 0,
     input: responseFromTuxedo,
-    classInstance: new TelegramOutput(SMC03F054ROutVo),
+    classInstance: new TelegramOut(SMC03F054ROutVo),
   });
   return parsed;
 }
 
 export async function callSMC03F054R() {
-  console.log("ENCODER START");
+  
   const requestToTuxedo: string | null = encodeSMC03F054R();
   if (!requestToTuxedo) return;
 
@@ -68,25 +68,25 @@ export async function callSMC03F054R() {
     );
     responseFromTuxedo = response.data;
   } catch (error) {
-    console.log("error");
-    console.log(error);
+    
+    
     return;
   }
-  console.log(`[${requestToTuxedo}]`);
-  console.log("-----------------------------------------------------------");
-  console.log(`[${responseFromTuxedo}]`);
+  
+  
+  
 
-  console.log("ENCODER END");
-  console.log("-----------------------------------------------------------");
-  console.log("-----------------------------------------------------------");
-  console.log("-----------------------------------------------------------");
-  console.log("DECODER START");
+  
+  
+  
+  
+  
 
   const parsed = decodeSMC03F054R(responseFromTuxedo);
-  console.log(parsed);
-  console.log("-----------------------------------------------------------");
-  console.log(parsed?.data.data);
-  console.log("-----------------------------------------------------------");
-  console.log(parsed?.data.data.sub1_vos);
-  console.log("DECODER END");
+  
+  
+  
+  
+  
+  
 }

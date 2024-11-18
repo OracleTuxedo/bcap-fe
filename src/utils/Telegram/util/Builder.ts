@@ -7,7 +7,7 @@ import {
   getPacketSize,
 } from "./Util";
 import moment from "moment";
-import { TelegramHeader, TelegramIn, TelegramIn, TelegramInData, TelegramUserDataIn } from "../vo";
+import { TelegramHeader, TelegramIn, TelegramInData, TelegramUserDataIn } from "../vo";
 
 export function makeTelegramUserDataIn({
   tuxedoCode,
@@ -38,27 +38,27 @@ export function makeTelegramIn<I>({
   data: I;
   userDataInput: TelegramUserDataIn;
 }): TelegramIn<I> | null {
-  const TelegramHeader: TelegramHeader | null = makeTelegramHeader({
+  const telegramHeader: TelegramHeader | null = makeTelegramHeader({
     userDataInput: userDataInput,
   });
-  const TelegramInData: TelegramInData<I> | null = makeTelegramInData({
+  const telegramInData: TelegramInData<I> | null = makeTelegramInData({
     typeClass: typeClass,
     data: data,
   });
 
-  if (!TelegramHeader || !TelegramInData) return null;
+  if (!telegramHeader || !telegramInData) return null;
 
-  const TelegramIn: TelegramIn<I> = new TelegramIn(typeClass);
-  TelegramIn.header = TelegramHeader;
-  TelegramIn.data = TelegramInData;
+  const telegramIn: TelegramIn<I> = new TelegramIn(typeClass);
+  telegramIn.header = telegramHeader;
+  telegramIn.data = telegramInData;
 
-  const countTelegramIn = getPacketSize(TelegramIn);
+  const countTelegramIn = getPacketSize(telegramIn);
 
   if (!countTelegramIn) return null;
 
-  TelegramIn.header.msg_len = countTelegramIn - 8;
+  telegramIn.header.msg_len = countTelegramIn - 8;
 
-  return TelegramIn;
+  return telegramIn;
 }
 
 function makeTelegramInData<I>({
@@ -68,14 +68,14 @@ function makeTelegramInData<I>({
   typeClass: ClassConstructor<I>;
   data: I;
 }): TelegramInData<I> | null {
-  const TelegramInData: TelegramInData<I> = new TelegramInData<I>(typeClass);
-  TelegramInData.data_type = "D";
-  TelegramInData.data = data;
-  const count = getPacketSize(TelegramInData);
+  const telegramInData: TelegramInData<I> = new TelegramInData<I>(typeClass);
+  telegramInData.data_type = "D";
+  telegramInData.data = data;
+  const count = getPacketSize(telegramInData);
   if (!count) return null;
 
-  TelegramInData.length = count - 9; // TODO Buat apa ada angka 9 ?
-  return TelegramInData;
+  telegramInData.length = count - 9; // TODO Buat apa ada angka 9 ?
+  return telegramInData;
 }
 
 function makeTelegramHeader({

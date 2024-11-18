@@ -4,7 +4,7 @@ import { MainLayout } from '@/layout';
 import { ReactElement } from 'react';
 
 const onClickSearch = () => {
-  console.log('test');
+  
 };
 
 const handlerDownloadButton = () => {};
