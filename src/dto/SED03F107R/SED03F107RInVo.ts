@@ -1,4 +1,4 @@
-import { Field } from "../../utils/parser/decorator";
+import { Field } from "../../utils/Telegram/decorator";
 
 export class SED03F107RInVo {
   @Field({ type: "STRING", length: 5, trim: "RTRIM" })

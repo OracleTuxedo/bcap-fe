@@ -5,7 +5,7 @@ import {
   FieldParam,
   Meta,
 } from "../decorator";
-import { ParserHeader } from "../vo";
+import { TelegramHeader } from "../vo";
 
 export function getMicroTime(): string {
   return moment().format("YYYYMMDDSSSSSS");
@@ -16,7 +16,7 @@ export function globalSeq(): string {
 }
 
 export function makeOriginalGid(
-  header: ParserHeader,
+  header: TelegramHeader,
   fields: Array<FieldParam>
 ): string {
   let originalGid = "";

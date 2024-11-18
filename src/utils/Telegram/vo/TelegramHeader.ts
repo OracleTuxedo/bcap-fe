@@ -1,6 +1,6 @@
 import { Field, FieldNumber } from "../decorator";
 
-export class ParserHeader {
+export class TelegramHeader {
   @Field({ type: "NUMBER", length: 8, trim: "LTRIM" })
   @FieldNumber({ type: "INT", decimal: 0 })
   msg_len: number;

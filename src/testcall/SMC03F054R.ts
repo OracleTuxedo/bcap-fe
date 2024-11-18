@@ -1,4 +1,4 @@
-import { convertObjectToString, convertStringToObject, makeParserInput, makeParserUserDataInput, ParserInput, ParserOutput, ParserUserDataInput } from "@/utils";
+import { convertObjectToString, convertStringToObject, makeTelegramInput, makeTelegramUserDataInput, TelegramInput, TelegramOutput, TelegramUserDataInput } from "@/utils";
 import { SMC03F054ROutVo, SMC03F054RInVo } from "../dto/SMC03F054R";
 import axios from "axios";
 
@@ -18,33 +18,33 @@ export function encodeSMC03F054R(): string | null {
   inVo.mid = "71000638409";
   inVo.page_size = 20;
 
-  const userDataInput: ParserUserDataInput = makeParserUserDataInput({
+  const userDataInput: TelegramUserDataInput = makeTelegramUserDataInput({
     tuxedoCode: "SMC03F054R",
     screenId: "WMC0302500",
   });
 
-  const ParserIn: ParserInput<SMC03F054RInVo> | null = makeParserInput<SMC03F054RInVo>({
+  const TelegramIn: TelegramInput<SMC03F054RInVo> | null = makeTelegramInput<SMC03F054RInVo>({
     typeClass: SMC03F054RInVo,
     data: inVo,
     userDataInput: userDataInput,
   });
 
-  if (!ParserIn) return null;
+  if (!TelegramIn) return null;
 
-  const resultString = convertObjectToString(ParserIn);
+  const resultString = convertObjectToString(TelegramIn);
 
   return resultString;
 }
 
 export function decodeSMC03F054R(
   responseFromTuxedo: string
-): ParserOutput<SMC03F054ROutVo> | null {
-  const parsed: ParserOutput<SMC03F054ROutVo> | null = convertStringToObject<
-    ParserOutput<SMC03F054ROutVo>
+): TelegramOutput<SMC03F054ROutVo> | null {
+  const parsed: TelegramOutput<SMC03F054ROutVo> | null = convertStringToObject<
+    TelegramOutput<SMC03F054ROutVo>
   >({
     index: 0,
     input: responseFromTuxedo,
-    classInstance: new ParserOutput(SMC03F054ROutVo),
+    classInstance: new TelegramOutput(SMC03F054ROutVo),
   });
   return parsed;
 }

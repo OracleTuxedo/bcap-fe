@@ -7,16 +7,16 @@ import {
   getPacketSize,
 } from "./Util";
 import moment from "moment";
-import { ParserHeader, ParserInput, ParserInputData, ParserUserDataInput } from "../vo";
+import { TelegramHeader, TelegramIn, TelegramIn, TelegramInData, TelegramUserDataIn } from "../vo";
 
-export function makeParserUserDataInput({
+export function makeTelegramUserDataIn({
   tuxedoCode,
   screenId,
 }: {
   tuxedoCode: string;
   screenId: string;
-}): ParserUserDataInput {
-  const userDataInput: ParserUserDataInput = new ParserUserDataInput();
+}): TelegramUserDataIn {
+  const userDataInput: TelegramUserDataIn = new TelegramUserDataIn();
   userDataInput.tx_code = tuxedoCode;
   userDataInput.scrn_id = screenId;
   userDataInput.client_ip_no = "172.16.20.11"; /// TODO get client IP browser / server
@@ -29,61 +29,61 @@ export function makeParserUserDataInput({
   return userDataInput;
 }
 
-export function makeParserInput<I>({
+export function makeTelegramIn<I>({
   typeClass,
   data,
   userDataInput,
 }: {
   typeClass: ClassConstructor<I>;
   data: I;
-  userDataInput: ParserUserDataInput;
-}): ParserInput<I> | null {
-  const ParserHeader: ParserHeader | null = makeParserHeader({
+  userDataInput: TelegramUserDataIn;
+}): TelegramIn<I> | null {
+  const TelegramHeader: TelegramHeader | null = makeTelegramHeader({
     userDataInput: userDataInput,
   });
-  const ParserInData: ParserInputData<I> | null = makeParserInputData({
+  const TelegramInData: TelegramInData<I> | null = makeTelegramInData({
     typeClass: typeClass,
     data: data,
   });
 
-  if (!ParserHeader || !ParserInData) return null;
+  if (!TelegramHeader || !TelegramInData) return null;
 
-  const ParserIn: ParserInput<I> = new ParserInput(typeClass);
-  ParserIn.header = ParserHeader;
-  ParserIn.data = ParserInData;
+  const TelegramIn: TelegramIn<I> = new TelegramIn(typeClass);
+  TelegramIn.header = TelegramHeader;
+  TelegramIn.data = TelegramInData;
 
-  const countParserIn = getPacketSize(ParserIn);
+  const countTelegramIn = getPacketSize(TelegramIn);
 
-  if (!countParserIn) return null;
+  if (!countTelegramIn) return null;
 
-  ParserIn.header.msg_len = countParserIn - 8;
+  TelegramIn.header.msg_len = countTelegramIn - 8;
 
-  return ParserIn;
+  return TelegramIn;
 }
 
-function makeParserInputData<I>({
+function makeTelegramInData<I>({
   typeClass,
   data,
 }: {
   typeClass: ClassConstructor<I>;
   data: I;
-}): ParserInputData<I> | null {
-  const ParserInData: ParserInputData<I> = new ParserInputData<I>(typeClass);
-  ParserInData.data_type = "D";
-  ParserInData.data = data;
-  const count = getPacketSize(ParserInData);
+}): TelegramInData<I> | null {
+  const TelegramInData: TelegramInData<I> = new TelegramInData<I>(typeClass);
+  TelegramInData.data_type = "D";
+  TelegramInData.data = data;
+  const count = getPacketSize(TelegramInData);
   if (!count) return null;
 
-  ParserInData.length = count - 9; // TODO Buat apa ada angka 9 ?
-  return ParserInData;
+  TelegramInData.length = count - 9; // TODO Buat apa ada angka 9 ?
+  return TelegramInData;
 }
 
-function makeParserHeader({
+function makeTelegramHeader({
   userDataInput,
 }: {
-  userDataInput: ParserUserDataInput;
-}): ParserHeader | null {
-  const header: ParserHeader = new ParserHeader();
+  userDataInput: TelegramUserDataIn;
+}): TelegramHeader | null {
+  const header: TelegramHeader = new TelegramHeader();
 
   const fields: Array<FieldParam> | undefined = Reflect.getMetadata(
     Meta.FIELD,

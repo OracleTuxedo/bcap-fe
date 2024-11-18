@@ -1,9 +1,9 @@
 import { Field, FieldList, FieldNumber } from "../decorator";
-import { ParserMessageSub } from "./ParserMessageSub";
+import { TelegramMessageSub } from "./TelegramMessageSub";
 
-export class ParserMessage {
+export class TelegramMessage {
   constructor() {
-    this.list = [new ParserMessageSub()];
+    this.list = [new TelegramMessageSub()];
   }
 
   @Field({ type: "STRING", length: 1, trim: "RTRIM" })
@@ -35,5 +35,5 @@ export class ParserMessage {
 
   @Field({ type: "LIST", length: 0, trim: "NONE" })
   @FieldList({ length: 2 })
-  list: Array<ParserMessageSub>;
+  list: Array<TelegramMessageSub>;
 }

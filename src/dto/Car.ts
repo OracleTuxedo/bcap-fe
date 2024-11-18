@@ -1,6 +1,6 @@
-import { Field } from "../utils/parser/decorator/Field";
-import { FieldList } from "../utils/parser/decorator/FieldList";
-import { FieldNumber } from "../utils/parser/decorator/FieldNumber";
+import { Field } from "../utils/Telegram/decorator/Field";
+import { FieldList } from "../utils/Telegram/decorator/FieldList";
+import { FieldNumber } from "../utils/Telegram/decorator/FieldNumber";
 
 export class Tire {
   @Field({ type: "STRING", length: 10, trim: "RTRIM" })

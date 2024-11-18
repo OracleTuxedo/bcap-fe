@@ -1,4 +1,4 @@
-export class ParserUserDataInput {
+export class TelegramUserDataIn {
   tx_code: string;
 
   client_ip_no: string;

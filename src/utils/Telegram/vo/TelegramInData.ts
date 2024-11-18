@@ -1,7 +1,7 @@
 import { ClassConstructor } from "class-transformer";
 import { Field, FieldNumber } from "../decorator";
 
-export class ParserInputData<I> {
+export class TelegramInData<I> {
   constructor(typeClass: ClassConstructor<I>) {
     this.data = new typeClass();
   }

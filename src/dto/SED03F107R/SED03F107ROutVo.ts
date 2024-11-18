@@ -1,4 +1,4 @@
-import { Field, FieldNumber } from "../../utils/parser/decorator";
+import { Field, FieldNumber } from "../../utils/Telegram/decorator";
 
 export class SED03F107ROutVo {
   @Field({ type: "NUMBER", length: 10, trim: "LTRIM" })

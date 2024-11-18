@@ -1,4 +1,4 @@
-import { Field, FieldNumber } from "../../utils/parser/decorator";
+import { Field, FieldNumber } from "../../utils/Telegram/decorator";
 import { SAC02F452ROutSub1Vo } from "./SAC02F452ROutSub1Vo";
 
 export class SAC02F452ROutVo {

@@ -1,4 +1,4 @@
-import { convertObjectToString, convertStringToObject, makeParserInput, makeParserUserDataInput, ParserInput, ParserOutput, ParserUserDataInput } from "@/utils";
+import { convertObjectToString, convertStringToObject, makeTelegramInput, makeTelegramUserDataInput, TelegramInput, TelegramOutput, TelegramUserDataInput } from "@/utils";
 import { SAC02F452RInVo, SAC02F452ROutVo } from "../dto/SAC02F452R";
 import axios from "axios";
 
@@ -17,33 +17,33 @@ export function encodeSAC02F452R(): string | null {
   inVo.auth_strt_date = "20240101";
   inVo.auth_end_date = "20240919";
 
-  const userDataInput: ParserUserDataInput = makeParserUserDataInput({
+  const userDataInput: TelegramUserDataInput = makeTelegramUserDataInput({
     tuxedoCode: "SAC02F452R",
     screenId: "WMC0302500",
   });
 
-  const ParserIn: ParserInput<SAC02F452RInVo> | null = makeParserInput<SAC02F452RInVo>({
+  const TelegramIn: TelegramInput<SAC02F452RInVo> | null = makeTelegramInput<SAC02F452RInVo>({
     typeClass: SAC02F452RInVo,
     data: inVo,
     userDataInput: userDataInput,
   });
 
-  if (!ParserIn) return null;
+  if (!TelegramIn) return null;
 
-  const resultString = convertObjectToString(ParserIn);
+  const resultString = convertObjectToString(TelegramIn);
 
   return resultString;
 }
 
 export function decodeSAC02F452R(
   responseFromTuxedo: string
-): ParserOutput<SAC02F452ROutVo> | null {
-  const parsed: ParserOutput<SAC02F452ROutVo> | null = convertStringToObject<
-    ParserOutput<SAC02F452ROutVo>
+): TelegramOutput<SAC02F452ROutVo> | null {
+  const parsed: TelegramOutput<SAC02F452ROutVo> | null = convertStringToObject<
+    TelegramOutput<SAC02F452ROutVo>
   >({
     index: 0,
     input: responseFromTuxedo,
-    classInstance: new ParserOutput(SAC02F452ROutVo),
+    classInstance: new TelegramOutput(SAC02F452ROutVo),
   });
   return parsed;
 }
