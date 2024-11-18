@@ -207,7 +207,7 @@ const WMC0302500 = () => {
           <div
             id="table-header"
             className={`
-              mt-4
+              mt-4 mb-2
               flex flex-row
               justify-between
               items-center
@@ -237,68 +237,70 @@ const WMC0302500 = () => {
               </Button>
             </div>
           </div>
-
-          <table
-            id="table-list"
-            className={`
-                m-2
-                table-fixed
-                text-left
-                text-wrap
-                border-collapse
-              `}
-          >
-            <thead
+          <div className={`
+            overflow-x-auto
+          `}>
+            <table
+              id="table-list"
               className={`
-                  bg-main-normal
+                  text-left
+                  text-wrap
+                  border-collapse
+                  w-full
+                  min-w-full
                 `}
             >
-              <tr>
-                <th>
-                  <input type="checkbox" />
-                </th>
-                <th>No</th>
-                <th>Apply Sequence No</th>
-                <th>MID</th>
-                <th>Request Date</th>
-                <th>Request PIC</th>
-                <th>Memo</th>
-                <th>Status</th>
-                <th>Authorization Status</th>
-                <th>Complete Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {outVoSMC03F054R &&
-                outVoSMC03F054R.sub1_vos.map((item, index) => {
-                  return (
-                    <tr
-                      key={`list-data-SMC03F054R-${++index}`}
-                      className={`
-                        even:bg-main-active
-                        hover
-                      `}
-                      onClick={() =>
-                        onRowClick(item.aplc_seq_no, '', 20)
-                      }
-                    >
-                      <td>
-                        <input type="checkbox" />
-                      </td>
-                      <td>{++index}</td>
-                      <td>{item.aplc_seq_no}</td>
-                      <td>{item.mid}</td>
-                      <td>{item.data_inp_dttm}</td>
-                      <td>{`${item.inp_usr_id}(${item.chng_emp_nm})`}</td>
-                      <td className={`text-wrap`}>{item.apfm_memo_ctnts}</td>
-                      <td>{item.apfm_pgrs_stat_cd}</td>
-                      <td>{item.apfm_auth_stat_cd}</td>
-                      <td>{item.data_chng_dttm}</td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+              <thead
+                className={`
+                    bg-main-normal
+                  `}
+              >
+                <tr>
+                  <th className={`px-2 py-1`}>
+                    <input type="checkbox" />
+                  </th>
+                  <th className={`px-2 py-1`}>No</th>
+                  <th className={`px-2 py-1`}>Apply Sequence No</th>
+                  <th className={`px-2 py-1`}>MID</th>
+                  <th className={`px-2 py-1`}>Request Date</th>
+                  <th className={`px-2 py-1`}>Request PIC</th>
+                  <th className={`px-2 py-1`}>Memo</th>
+                  <th className={`px-2 py-1`}>Status</th>
+                  <th className={`px-2 py-1`}>Authorization Status</th>
+                  <th className={`px-2 py-1`}>Complete Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {outVoSMC03F054R &&
+                  outVoSMC03F054R.sub1_vos.map((item, index) => {
+                    return (
+                      <tr
+                        key={`list-data-SMC03F054R-${++index}`}
+                        className={`
+                          even:bg-main-active
+                        `}
+                        onClick={() =>
+                          onRowClick(item.aplc_seq_no, '', 20)
+                        }
+                      >
+                        <td className={`px-2 py-1`}>
+                          <input type="checkbox" />
+                        </td>
+                        <td className={`px-2 py-1`}>{++index}</td>
+                        <td className={`px-2 py-1`}>{item.aplc_seq_no}</td>
+                        <td className={`px-2 py-1`}>{item.mid}</td>
+                        <td className={`px-2 py-1`}>{item.data_inp_dttm}</td>
+                        <td className={`px-2 py-1`}>{`${item.inp_usr_id}(${item.chng_emp_nm})`}</td>
+                        <td className={`text-wrap`}>{item.apfm_memo_ctnts}</td>
+                        <td className={`px-2 py-1`}>{item.apfm_pgrs_stat_cd}</td>
+                        <td className={`px-2 py-1`}>{item.apfm_auth_stat_cd}</td>
+                        <td className={`px-2 py-1`}>{item.data_chng_dttm}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div
@@ -307,7 +309,7 @@ const WMC0302500 = () => {
             flex flex-col
             justify-start
             border
-            h-72
+            h-60
             m-2
             text-lg
           `}
@@ -330,45 +332,49 @@ const WMC0302500 = () => {
             </label>
           </div>
 
-          <table
-            id="table-detail"
-            className={`
-                m-2
-                table-fixed
-                text-left
-                text-wrap
-                border-collapse
-              `}
-          >
-            <thead
+          <div className={`
+            overflow-x-auto
+          `}>
+            <table
+              id="table-detail"
               className={`
-                  bg-main-normal
+                  text-left
+                  text-wrap
+                  border-collapse
+                  w-full
+                  min-w-full
                 `}
             >
-              <tr>
-                <th>Change Type</th>
-                <th>Old Value</th>
-                <th>New Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {outVoSMC03F055R &&
-                outVoSMC03F055R.sub1_vos.map((item, index) => {
-                  return (
-                    <tr
-                      key={`list-detail-data-SMC03F055R-${++index}`}
-                      className={`
-                        even:bg-main-active
-                      `}
-                    >
-                      <td>{item.info_chng_tp_cd}</td>
-                      <td>{item.chng_bef_ctnts ? item.chng_bef_ctnts : "-"}</td>
-                      <td>{item.chng_aftr_ctnts}</td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+              <thead
+                className={`
+                    bg-main-normal
+                  `}
+              >
+                <tr>
+                  <th>Change Type</th>
+                  <th>Old Value</th>
+                  <th>New Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {outVoSMC03F055R &&
+                  outVoSMC03F055R.sub1_vos.map((item, index) => {
+                    return (
+                      <tr
+                        key={`list-detail-data-SMC03F055R-${++index}`}
+                        className={`
+                          even:bg-main-active
+                        `}
+                      >
+                        <td>{item.info_chng_tp_cd}</td>
+                        <td>{item.chng_bef_ctnts ? item.chng_bef_ctnts : "-"}</td>
+                        <td>{item.chng_aftr_ctnts}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </MainLayout>
