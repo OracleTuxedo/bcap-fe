@@ -291,7 +291,7 @@ const WMC0302500 = () => {
                         <td className={`px-2 py-1`}>{item.mid}</td>
                         <td className={`px-2 py-1`}>{item.data_inp_dttm}</td>
                         <td className={`px-2 py-1`}>{`${item.inp_usr_id}(${item.chng_emp_nm})`}</td>
-                        <td className={`text-wrap`}>{item.apfm_memo_ctnts}</td>
+                        <td className={`text-wrap px-2 py-1`}>{item.apfm_memo_ctnts}</td>
                         <td className={`px-2 py-1`}>{item.apfm_pgrs_stat_cd}</td>
                         <td className={`px-2 py-1`}>{item.apfm_auth_stat_cd}</td>
                         <td className={`px-2 py-1`}>{item.data_chng_dttm}</td>
