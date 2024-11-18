@@ -10,37 +10,37 @@ import moment from "moment";
 import { ReactElement, useState } from "react";
 
 export interface queryDataInterface {
-  start : string;
-  end : string;
+  start: string;
+  end: string;
 }
 
 const WMC0302500 = () => {
-  const screenId = 'WMC0302500'
+  const screenId = "WMC0302500";
   const [outVoSMC03F054R, setOutVoSMC03F054R] = useState<SMC03F054ROutVo>();
   const [outVoSMC03F055R, setOutVoSMC03F055R] = useState<SMC03F055ROutVo>();
-  
+
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [queryDate, setQueryDate] = useState<queryDataInterface>({
-    start : "20220101",
-    end : "20241211"
-  })
+    start: "20220101",
+    end: "20241211",
+  });
   const [mid, setMid] = useState<string>("71000638409");
-  const [pageSize, setPageSize] = useState<string>("70");
-  
+  const pageSize: string = "70";
+
   const handlerDownloadButton = async () => {
     if (outVoSMC03F054R) {
       const data = outVoSMC03F054R?.sub1_vos.map((item, index) => ({
-        "no"                    : ++index,
-        "Apply Sequence No"     : item.aplc_seq_no,
-        "MID"                   : item.mid,
-        "Request Date"          : `${item.data_inp_dttm}`,
-        "Request PIC"           : `${item.inp_usr_id}(${item.chng_emp_nm})`,
-        "Memo"                  : item.apfm_memo_ctnts,
-        "Status"                : item.apfm_pgrs_stat_cd,
-        "Authorization Status"  : item.apfm_auth_stat_cd,
-        "Complete Date"         : `${item.data_chng_dttm}`,
+        no: ++index,
+        "Apply Sequence No": item.aplc_seq_no,
+        MID: item.mid,
+        "Request Date": `${item.data_inp_dttm}`,
+        "Request PIC": `${item.inp_usr_id}(${item.chng_emp_nm})`,
+        Memo: item.apfm_memo_ctnts,
+        Status: item.apfm_pgrs_stat_cd,
+        "Authorization Status": item.apfm_auth_stat_cd,
+        "Complete Date": `${item.data_chng_dttm}`,
       }));
-  
+
       exportToExcel(data!, screenId);
     }
   };
@@ -54,44 +54,45 @@ const WMC0302500 = () => {
     console.log("mid", mid);
     console.log("pageSize", pageSize);
     try {
-
       const listData = await callSMC03F054R({
         screenId,
         mid,
-        startDate : queryDate.start,
-        endDate : queryDate.end,
-        pageSize})
-        .catch (err => {
-          throw new Error(err)
-        });
+        startDate: queryDate.start,
+        endDate: queryDate.end,
+        pageSize,
+      }).catch((err) => {
+        throw new Error(err);
+      });
 
-        setOutVoSMC03F054R(listData);
-      } catch (error) {
-        console.log('error', error);
-      }
-    };
-    
-    const onRowClick = async (aplc_seq_no : string, next_key_val : string, page_size : number) => {
+      setOutVoSMC03F054R(listData);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const onRowClick = async (
+    aplc_seq_no: string,
+    next_key_val: string,
+    page_size: number
+  ) => {
     console.log("aplc_seq_no", aplc_seq_no);
     console.log("next_key_val", next_key_val);
     console.log("page_size", page_size);
     try {
-
       const detailListData = await callSMC03F055R({
         screenId,
         aplc_seq_no,
         next_key_val,
         page_size,
-      })
-      .catch (err => {
-        throw new Error(err)
+      }).catch((err) => {
+        throw new Error(err);
       });
 
       setOutVoSMC03F055R(detailListData);
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     }
-  }
+  };
 
   return (
     <MainLayout
@@ -135,15 +136,23 @@ const WMC0302500 = () => {
               </label>
 
               <DateRange
-                startName={"start-date"} startValue={queryDate.start} startOnChangeHandler={(e) => setQueryDate(
-                  (prev) => ({...prev, start : moment(e.target.value).format("YYYYMMDD")})
-                )}
-
-                endName={"end-date"} endValue={queryDate.end} endOnChangeHandler={(e) => setQueryDate(
-                  (prev) => ({...prev, end : moment(e.target.value).format("YYYYMMDD")})
-                )}
+                startName={"start-date"}
+                startValue={queryDate.start}
+                startOnChangeHandler={(e) =>
+                  setQueryDate((prev) => ({
+                    ...prev,
+                    start: moment(e.target.value).format("YYYYMMDD"),
+                  }))
+                }
+                endName={"end-date"}
+                endValue={queryDate.end}
+                endOnChangeHandler={(e) =>
+                  setQueryDate((prev) => ({
+                    ...prev,
+                    end: moment(e.target.value).format("YYYYMMDD"),
+                  }))
+                }
               />
-
             </div>
 
             <div
@@ -164,7 +173,11 @@ const WMC0302500 = () => {
                 MID
               </label>
 
-              <InputText name="mid" value={mid} onChangeHandler={(e) => setMid(e.target.value)} />
+              <InputText
+                name="mid"
+                value={mid}
+                onChangeHandler={(e) => setMid(e.target.value)}
+              />
             </div>
           </div>
 
@@ -261,32 +274,34 @@ const WMC0302500 = () => {
               </tr>
             </thead>
             <tbody>
-              { outVoSMC03F054R && outVoSMC03F054R.sub1_vos.map((item, index) => {
-                return(
-                  <tr
-                    key={`list-data-SMC03F054R-${++index}`}
-                    className={`
+              {outVoSMC03F054R &&
+                outVoSMC03F054R.sub1_vos.map((item, index) => {
+                  return (
+                    <tr
+                      key={`list-data-SMC03F054R-${++index}`}
+                      className={`
                         even:bg-main-active
                         hover
                       `}
-                      onClick={() => onRowClick('20000059176', "20240717035444506768", 20)}
-                  >
-                    <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>{++index}</td>
-                    <td>{item.aplc_seq_no}</td>
-                    <td>{item.mid}</td>
-                    <td>{item.data_inp_dttm}</td>
-                    <td>{`${item.inp_usr_id}(${item.chng_emp_nm})`}</td>
-                    <td className={`text-wrap`}>{item.apfm_memo_ctnts}</td>
-                    <td>{item.apfm_pgrs_stat_cd}</td>
-                    <td>{item.apfm_auth_stat_cd}</td>
-                    <td>{item.data_chng_dttm}</td>
-                  </tr>
-                )
-              })
-              }
+                      onClick={() =>
+                        onRowClick("20000059176", "20240717035444506768", 20)
+                      }
+                    >
+                      <td>
+                        <input type="checkbox" />
+                      </td>
+                      <td>{++index}</td>
+                      <td>{item.aplc_seq_no}</td>
+                      <td>{item.mid}</td>
+                      <td>{item.data_inp_dttm}</td>
+                      <td>{`${item.inp_usr_id}(${item.chng_emp_nm})`}</td>
+                      <td className={`text-wrap`}>{item.apfm_memo_ctnts}</td>
+                      <td>{item.apfm_pgrs_stat_cd}</td>
+                      <td>{item.apfm_auth_stat_cd}</td>
+                      <td>{item.data_chng_dttm}</td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>
@@ -342,21 +357,21 @@ const WMC0302500 = () => {
               </tr>
             </thead>
             <tbody>
-              { outVoSMC03F055R && outVoSMC03F055R.sub1_vos.map((item, index) => {
-                return(
-                  <tr
-                    key={`list-detail-data-SMC03F055R-${++index}`}
-                    className={`
+              {outVoSMC03F055R &&
+                outVoSMC03F055R.sub1_vos.map((item, index) => {
+                  return (
+                    <tr
+                      key={`list-detail-data-SMC03F055R-${++index}`}
+                      className={`
                         even:bg-main-active
                       `}
-                  >
-                    <td>{item.info_chng_tp_cd}</td>
-                    <td>{item.chng_bef_ctnts ? item.chng_bef_ctnts : '-'}</td>
-                    <td>{item.chng_aftr_ctnts}</td>
-                  </tr>
-                );
-              })
-              }
+                    >
+                      <td>{item.info_chng_tp_cd}</td>
+                      <td>{item.chng_bef_ctnts ? item.chng_bef_ctnts : "-"}</td>
+                      <td>{item.chng_aftr_ctnts}</td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>
