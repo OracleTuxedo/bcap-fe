@@ -187,7 +187,6 @@ const WMC0302500 = () => {
               type={ButtonTypeEnum.DEFAULT}
               onClickHandler={onClickSearch}
               white
-              disable={outVoSMC03F054R ? true : false}
             >
               Search
             </Button>
@@ -229,7 +228,7 @@ const WMC0302500 = () => {
               `}
             >
               <Button
-                type={ButtonTypeEnum.SUCCESS}
+                type={outVoSMC03F054R ? ButtonTypeEnum.SUCCESS : ButtonTypeEnum.DISABLE}
                 onClickHandler={handlerDownloadButton}
                 white
                 disable={outVoSMC03F054R ? false : true}
@@ -280,7 +279,7 @@ const WMC0302500 = () => {
                         hover
                       `}
                       onClick={() =>
-                        onRowClick("20000059176", "20240717035444506768", 20)
+                        onRowClick(item.aplc_seq_no, '', 20)
                       }
                     >
                       <td>
