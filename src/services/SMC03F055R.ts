@@ -65,7 +65,7 @@ const callSMC03F055R = async (inputRequest : SMC03F055RInputInterface) => {
 
     try {
         const response = await axios.post(
-            `${BACKEND_ENDPOINT}message`,
+            `${BACKEND_ENDPOINT}/message`,
             body,
             {
                 headers: {
