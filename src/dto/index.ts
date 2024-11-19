@@ -6,3 +6,4 @@ export * from "./SAZ02F113R";
 export * from "./SAZ02F110R";
 export * from "./SAZ02F114R";
 export * from "./SAZ02F111U";
+export * from "./SAZ02F116R";
