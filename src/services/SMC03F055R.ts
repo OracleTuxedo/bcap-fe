@@ -55,8 +55,12 @@ const decodeSMC03F055R = (
 };
 
 const callSMC03F055R = async (inputRequest : SMC03F055RInputInterface) => {
+    console.log("callSMC03F055R");
+    
     const requestToTuxedo: string | null = encodeSMC03F055R(inputRequest);
     if (!requestToTuxedo) return;
+    
+    console.log(requestToTuxedo);
 
     let responseFromTuxedo = "";
 
@@ -81,8 +85,11 @@ const callSMC03F055R = async (inputRequest : SMC03F055RInputInterface) => {
         
         return;
     }
+    console.log(responseFromTuxedo);
 
     const parsed = decodeSMC03F055R(responseFromTuxedo);
+
+    console.log(parsed);
     
     return(parsed?.data.data);
 };

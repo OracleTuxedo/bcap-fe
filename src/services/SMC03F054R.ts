@@ -43,11 +43,7 @@ const encodeSMC03F054R = ({
 
     if (!telegramIn) return null;
 
-    
-
     const resultString = convertObjectToString(telegramIn);
-
-    
 
     return resultString;
 };
@@ -66,10 +62,13 @@ const decodeSMC03F054R = (
 };
 
 const callSMC03F054R = async (inputRequest : SMC03F054RInputInterface) => {
+    console.log("callSMC03F054R");
     
     const requestToTuxedo: string | null = encodeSMC03F054R(inputRequest);
     if (!requestToTuxedo) return;
     
+    console.log(requestToTuxedo);
+
     let responseFromTuxedo = "";
 
     const body: EncryptDecryptParam = encryption(requestToTuxedo);
@@ -92,9 +91,11 @@ const callSMC03F054R = async (inputRequest : SMC03F054RInputInterface) => {
         
         return;
     }
-    
+    console.log(responseFromTuxedo);
+
     const parsed = decodeSMC03F054R(responseFromTuxedo);
-    
+
+    console.log(parsed);
 
     return(parsed?.data.data);
 };

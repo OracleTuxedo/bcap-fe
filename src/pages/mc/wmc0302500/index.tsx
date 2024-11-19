@@ -104,297 +104,297 @@ const WMC0302500 = () => {
         </div>
       </div>
     );
-  } else {
-    return (
-      <MainLayout
-        screenId="MC0302500"
-        screenName="Merchant Info. Change History"
-        isFavorite={isFavorite}
-        favoriteHandler={favoriteHandler}
+  } 
+  return (
+    <MainLayout
+      screenId="MC0302500"
+      screenName="Merchant Info. Change History"
+      isFavorite={isFavorite}
+      favoriteHandler={favoriteHandler}
+    >
+      <div
+        id="content"
+        className={`
+          w-full
+        `}
       >
         <div
-          id="content"
+          id="search"
           className={`
-            w-full
+            mx-2 py-2
+            flex flex-row
+            border
+            text-md
+            justify-between
+            bg-sidebar-active
+          `}
+        >
+          <div id="input" className="flex">
+            <div
+              id="inputDate"
+              className={`
+                flex flex-row
+                font-medium
+                items-center
+              `}
+            >
+              <label
+                className={`
+                  mx-2
+                `}
+              >
+                Approval Date
+              </label>
+
+              <DateRange
+                startName={"start-date"}
+                startValue={queryDate.start}
+                startOnChangeHandler={(e) =>
+                  setQueryDate((prev) => ({
+                    ...prev,
+                    start: moment(e.target.value).format("YYYYMMDD"),
+                  }))
+                }
+                endName={"end-date"}
+                endValue={queryDate.end}
+                endOnChangeHandler={(e) =>
+                  setQueryDate((prev) => ({
+                    ...prev,
+                    end: moment(e.target.value).format("YYYYMMDD"),
+                  }))
+                }
+              />
+            </div>
+
+            <div
+              id="mid"
+              className={`
+                mx-2
+                flex flex-row
+                items-center
+                font-medium
+                text-gray-700
+              `}
+            >
+              <label
+                className={`
+                  mx-2
+                `}
+              >
+                MID
+              </label>
+
+              <InputText
+                name="mid"
+                value={mid}
+                onChangeHandler={(e) => setMid(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div
+            id="searchButton"
+            className={`
+              mx-2
+            `}
+          >
+            <Button
+              type={ButtonTypeEnum.DEFAULT}
+              onClickHandler={onClickSearch}
+              white
+            >
+              Search
+            </Button>
+          </div>
+        </div>
+
+        <div
+          id="list"
+          className={`
+            h-72
+            m-2
+            flex flex-col
+            justify-start
+            border
+            text-lg
           `}
         >
           <div
-            id="search"
+            id="table-header"
             className={`
-              mx-2 py-2
+              mt-4 mb-2
               flex flex-row
-              border
-              text-md
               justify-between
-              bg-sidebar-active
+              items-center
             `}
           >
-            <div id="input" className="flex">
-              <div
-                id="inputDate"
-                className={`
-                  flex flex-row
-                  font-medium
-                  items-center
-                `}
-              >
-                <label
-                  className={`
-                    mx-2
-                  `}
-                >
-                  Approval Date
-                </label>
-  
-                <DateRange
-                  startName={"start-date"}
-                  startValue={queryDate.start}
-                  startOnChangeHandler={(e) =>
-                    setQueryDate((prev) => ({
-                      ...prev,
-                      start: moment(e.target.value).format("YYYYMMDD"),
-                    }))
-                  }
-                  endName={"end-date"}
-                  endValue={queryDate.end}
-                  endOnChangeHandler={(e) =>
-                    setQueryDate((prev) => ({
-                      ...prev,
-                      end: moment(e.target.value).format("YYYYMMDD"),
-                    }))
-                  }
-                />
-              </div>
-  
-              <div
-                id="mid"
-                className={`
-                  mx-2
-                  flex flex-row
-                  items-center
-                  font-medium
-                  text-gray-700
-                `}
-              >
-                <label
-                  className={`
-                    mx-2
-                  `}
-                >
-                  MID
-                </label>
-  
-                <InputText
-                  name="mid"
-                  value={mid}
-                  onChangeHandler={(e) => setMid(e.target.value)}
-                />
-              </div>
-            </div>
-  
-            <div
-              id="searchButton"
+            <label
               className={`
-                mx-2
+                mx-8
+              `}
+            >
+              List
+            </label>
+
+            <div
+              id="download-button"
+              className={`
+                px-8
               `}
             >
               <Button
-                type={ButtonTypeEnum.DEFAULT}
-                onClickHandler={onClickSearch}
+                type={outVoSMC03F054R ? ButtonTypeEnum.SUCCESS : ButtonTypeEnum.DISABLE}
+                onClickHandler={handlerDownloadButton}
                 white
+                disable={outVoSMC03F054R ? false : true}
               >
-                Search
+                Export
               </Button>
             </div>
           </div>
-  
-          <div
-            id="list"
-            className={`
-              h-72
-              m-2
-              flex flex-col
-              justify-start
-              border
-              text-lg
-            `}
-          >
-            <div
-              id="table-header"
+          <div className={`
+            overflow-x-auto
+          `}>
+            <table
+              id="table-list"
               className={`
-                mt-4 mb-2
-                flex flex-row
-                justify-between
-                items-center
-              `}
+                  text-left
+                  text-wrap
+                  border-collapse
+                  w-full
+                  min-w-full
+                `}
             >
-              <label
+              <thead
                 className={`
-                  mx-8
-                `}
-              >
-                List
-              </label>
-  
-              <div
-                id="download-button"
-                className={`
-                  px-8
-                `}
-              >
-                <Button
-                  type={outVoSMC03F054R ? ButtonTypeEnum.SUCCESS : ButtonTypeEnum.DISABLE}
-                  onClickHandler={handlerDownloadButton}
-                  white
-                  disable={outVoSMC03F054R ? false : true}
-                >
-                  Export
-                </Button>
-              </div>
-            </div>
-            <div className={`
-              overflow-x-auto
-            `}>
-              <table
-                id="table-list"
-                className={`
-                    text-left
-                    text-wrap
-                    border-collapse
-                    w-full
-                    min-w-full
+                    bg-main-normal
                   `}
               >
-                <thead
-                  className={`
-                      bg-main-normal
-                    `}
-                >
-                  <tr>
-                    <th className={`px-2 py-1`}>
-                      <input type="checkbox" />
-                    </th>
-                    <th className={`px-2 py-1`}>No</th>
-                    <th className={`px-2 py-1`}>Apply Sequence No</th>
-                    <th className={`px-2 py-1`}>MID</th>
-                    <th className={`px-2 py-1`}>Request Date</th>
-                    <th className={`px-2 py-1`}>Request PIC</th>
-                    <th className={`px-2 py-1`}>Memo</th>
-                    <th className={`px-2 py-1`}>Status</th>
-                    <th className={`px-2 py-1`}>Authorization Status</th>
-                    <th className={`px-2 py-1`}>Complete Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {outVoSMC03F054R &&
-                    outVoSMC03F054R.sub1_vos.map((item, index) => {
-                      return (
-                        <tr
-                          key={`list-data-SMC03F054R-${++index}`}
-                          className={`
-                            even:bg-main-active
-                          `}
-                          onClick={() =>
-                            onRowClick(item.aplc_seq_no, '', 20)
-                          }
-                        >
-                          <td className={`px-2 py-1`}>
-                            <input type="checkbox" />
-                          </td>
-                          <td className={`px-2 py-1`}>{++index}</td>
-                          <td className={`px-2 py-1`}>{item.aplc_seq_no}</td>
-                          <td className={`px-2 py-1`}>{item.mid}</td>
-                          <td className={`px-2 py-1`}>{item.data_inp_dttm}</td>
-                          <td className={`px-2 py-1`}>{`${item.inp_usr_id}(${item.chng_emp_nm})`}</td>
-                          <td className={`text-wrap px-2 py-1`}>{item.apfm_memo_ctnts}</td>
-                          <td className={`px-2 py-1`}>{item.apfm_pgrs_stat_cd}</td>
-                          <td className={`px-2 py-1`}>{item.apfm_auth_stat_cd}</td>
-                          <td className={`px-2 py-1`}>{item.data_chng_dttm}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-  
-          <div
-            id="detail-list"
-            className={`
-              flex flex-col
-              justify-start
-              border
-              h-60
-              m-2
-              text-lg
-            `}
-          >
-            <div
-              id="table-header"
-              className={`
-                mt-4
-                flex flex-row
-                justify-between
-                items-center
-              `}
-            >
-              <label
-                className={`
-                  mx-8
-                `}
-              >
-                Detail List
-              </label>
-            </div>
-  
-            <div className={`
-              overflow-x-auto
-            `}>
-              <table
-                id="table-detail"
-                className={`
-                    text-left
-                    text-wrap
-                    border-collapse
-                    w-full
-                    min-w-full
-                  `}
-              >
-                <thead
-                  className={`
-                      bg-main-normal
-                    `}
-                >
-                  <tr>
-                    <th>Change Type</th>
-                    <th>Old Value</th>
-                    <th>New Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {outVoSMC03F055R &&
-                    outVoSMC03F055R.sub1_vos.map((item, index) => {
-                      return (
-                        <tr
-                          key={`list-detail-data-SMC03F055R-${++index}`}
-                          className={`
-                            even:bg-main-active
-                          `}
-                        >
-                          <td>{item.info_chng_tp_cd}</td>
-                          <td>{item.chng_bef_ctnts ? item.chng_bef_ctnts : "-"}</td>
-                          <td>{item.chng_aftr_ctnts}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            </div>
+                <tr>
+                  <th className={`px-2 py-1`}>
+                    <input type="checkbox" />
+                  </th>
+                  <th className={`px-2 py-1`}>No</th>
+                  <th className={`px-2 py-1`}>Apply Sequence No</th>
+                  <th className={`px-2 py-1`}>MID</th>
+                  <th className={`px-2 py-1`}>Request Date</th>
+                  <th className={`px-2 py-1`}>Request PIC</th>
+                  <th className={`px-2 py-1`}>Memo</th>
+                  <th className={`px-2 py-1`}>Status</th>
+                  <th className={`px-2 py-1`}>Authorization Status</th>
+                  <th className={`px-2 py-1`}>Complete Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {outVoSMC03F054R &&
+                  outVoSMC03F054R.sub1_vos.map((item, index) => {
+                    return (
+                      <tr
+                        key={`list-data-SMC03F054R-${++index}`}
+                        className={`
+                          even:bg-main-active
+                        `}
+                        onClick={() =>
+                          onRowClick(item.aplc_seq_no, '', 20)
+                        }
+                      >
+                        <td className={`px-2 py-1`}>
+                          <input type="checkbox" />
+                        </td>
+                        <td className={`px-2 py-1`}>{++index}</td>
+                        <td className={`px-2 py-1`}>{item.aplc_seq_no}</td>
+                        <td className={`px-2 py-1`}>{item.mid}</td>
+                        <td className={`px-2 py-1`}>{item.data_inp_dttm}</td>
+                        <td className={`px-2 py-1`}>{`${item.inp_usr_id}(${item.chng_emp_nm})`}</td>
+                        <td className={`text-wrap px-2 py-1`}>{item.apfm_memo_ctnts}</td>
+                        <td className={`px-2 py-1`}>{item.apfm_pgrs_stat_cd}</td>
+                        <td className={`px-2 py-1`}>{item.apfm_auth_stat_cd}</td>
+                        <td className={`px-2 py-1`}>{item.data_chng_dttm}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
           </div>
         </div>
-      </MainLayout>
-    );
-  }
+
+        <div
+          id="detail-list"
+          className={`
+            flex flex-col
+            justify-start
+            border
+            h-60
+            m-2
+            text-lg
+          `}
+        >
+          <div
+            id="table-header"
+            className={`
+              mt-4
+              flex flex-row
+              justify-between
+              items-center
+            `}
+          >
+            <label
+              className={`
+                mx-8
+              `}
+            >
+              Detail List
+            </label>
+          </div>
+
+          <div className={`
+            overflow-x-auto
+          `}>
+            <table
+              id="table-detail"
+              className={`
+                  text-left
+                  text-wrap
+                  border-collapse
+                  w-full
+                  min-w-full
+                `}
+            >
+              <thead
+                className={`
+                    bg-main-normal
+                  `}
+              >
+                <tr>
+                  <th>Change Type</th>
+                  <th>Old Value</th>
+                  <th>New Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {outVoSMC03F055R &&
+                  outVoSMC03F055R.sub1_vos.map((item, index) => {
+                    return (
+                      <tr
+                        key={`list-detail-data-SMC03F055R-${++index}`}
+                        className={`
+                          even:bg-main-active
+                        `}
+                      >
+                        <td>{item.info_chng_tp_cd}</td>
+                        <td>{item.chng_bef_ctnts ? item.chng_bef_ctnts : "-"}</td>
+                        <td>{item.chng_aftr_ctnts}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </MainLayout>
+  );
+  
 
 };
 
