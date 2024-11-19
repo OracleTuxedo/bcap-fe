@@ -1,10 +1,11 @@
-import { Button, Dropdown, InputText } from '@/components';
+import { Button, Dropdown, InputText, Loading } from '@/components';
 import { ButtonTypeEnum } from '@/enums';
 import { SAZ02F110ROutVo } from '@/dto/SAZ02F110R';
 import { SAZ02F114ROutVo } from '@/dto/SAZ02F114R';
 import { MainLayout } from '@/layout';
 import { dropdownOptionsInterface } from '@/types';
 import { ChangeEvent, ReactElement, useState } from 'react';
+import { callSAZ02F110R } from '@/services';
 
 const systemDivisionData: dropdownOptionsInterface[] = [
   { value: '', label: 'All' },
@@ -32,14 +33,19 @@ const useStatusOptionValue: dropdownOptionsInterface[] = [
 ];
 
 const WAZ021100 = () => {
+  const screenId = "WSZ0211000";
   const [outVoSAZ02F110R, setOutVoSAZ02F110R] = useState<SAZ02F110ROutVo>();
   const [outVoSAZ02F114R, setOutVoSAZ02F114R] = useState<SAZ02F114ROutVo>();
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const [groupCode, setGroupCode] = useState<string>('');
-  const [groupCodeName, setGroupCodeName] = useState<string>('');
-  const [systemDivision, setSystemDivision] = useState<string>('');
-  const [useStatus, setUseStatus] = useState<string>('');
+  const [bizCtgoCd, setBizCtgoCd] = useState<string>('');
+  const [dataStatCd, setDataStatCd] = useState<string>('');
+  const [grupCdId, setGrupCdId] = useState<string>('');
+  const [langClcd, setLangClcd] = useState<string>('EN');
+  const [msgNm, setMsgNm] = useState<string>('');
+  const [pageNo, setPageNo] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(20);
 
   const favoriteHandler = () => {
     setIsFavorite((prev) => !prev);
@@ -66,13 +72,31 @@ const WAZ021100 = () => {
   };
 
   const onClickSearch = async () => {
-    console.log('SEARCH');
-    console.log('groupCode', groupCode);
-    console.log('groupCodeName', groupCodeName);
-    console.log('systemDivision', systemDivision);
-    console.log('useStatus', useStatus);
+    setLoading(() => true);
+    try {
+      const listData = await callSAZ02F110R(screenId, 
+        {
+          biz_ctgo_cd : bizCtgoCd,
+          data_stat_cd : dataStatCd,
+          grup_cd_id : grupCdId,
+          lang_clcd : langClcd,
+          msg_nm : msgNm,
+          page_no : pageNo,
+          page_size : pageSize,
+      }).catch((err) => {
+        throw new Error(err);
+      });
+      setOutVoSAZ02F110R(listData);
+      setLoading(() => false);
+    } catch (error) {
+      setLoading(() => false);
+      console.log(error);
+    }
   };
 
+  if (loading) {
+    <Loading />
+  }
 
   return (
     <MainLayout
@@ -87,125 +111,126 @@ const WAZ021100 = () => {
           w-full
         `}
       >
-                  <div
-            id="search"
-            className={`
-              mx-2 py-2
-              flex flex-row
-              border
-              text-md
-              justify-between
-              bg-sidebar-active
-            `}
-          >
-            <div id="input" className="flex">
-              <div
-                id="system-division"
-                className={`
-                  flex flex-row
-                  font-medium
-                  items-center
-                `}
-              >
-                <label
-                  className={`
-                    mx-2
-                  `}
-                >
-                  System Division
-                </label>
-                <Dropdown
-                  name="system-division"
-                  options={systemDivisionData}
-                  value={systemDivision}
-                  onChangeHandler={(e) => setSystemDivision(e.target.value)}
-                />
-              </div>
-              <div
-                id="group-code"
-                className={`
-                  flex flex-row
-                  font-medium
-                  items-center
-                `}
-              >
-                <label
-                  className={`
-                    mx-2
-                  `}
-                >
-                  Group Code
-                </label>
-                <InputText
-                  name="group-code"
-                  value={groupCode}
-                  onChangeHandler={(e: ChangeEvent<HTMLInputElement>) =>
-                    setGroupCode(e.target.value)
-                  }
-                />
-              </div>
-              <div
-                id="group-code-name"
-                className={`
-                  flex flex-row
-                  font-medium
-                  items-center
-                `}
-              >
-                <label
-                  className={`
-                    mx-2
-                  `}
-                >
-                  Group Code Name
-                </label>
-                <InputText
-                  name="group-code-name"
-                  value={groupCodeName}
-                  onChangeHandler={(e: ChangeEvent<HTMLInputElement>) =>
-                    setGroupCodeName(e.target.value)
-                  }
-                />
-              </div>
-              <div
-                id="use-status"
-                className={`
-                  flex flex-row
-                  font-medium
-                  items-center
-                `}
-              >
-                <label
-                  className={`
-                    mx-2
-                  `}
-                >
-                  Use Status
-                </label>
-                <Dropdown
-                  name="use-status"
-                  options={useStatusData}
-                  value={useStatus}
-                  onChangeHandler={(e) => setUseStatus(e.target.value)}
-                />
-              </div>
-            </div>
-
+        <div
+          id="search"
+          className={`
+            mx-2 py-2
+            flex flex-row
+            border
+            text-md
+            justify-between
+            bg-sidebar-active
+          `}
+        >
+          <div id="input" className="flex">
             <div
-              id="searchButton"
+              id="system-division"
               className={`
-                mx-2
+                flex flex-row
+                font-medium
+                items-center
               `}
             >
-              <Button
-                type={ButtonTypeEnum.DEFAULT}
-                onClickHandler={onClickSearch}
-                white
+              <label
+                className={`
+                  mx-2
+                `}
               >
-                Search
-              </Button>
+                System Division
+              </label>
+              <Dropdown
+                name="system-division"
+                options={systemDivisionData}
+                value={bizCtgoCd}
+                onChangeHandler={(e) => setBizCtgoCd(e.target.value)}
+              />
+            </div>
+            <div
+              id="group-code"
+              className={`
+                flex flex-row
+                font-medium
+                items-center
+              `}
+            >
+              <label
+                className={`
+                  mx-2
+                `}
+              >
+                Group Code
+              </label>
+              <InputText
+                name="group-code"
+                value={grupCdId}
+                onChangeHandler={(e: ChangeEvent<HTMLInputElement>) =>
+                  setGrupCdId(e.target.value)
+                }
+              />
+            </div>
+            <div
+              id="group-code-name"
+              className={`
+                flex flex-row
+                font-medium
+                items-center
+              `}
+            >
+              <label
+                className={`
+                  mx-2
+                `}
+              >
+                Group Code Name
+              </label>
+              <InputText
+                name="group-code-name"
+                value={msgNm}
+                onChangeHandler={(e: ChangeEvent<HTMLInputElement>) =>
+                  setMsgNm(e.target.value)
+                }
+              />
+            </div>
+            <div
+              id="use-status"
+              className={`
+                flex flex-row
+                font-medium
+                items-center
+              `}
+            >
+              <label
+                className={`
+                  mx-2
+                `}
+              >
+                Use Status
+              </label>
+              <Dropdown
+                name="use-status"
+                options={useStatusData}
+                value={dataStatCd}
+                onChangeHandler={(e) => setDataStatCd(e.target.value)}
+              />
             </div>
           </div>
+
+          <div
+            id="searchButton"
+            className={`
+              mx-2
+            `}
+          >
+            <Button
+              type={ButtonTypeEnum.DEFAULT}
+              onClickHandler={onClickSearch}
+              white
+            >
+              Search
+            </Button>
+          </div>
+        </div>
+
         <div
           id="list"
           className={`
@@ -410,6 +435,7 @@ const WAZ021100 = () => {
             </table>
           </div>
         </div>
+
       </div>
     </MainLayout>
   );
