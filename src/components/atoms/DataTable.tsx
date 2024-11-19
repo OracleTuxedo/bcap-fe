@@ -12,13 +12,13 @@ export type DataTableProps<Entry> = {
   // Enums? : T,
   sortDirection?: string[];
   // handleSortBy: (sortBy: keyof Entry) => void
-  handleClick: (entry: Entry) => void;
+  handleOnRowClick?: (entry: Entry) => void;
 };
 
 export const DataTable = <Entry,>({
   data,
   columns,
-  handleClick,
+  handleOnRowClick,
 }: DataTableProps<Entry>) => {
   if (data?.length === 0) {
     <div>No Data</div>;
@@ -52,6 +52,7 @@ export const DataTable = <Entry,>({
               scope="col"
               className="flex flex-row w-[100rem] justify-between px-6 py-3 bg-main-normal"
             >
+              <p className="text-center">No</p>
               {columns.map((column, index) => (
                 <p key={column.title + index}>{column.title}</p>
               ))}
@@ -63,8 +64,9 @@ export const DataTable = <Entry,>({
             <tr
               key={++entryIndex}
               className="flex flex-row w-[100rem] border radius-md justify-between px-6 py-3 font-medium even:bg-main-active hover"
-              onClick={() => handleClick(entry)}
+              onClick={() => handleOnRowClick(entry)}
             >
+              <td className="text-center">{entryIndex + 1}</td>
               {columns.map(({ title, field }, columnIndex) => (
                 <td key={title + columnIndex}>{`${entry[field]}`}</td>
               ))}

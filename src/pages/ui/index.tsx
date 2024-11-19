@@ -25,8 +25,8 @@ const UiPage = () => {
       field: 'id',
     },
     {
-      field: 'name',
       title: 'name',
+      field: 'name',
     },
     {
       title: 'age',
@@ -34,8 +34,8 @@ const UiPage = () => {
     },
   ];
 
-  const handleClick = (data: dataColumns) => {
-    
+  const handleOnRowClick = (data: dataColumns) => {
+    console.log(data);
   };
 
   return (
@@ -53,7 +53,11 @@ const UiPage = () => {
             `}
       >
         <Sidebar />
-        <DataTable data={data} columns={columns} handleClick={handleClick} />
+        <DataTable
+          data={data}
+          columns={columns}
+          handleOnRowClick={handleOnRowClick}
+        />
         {/* <div
                 className={`
                     flex flex-1
