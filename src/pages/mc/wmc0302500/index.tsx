@@ -3,8 +3,7 @@ import { SMC03F054ROutVo } from "@/dto/SMC03F054R";
 import { SMC03F055ROutVo } from "@/dto/SMC03F055R";
 import { ButtonTypeEnum } from "@/enums";
 import { MainLayout } from "@/layout";
-import { callSMC03F054R } from "@/services";
-import callSMC03F055R from "@/services/SMC03F055R";
+import { callSMC03F054R, callSMC03F055R } from "@/services";
 import { exportToExcel } from "@/utils";
 import moment from "moment";
 import { ReactElement, useEffect, useState } from "react";
@@ -454,7 +453,6 @@ const WMC0302500 = () => {
       </div>
     </MainLayout>
   );
-  
 
 };
 
