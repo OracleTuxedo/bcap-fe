@@ -1,7 +1,28 @@
-import { Button, InputText, Loading } from '@/components';
+import { Button, Dropdown, InputText, Loading } from '@/components';
 import { ButtonTypeEnum } from '@/enums';
 import { MainLayout } from '@/layout';
+import { dropdownOptionsInterface } from '@/types';
 import { ChangeEvent, useState } from 'react';
+
+const systemDivisionData : dropdownOptionsInterface[] = [
+  {value : '', label : "All"},
+  {value : 'SFA', label : 'SFA'},
+  {value : 'MER', label : 'Merchant'},
+  {value : 'MMP', label : 'MMP'},
+  {value : 'TMS', label : 'TMS'},
+  {value : 'WDS', label : 'WDS'},
+  {value : 'AUT', label : 'Authorization'},
+  {value : 'C&S', label : 'Clearing & Settlement'},
+  {value : 'MET', label : 'Metering'},
+  {value : 'ADM', label : 'Admin & Common'},
+  {value : 'EXT', label : 'External'},
+];
+
+const useStatusData : dropdownOptionsInterface[] = [
+  {value : '', label : "All"},
+  {value : 'U', label : 'Valid'},
+  {value : 'D', label : 'Not Valid'},
+];
 
 const UiPage = () => {
   const screenId = "WAZ0211000";
@@ -10,6 +31,8 @@ const UiPage = () => {
 
   const [groupCode, setGroupCode] = useState<string>('');
   const [groupCodeName, setGroupCodeName] = useState<string>('');
+  const [systemDivision, setSystemDivision] = useState<string>('');
+  const [useStatus, setUseStatus] = useState<string>('');
 
   const favoriteHandler = () => {
     setIsFavorite((prev) => !prev);
@@ -19,6 +42,8 @@ const UiPage = () => {
     console.log("SEARCH");
     console.log("groupCode", groupCode);
     console.log("groupCodeName", groupCodeName);
+    console.log("systemDivision", systemDivision);
+    console.log("useStatus", useStatus);
   };
 
   if (loading) {
@@ -33,7 +58,7 @@ const UiPage = () => {
         isFavorite={isFavorite}
         favoriteHandler={favoriteHandler}
       >
-              <div
+        <div
           id="content"
           className={`
             w-full
@@ -63,7 +88,7 @@ const UiPage = () => {
                     mx-2
                   `}
                 >System Division</label>
-                <input name='system-division'/>
+                <Dropdown name='system-division' options={systemDivisionData} value={systemDivision} onChangeHandler={(e) => setSystemDivision(e.target.value)} />
               </div>
               <div id='group-code'
                 className={`
@@ -113,10 +138,10 @@ const UiPage = () => {
                     mx-2
                   `}
                 >Use Status</label>
-                <input name='use-status' />
+                <Dropdown name='use-status' options={useStatusData} value={useStatus} onChangeHandler={(e) => setUseStatus(e.target.value)} />
               </div>
             </div>
-  
+
             <div
               id="searchButton"
               className={`
