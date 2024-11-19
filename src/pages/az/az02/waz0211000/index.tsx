@@ -26,6 +26,11 @@ const useStatusData: dropdownOptionsInterface[] = [
   { value: 'D', label: 'Not Valid' },
 ];
 
+const useStatusOptionValue: dropdownOptionsInterface[] = [
+  { value: 'U', label: 'Valid' },
+  { value: 'D', label: 'Not Valid' },
+];
+
 const WAZ021100 = () => {
   const [outVoSAZ02F110R, setOutVoSAZ02F110R] = useState<SAZ02F110ROutVo>();
   const [outVoSAZ02F114R, setOutVoSAZ02F114R] = useState<SAZ02F114ROutVo>();
@@ -282,7 +287,14 @@ const WAZ021100 = () => {
                         <td className={`px-2 py-1`}>{item.grup_cd_id}</td>
                         <td className={`px-2 py-1`}>{`${item.msg_nm}`}</td>
                         <td className={`text-wrap px-2 py-1`}>
-                          {item.data_stat_cd}
+                          <Dropdown value={item.data_stat_cd} options={useStatusOptionValue} onChangeHandler={(e) => {
+                            setOutVoSAZ02F110R((prev) => ({
+                              ...prev, sub1_vos : {
+                                ...prev.sub1_vos,
+                                data_stat_cd : e.target.value
+                              }
+                            }))
+                          } } name={`use-statue-${index}`} />
                         </td>
                         <td className={`px-2 py-1`}>{item.cd_expl}</td>
                       </tr>
