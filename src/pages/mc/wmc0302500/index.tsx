@@ -395,7 +395,7 @@ const WMC0302500 = () => {
           <div
             id="table-header"
             className={`
-              mt-4
+              mt-4 mb-2
               flex flex-row
               justify-between
               items-center
@@ -403,6 +403,7 @@ const WMC0302500 = () => {
           >
             <label
               className={`
+                py-2
                 mx-8
               `}
             >
