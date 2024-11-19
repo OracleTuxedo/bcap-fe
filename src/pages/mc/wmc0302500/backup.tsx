@@ -1,6 +1,5 @@
 import { Button } from '@/components';
 import { ButtonTypeEnum } from '@/enums';
-import { MainLayout } from '@/layout';
 import { ReactElement } from 'react';
 
 const onClickSearch = () => {
@@ -43,7 +42,7 @@ const WMC0302500 = () => {
             <div id="input" className="flex basis-3/4">
               <div
                 id="inputDate"
-                className="block flex flex-row basis-1/2 items-center font-medium text-gray-700 ml-10"
+                className="flex flex-row basis-1/2 items-center font-medium text-gray-700 ml-10"
               >
                 <label className="mr-4">Approval Date</label>
                 <input
@@ -58,7 +57,7 @@ const WMC0302500 = () => {
               </div>
               <div
                 id="mid"
-                className="block flex flex-row basis-1/2 mr-[10rem] items-center font-medium text-gray-700"
+                className="flex flex-row basis-1/2 mr-[10rem] items-center font-medium text-gray-700"
               >
                 <label className="mr-2"> MID</label>
                 <input

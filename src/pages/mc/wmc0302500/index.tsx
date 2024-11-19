@@ -7,7 +7,7 @@ import { callSMC03F054R } from "@/services";
 import callSMC03F055R from "@/services/SMC03F055R";
 import { exportToExcel } from "@/utils";
 import moment from "moment";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 
 export interface queryDataInterface {
   start: string;
@@ -20,13 +20,39 @@ const WMC0302500 = () => {
   const [outVoSMC03F055R, setOutVoSMC03F055R] = useState<SMC03F055ROutVo>();
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [selectedRow, setSelectedRow] = useState<string[]>([]);
+  const [selectAll, setSelectAll] = useState<boolean>(false);
+
+  const handleSelectRow = (id : string) => {
+    if (selectedRow.includes(id)) {
+      setSelectedRow(selectedRow.filter((rowId) => rowId !== id));
+    } else {
+      setSelectedRow([...selectedRow, id]);
+    }
+  }
+
+  useEffect(() => {
+    if (outVoSMC03F054R && selectedRow.length === outVoSMC03F054R.sub1_vos.length) {
+      setSelectAll(true);
+    }
+  }, [selectedRow])
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedRow([]);
+    } else {
+      setSelectedRow(outVoSMC03F054R.sub1_vos.map((item) => item.aplc_seq_no));
+    }
+    
+    setSelectAll(!selectAll);
+  }
 
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [queryDate, setQueryDate] = useState<queryDataInterface>({
-    start: "20220101",
-    end: "20241211",
+    start: "20200101",
+    end: "20241231",
   });
-  const [mid, setMid] = useState<string>("71000638409");
+  const [mid, setMid] = useState<string>("70000000014");
   const pageSize: string = "70";
 
   const handlerDownloadButton = async () => {
@@ -272,7 +298,7 @@ const WMC0302500 = () => {
               >
                 <tr>
                   <th className={`px-2 py-1`}>
-                    <input type="checkbox" />
+                    <input type="checkbox" onChange={handleSelectAll} checked={selectAll} />
                   </th>
                   <th className={`px-2 py-1`}>No</th>
                   <th className={`px-2 py-1`}>Apply Sequence No</th>
@@ -290,26 +316,63 @@ const WMC0302500 = () => {
                   outVoSMC03F054R.sub1_vos.map((item, index) => {
                     return (
                       <tr
-                        key={`list-data-SMC03F054R-${++index}`}
+                        key={`list-data-SMC03F054R-${index}`}
                         className={`
                           even:bg-main-active
                         `}
-                        onClick={() =>
-                          onRowClick(item.aplc_seq_no, '', 20)
-                        }
                       >
                         <td className={`px-2 py-1`}>
-                          <input type="checkbox" />
+                          <input
+                            type="checkbox"
+                            checked={selectedRow.includes(item.aplc_seq_no)}
+                            onChange={() => handleSelectRow(item.aplc_seq_no)}
+                          />
                         </td>
-                        <td className={`px-2 py-1`}>{++index}</td>
-                        <td className={`px-2 py-1`}>{item.aplc_seq_no}</td>
-                        <td className={`px-2 py-1`}>{item.mid}</td>
-                        <td className={`px-2 py-1`}>{item.data_inp_dttm}</td>
-                        <td className={`px-2 py-1`}>{`${item.inp_usr_id}(${item.chng_emp_nm})`}</td>
-                        <td className={`text-wrap px-2 py-1`}>{item.apfm_memo_ctnts}</td>
-                        <td className={`px-2 py-1`}>{item.apfm_pgrs_stat_cd}</td>
-                        <td className={`px-2 py-1`}>{item.apfm_auth_stat_cd}</td>
-                        <td className={`px-2 py-1`}>{item.data_chng_dttm}</td>
+                        <td
+                          onClick={() => onRowClick(item.aplc_seq_no, '', 20)}
+                          className={`px-2 py-1`}>
+                            {index+1}
+                          </td>
+                        <td
+                          onClick={() => onRowClick(item.aplc_seq_no, '', 20)}
+                          className={`px-2 py-1`}>
+                            {item.aplc_seq_no}
+                          </td>
+                        <td
+                          onClick={() => onRowClick(item.aplc_seq_no, '', 20)}
+                          className={`px-2 py-1`}>
+                            {item.mid}
+                          </td>
+                        <td
+                          onClick={() => onRowClick(item.aplc_seq_no, '', 20)}
+                          className={`px-2 py-1`}>
+                            {item.data_inp_dttm}
+                          </td>
+                        <td
+                          onClick={() => onRowClick(item.aplc_seq_no, '', 20)}
+                          className={`px-2 py-1`}>
+                            {`${item.inp_usr_id}(${item.chng_emp_nm})`}
+                          </td>
+                        <td
+                          onClick={() => onRowClick(item.aplc_seq_no, '', 20)}
+                          className={`text-wrap px-2 py-1`}>
+                            {item.apfm_memo_ctnts}
+                          </td>
+                        <td
+                          onClick={() => onRowClick(item.aplc_seq_no, '', 20)}
+                          className={`px-2 py-1`}>
+                            {item.apfm_pgrs_stat_cd}
+                          </td>
+                        <td
+                          onClick={() => onRowClick(item.aplc_seq_no, '', 20)}
+                          className={`px-2 py-1`}>
+                            {item.apfm_auth_stat_cd}
+                          </td>
+                        <td
+                          onClick={() => onRowClick(item.aplc_seq_no, '', 20)}
+                          className={`px-2 py-1`}>
+                            {item.data_chng_dttm}
+                          </td>
                       </tr>
                     );
                   })}
