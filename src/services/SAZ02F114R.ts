@@ -21,7 +21,7 @@ const encodeSAZ02F114R = (
   inVo: SAZ02F114RInVo
 ): string | null => {
   const userDataInput: TelegramUserDataIn = makeTelegramUserDataIn({
-    tuxedoCode: "SAZ02F110R",
+    tuxedoCode: "SAZ02F114R",
     screenId,
   });
 
