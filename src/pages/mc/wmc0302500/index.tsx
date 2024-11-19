@@ -1,4 +1,4 @@
-import { Button, DateRange, InputText } from "@/components";
+import { Button, DateRange, InputText, Loading } from "@/components";
 import { SMC03F054ROutVo } from "@/dto/SMC03F054R";
 import { SMC03F055ROutVo } from "@/dto/SMC03F055R";
 import { ButtonTypeEnum } from "@/enums";
@@ -20,6 +20,15 @@ const WMC0302500 = () => {
   const [outVoSMC03F055R, setOutVoSMC03F055R] = useState<SMC03F055ROutVo>();
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  const [queryDate, setQueryDate] = useState<queryDataInterface>({
+    start: "20200101",
+    end: "20241231",
+  });
+  const [mid, setMid] = useState<string>("70000000014");
+  const pageSize: string = "70";
+
   const [selectedRow, setSelectedRow] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState<boolean>(false);
 
@@ -46,14 +55,6 @@ const WMC0302500 = () => {
     
     setSelectAll(!selectAll);
   }
-
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const [queryDate, setQueryDate] = useState<queryDataInterface>({
-    start: "20200101",
-    end: "20241231",
-  });
-  const [mid, setMid] = useState<string>("70000000014");
-  const pageSize: string = "70";
 
   const handlerDownloadButton = async () => {
     if (outVoSMC03F054R) {
@@ -123,12 +124,7 @@ const WMC0302500 = () => {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-sidebar-normal bg-opacity-75">
-        <div className="flex flex-col items-center">
-          <div className="loader border-t-4 border-b-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
-          <p className="text-white mt-4">Loading...</p>
-        </div>
-      </div>
+      <Loading/>
     );
   } 
   return (
