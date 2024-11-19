@@ -1,10 +1,12 @@
 import { Button } from '@/components';
+import { SAZ02F110ROutVo } from '@/dto/SAZ02F110R';
+import { SAZ02F114ROutVo } from '@/dto/SAZ02F114R';
 import { MainLayout } from '@/layout';
 import { ReactElement, useState } from 'react';
 
 const WAZ021100 = () => {
-  const [outVoSAZ02F110R, setOutVoSAZ02F110R] = useState();
-  const [outVoSAZ02F114R, setOutVoSAZ02F114R] = useState();
+  const [outVoSAZ02F110R, setOutVoSAZ02F110R] = useState<SAZ02F110ROutVo>();
+  const [outVoSAZ02F114R, setOutVoSAZ02F114R] = useState<SAZ02F114ROutVo>();
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const favoriteHandler = () => {
     setIsFavorite((prev) => !prev);
@@ -220,15 +222,15 @@ const WAZ021100 = () => {
                         <td>
                           <input
                             type="checkbox"
-                            checked={selectedRow.includes(item.aplc_seq_no)}
-                            onChange={() => handleSelectRow(item.aplc_seq_no)}
+                            checked={selectedRow.includes(item.cmmn_cd_id)}
+                            onChange={() => handleSelectRow(item.cmmn_cd_id)}
                           />
                         </td>
                         <td>{item.cmmn_cd_id}</td>
                         <td>{item.dtl_cd_id}</td>
                         <td>{item.msg_nm}</td>
                         <td>{item.sort_seq}</td>
-                        <td>{item.data_stat_id}</td>
+                        <td>{item.data_stat_cd}</td>
                         <td>{item.cd_expl}</td>
                         <td>{item.clss_info_val1}</td>
                         <td>{item.clss_info_val2}</td>
