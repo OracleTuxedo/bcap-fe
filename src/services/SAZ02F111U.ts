@@ -1,5 +1,5 @@
 import { BACKEND_ENDPOINT } from "@/config/constants";
-import { SAZ02F110RInVo, SAZ02F110ROutVo } from "@/dto";
+import { SAZ02F111UInVo, SAZ02F111UOutVo } from "@/dto";
 import {
   convertObjectToString,
   convertStringToObject,
@@ -16,18 +16,18 @@ import {
 } from "@/utils/EncryptionDecryption";
 import axios from "axios";
 
-const encodeSAZ02F110R = (
+const encodeSAZ02F111U = (
   screenId: string,
-  inVo: SAZ02F110RInVo
+  inVo: SAZ02F111UInVo
 ): string | null => {
   const userDataInput: TelegramUserDataIn = makeTelegramUserDataIn({
     tuxedoCode: "SAZ02F110R",
     screenId,
   });
 
-  const telegramIn: TelegramIn<SAZ02F110RInVo> | null =
-    makeTelegramIn<SAZ02F110RInVo>({
-      typeClass: SAZ02F110RInVo,
+  const telegramIn: TelegramIn<SAZ02F111UInVo> | null =
+    makeTelegramIn<SAZ02F111UInVo>({
+      typeClass: SAZ02F111UInVo,
       data: inVo,
       userDataInput: userDataInput,
     });
@@ -41,21 +41,21 @@ const encodeSAZ02F110R = (
 
 const decodeSAZ02F110R = (
   responseFromTuxedo: string
-): TelegramOut<SAZ02F110ROutVo> | null => {
-  const parsed: TelegramOut<SAZ02F110ROutVo> | null = convertStringToObject<
-    TelegramOut<SAZ02F110ROutVo>
+): TelegramOut<SAZ02F111UOutVo> | null => {
+  const parsed: TelegramOut<SAZ02F111UOutVo> | null = convertStringToObject<
+    TelegramOut<SAZ02F111UOutVo>
   >({
     index: 0,
     input: responseFromTuxedo,
-    classInstance: new TelegramOut(SAZ02F110ROutVo),
+    classInstance: new TelegramOut(SAZ02F111UOutVo),
   });
   return parsed;
 };
 
-const callSAZ02F110R = async (screenId: string, inVo: SAZ02F110RInVo) => {
-  console.log("callSAZ02F110R");
+const callSAZ02F111U = async (inVo: SAZ02F111UInVo, screenId: string) => {
+  console.log("callSAZ02F111U");
 
-  const requestToTuxedo: string | null = encodeSAZ02F110R(screenId, inVo);
+  const requestToTuxedo: string | null = encodeSAZ02F111U(screenId, inVo);
   if (!requestToTuxedo) return;
 
   console.log(requestToTuxedo);
@@ -86,4 +86,4 @@ const callSAZ02F110R = async (screenId: string, inVo: SAZ02F110RInVo) => {
   return parsed?.data.data;
 };
 
-export default callSAZ02F110R;
+export default callSAZ02F111U;
