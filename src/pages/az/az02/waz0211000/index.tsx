@@ -1,13 +1,41 @@
-import { Button } from '@/components';
+import { Button, Dropdown, InputText } from '@/components';
+import { ButtonTypeEnum } from '@/enums';
 import { SAZ02F110ROutVo } from '@/dto/SAZ02F110R';
 import { SAZ02F114ROutVo } from '@/dto/SAZ02F114R';
 import { MainLayout } from '@/layout';
-import { ReactElement, useState } from 'react';
+import { dropdownOptionsInterface } from '@/types';
+import { ChangeEvent, ReactElement, useState } from 'react';
+
+const systemDivisionData: dropdownOptionsInterface[] = [
+  { value: '', label: 'All' },
+  { value: 'SFA', label: 'SFA' },
+  { value: 'MER', label: 'Merchant' },
+  { value: 'MMP', label: 'MMP' },
+  { value: 'TMS', label: 'TMS' },
+  { value: 'WDS', label: 'WDS' },
+  { value: 'AUT', label: 'Authorization' },
+  { value: 'C&S', label: 'Clearing & Settlement' },
+  { value: 'MET', label: 'Metering' },
+  { value: 'ADM', label: 'Admin & Common' },
+  { value: 'EXT', label: 'External' },
+];
+
+const useStatusData: dropdownOptionsInterface[] = [
+  { value: '', label: 'All' },
+  { value: 'U', label: 'Valid' },
+  { value: 'D', label: 'Not Valid' },
+];
 
 const WAZ021100 = () => {
   const [outVoSAZ02F110R, setOutVoSAZ02F110R] = useState<SAZ02F110ROutVo>();
   const [outVoSAZ02F114R, setOutVoSAZ02F114R] = useState<SAZ02F114ROutVo>();
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  const [groupCode, setGroupCode] = useState<string>('');
+  const [groupCodeName, setGroupCodeName] = useState<string>('');
+  const [systemDivision, setSystemDivision] = useState<string>('');
+  const [useStatus, setUseStatus] = useState<string>('');
+
   const favoriteHandler = () => {
     setIsFavorite((prev) => !prev);
   };
@@ -26,11 +54,20 @@ const WAZ021100 = () => {
     if (selectAll) {
       setSelectedRow([]);
     } else {
-      setSelectedRow(outVoSAZ02F110R);
+      setSelectedRow(outVoSAZ02F110R.sub1_vos.map(item => item.grup_cd_id));
     }
 
     setSelectAll(!selectAll);
   };
+
+  const onClickSearch = async () => {
+    console.log('SEARCH');
+    console.log('groupCode', groupCode);
+    console.log('groupCodeName', groupCodeName);
+    console.log('systemDivision', systemDivision);
+    console.log('useStatus', useStatus);
+  };
+
 
   return (
     <MainLayout
@@ -45,6 +82,125 @@ const WAZ021100 = () => {
           w-full
         `}
       >
+                  <div
+            id="search"
+            className={`
+              mx-2 py-2
+              flex flex-row
+              border
+              text-md
+              justify-between
+              bg-sidebar-active
+            `}
+          >
+            <div id="input" className="flex">
+              <div
+                id="system-division"
+                className={`
+                  flex flex-row
+                  font-medium
+                  items-center
+                `}
+              >
+                <label
+                  className={`
+                    mx-2
+                  `}
+                >
+                  System Division
+                </label>
+                <Dropdown
+                  name="system-division"
+                  options={systemDivisionData}
+                  value={systemDivision}
+                  onChangeHandler={(e) => setSystemDivision(e.target.value)}
+                />
+              </div>
+              <div
+                id="group-code"
+                className={`
+                  flex flex-row
+                  font-medium
+                  items-center
+                `}
+              >
+                <label
+                  className={`
+                    mx-2
+                  `}
+                >
+                  Group Code
+                </label>
+                <InputText
+                  name="group-code"
+                  value={groupCode}
+                  onChangeHandler={(e: ChangeEvent<HTMLInputElement>) =>
+                    setGroupCode(e.target.value)
+                  }
+                />
+              </div>
+              <div
+                id="group-code-name"
+                className={`
+                  flex flex-row
+                  font-medium
+                  items-center
+                `}
+              >
+                <label
+                  className={`
+                    mx-2
+                  `}
+                >
+                  Group Code Name
+                </label>
+                <InputText
+                  name="group-code-name"
+                  value={groupCodeName}
+                  onChangeHandler={(e: ChangeEvent<HTMLInputElement>) =>
+                    setGroupCodeName(e.target.value)
+                  }
+                />
+              </div>
+              <div
+                id="use-status"
+                className={`
+                  flex flex-row
+                  font-medium
+                  items-center
+                `}
+              >
+                <label
+                  className={`
+                    mx-2
+                  `}
+                >
+                  Use Status
+                </label>
+                <Dropdown
+                  name="use-status"
+                  options={useStatusData}
+                  value={useStatus}
+                  onChangeHandler={(e) => setUseStatus(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div
+              id="searchButton"
+              className={`
+                mx-2
+              `}
+            >
+              <Button
+                type={ButtonTypeEnum.DEFAULT}
+                onClickHandler={onClickSearch}
+                white
+              >
+                Search
+              </Button>
+            </div>
+          </div>
         <div
           id="list"
           className={`
@@ -123,8 +279,8 @@ const WAZ021100 = () => {
                         <td className={`px-2 py-1`}></td>
                         <td className={`px-2 py-1`}>{index + 1}</td>
                         <td className={`px-2 py-1`}>{item.biz_ctgo_cd}</td>
-                        <td className={`px-2 py-1`}>{item.grup_cd_list}</td>
-                        <td className={`px-2 py-1`}>{`${item.cmmn_cd_nm}`}</td>
+                        <td className={`px-2 py-1`}>{item.grup_cd_id}</td>
+                        <td className={`px-2 py-1`}>{`${item.msg_nm}`}</td>
                         <td className={`text-wrap px-2 py-1`}>
                           {item.data_stat_cd}
                         </td>
