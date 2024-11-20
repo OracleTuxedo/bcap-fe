@@ -2,21 +2,22 @@ import { dropdownOptionsInterface } from '@/types';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Loading from '../../Loading';
-import { SAZ02F111UInSub1Vo } from '@/dto';
+import { SAZ02F111UInSub1Vo, SAZ02F111UInSub2Vo, SAZ02F111UInVo } from '@/dto';
+import { callSAZ02F111U } from '@/services';
 
 export type GroupCodeMessageList = {
   biz_cd: string;
   msg_id: string;
   lang_clcd: string[];
   msg_nm: string[];
-  data_stat_id: string;
+  data_stat_cd: string;
 };
 
 export type GroupCodeList = {
   biz_cd: string;
   biz_ctgo_id: string;
   group_cd_id: string;
-  data_stat_id: string;
+  data_stat_cd: string;
   cd_expl: string;
 };
 
@@ -27,7 +28,7 @@ export type messageList = {
 
 export type addNewGroupCode = Pick<
   GroupCodeList,
-  'biz_ctgo_id' | 'group_cd_id' | 'cd_expl' | 'data_stat_id'
+  'biz_ctgo_id' | 'group_cd_id' | 'cd_expl' | 'data_stat_cd'
 > &
   Pick<GroupCodeMessageList, 'msg_nm'>;
 
@@ -46,12 +47,17 @@ const languageCode: messageList[] = [
 export interface AddGroupCodeListProps {
   open: boolean;
   onClose: () => void;
+  screenId: string;
   codeType?: string;
   groupCodeList?: GroupCodeList;
   groupCodeMessageList?: GroupCodeMessageList[];
 }
 
-export const AddGroupCodeList = ({ open, onClose }: AddGroupCodeListProps) => {
+export const AddGroupCodeList = ({
+  open,
+  screenId,
+  onClose,
+}: AddGroupCodeListProps) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -63,9 +69,36 @@ export const AddGroupCodeList = ({ open, onClose }: AddGroupCodeListProps) => {
   const onSubmit = async (value: addNewGroupCode) => {
     setLoading(true);
     try {
-      const data: SAZ02F111UInSub1Vo;
+      const groupCodeList = new SAZ02F111UInSub1Vo();
+      groupCodeList.biz_clcd = 'I';
+      groupCodeList.biz_ctgo_cd = value.biz_ctgo_id;
+      groupCodeList.grup_cd_id = value.group_cd_id;
+      groupCodeList.data_stat_cd = value.data_stat_cd;
+      groupCodeList.cd_expl = value.cd_expl;
 
-      setload;
+      const groupCodeMessageEn = new SAZ02F111UInSub2Vo();
+      groupCodeMessageEn.biz_clcd = 'I';
+      groupCodeMessageEn.msg_id = value.biz_ctgo_id + value.group_cd_id;
+      groupCodeMessageEn.lang_clcd = 'EN';
+      groupCodeMessageEn.msg_nm = value.msg_nm[0];
+      groupCodeMessageEn.data_stat_cd = value.data_stat_cd;
+
+      const groupCodeMessageId = new SAZ02F111UInSub2Vo();
+      groupCodeMessageId.biz_clcd = 'I';
+      groupCodeMessageId.msg_id = value.biz_ctgo_id + value.group_cd_id;
+      groupCodeMessageId.lang_clcd = 'ID';
+      groupCodeMessageId.msg_nm = value.msg_nm[1];
+      groupCodeMessageId.data_stat_cd = value.data_stat_cd;
+
+      const inVo = new SAZ02F111UInVo();
+      inVo.sub1_vos = [groupCodeList];
+      inVo.sub2_vos = [groupCodeMessageEn, groupCodeMessageId];
+
+      await callSAZ02F111U(inVo, screenId).catch((err) => {
+        throw new Error(err);
+      });
+      setLoading(false);
+      onClose();
     } catch (err: unknown) {
       console.log(err);
     }
@@ -131,7 +164,7 @@ export const AddGroupCodeList = ({ open, onClose }: AddGroupCodeListProps) => {
               <div>
                 <label>Use Status</label>
                 <select
-                  {...register('data_stat_id', {
+                  {...register('data_stat_cd', {
                     required: 'required',
                   })}
                 >
