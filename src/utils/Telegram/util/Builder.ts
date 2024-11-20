@@ -7,7 +7,12 @@ import {
   getPacketSize,
 } from "./Util";
 import moment from "moment";
-import { TelegramHeader, TelegramIn, TelegramInData, TelegramUserDataIn } from "../vo";
+import {
+  TelegramHeader,
+  TelegramIn,
+  TelegramInData,
+  TelegramUserDataIn,
+} from "../vo";
 
 export function makeTelegramUserDataIn({
   tuxedoCode,
@@ -46,15 +51,22 @@ export function makeTelegramIn<I>({
     data: data,
   });
 
+  console.log(telegramHeader);
+  console.log(telegramInData);
+
   if (!telegramHeader || !telegramInData) return null;
 
   const telegramIn: TelegramIn<I> = new TelegramIn(typeClass);
   telegramIn.header = telegramHeader;
   telegramIn.data = telegramInData;
 
+  console.log(telegramIn);
+
   const countTelegramIn = getPacketSize(telegramIn);
 
   if (!countTelegramIn) return null;
+
+  console.log(countTelegramIn);
 
   telegramIn.header.msg_len = countTelegramIn - 8;
 
@@ -71,7 +83,9 @@ function makeTelegramInData<I>({
   const telegramInData: TelegramInData<I> = new TelegramInData<I>(typeClass);
   telegramInData.data_type = "D";
   telegramInData.data = data;
+  console.log(data);
   const count = getPacketSize(telegramInData);
+  console.log(count);
   if (!count) return null;
 
   telegramInData.length = count - 9; // TODO Buat apa ada angka 9 ?

@@ -42,7 +42,7 @@ const languageCode: messageList[] = [
   },
   { label: 'Bahasa Indonesia', value: 'ID' },
 ];
-export interface AddGroupCodeList {
+export interface AddGroupCodeListProps {
   open: boolean;
   onClose: () => void;
   codeType?: string;
@@ -50,7 +50,11 @@ export interface AddGroupCodeList {
   groupCodeMessageList?: GroupCodeMessageList[];
 }
 
-export const AddGroupCodeList = ({ open, onClose }: AddGroupCodeList) => {
+export const AddGroupCodeList = ({
+  open,
+  onClose,
+  onConfirm,
+}: AddGroupCodeListProps) => {
   const {
     register,
     handleSubmit,
