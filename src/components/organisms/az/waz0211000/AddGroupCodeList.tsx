@@ -192,7 +192,7 @@ export const AddGroupCodeList = ({
                 <label className={labelStyle}>Use Status</label>
                 <select
                   className={inputStyle}
-                  {...register('data_stat_id', {
+                  {...register('data_stat_cd', {
                     required: 'required',
                   })}
                 >
