@@ -343,7 +343,7 @@ const WAZ021100 = () => {
                           item.data_stat_cd == 'U' ? 'Valid' : 'Not Valid'
                         }</td>
                         <td className={`text-wrap px-2 py-1`}>{item.cd_expl}</td>
-                        <td className={`px-2 py-1`}>
+                        <td className={`px-2 py-1 flex flex-1`}>
                           <Button
                             type={ButtonTypeEnum.SUCCESS}
                             onClickHandler={() => {
