@@ -1,8 +1,13 @@
 import { Button, Dropdown, InputText, Loading } from '@/components';
+import {
+  AddGroupCodeList,
+  addNewGroupCode,
+} from '@/components/organisms/az/waz0211000/AddGroupCodeList';
 import { ButtonTypeEnum } from '@/enums';
 import { MainLayout } from '@/layout';
 import { dropdownOptionsInterface } from '@/types';
 import { ChangeEvent, useState } from 'react';
+import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 
 const UiPage = () => {
   const screenId = 'WAZ0211000';
@@ -26,6 +31,23 @@ const UiPage = () => {
     console.log('useStatus', useStatus);
   };
 
+  const [open, setOpen] = useState<boolean>(true);
+
+  const handlerCloseModal = () => {
+    setOpen(false);
+  };
+
+  const handleOpenModal = () => {
+    console.log(open);
+
+    setOpen(true);
+  };
+
+  const onSubmit = (data: addNewGroupCode) => {
+    console.log(data);
+    setOpen(false);
+  };
+
   if (loading) {
     return <Loading />;
   } else {
@@ -36,13 +58,19 @@ const UiPage = () => {
         isFavorite={isFavorite}
         favoriteHandler={favoriteHandler}
       >
+        <button onClick={() => handleOpenModal()}>open</button>
+        <AddGroupCodeList
+          open={open}
+          onClose={handlerCloseModal}
+          onConfirm={onSubmit}
+        />
+
         <div
           id="content"
           className={`
             w-full
           `}
-        >
-        </div>
+        ></div>
       </MainLayout>
     );
   }
