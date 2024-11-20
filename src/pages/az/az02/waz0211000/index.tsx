@@ -282,6 +282,7 @@ const WAZ021100 = () => {
           >
             <label
               className={`
+                py-2
                 mx-8
               `}
             >
@@ -289,11 +290,19 @@ const WAZ021100 = () => {
             </label>
 
             <div
-              id="download-button"
+              id="add-list-button"
               className={`
                 px-8
               `}
-            ></div>
+            >
+              <Button
+                type={ButtonTypeEnum.SUCCESS}
+                onClickHandler={() => console.log('add list')}
+                white
+              >
+                Add
+              </Button>
+            </div>
           </div>
           <div
             className={`
@@ -393,6 +402,21 @@ const WAZ021100 = () => {
             >
               Detail List
             </label>
+
+            <div
+              id="add-detail-button"
+              className={`
+                px-8
+              `}
+            >
+              <Button
+                type={ButtonTypeEnum.SUCCESS}
+                onClickHandler={() => console.log('add detail')}
+                white
+              >
+                Add
+              </Button>
+            </div>
           </div>
 
           <div
