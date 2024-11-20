@@ -4,12 +4,13 @@ import { ReactNode } from "react";
 export interface ButtonInterface {
     type?: ButtonTypeEnum;
     white? : boolean
+    small? : boolean
     disable? : boolean
     children : ReactNode;
     onClickHandler : () => void;
 }
 
-const Button = ( { type, white, disable = false, onClickHandler, children} : ButtonInterface ) => {
+const Button = ( { type, white, small, disable = false, onClickHandler, children} : ButtonInterface ) => {
     let bgColor : string = 'bg-main-normal hover:bg-main-active';
     switch (type) {
         case ButtonTypeEnum.WARNING:
@@ -32,7 +33,7 @@ const Button = ( { type, white, disable = false, onClickHandler, children} : But
         <button onClick={onClickHandler}
             className={`
                 flex flex-1
-                px-8 py-2
+                ${small ? 'px-2 py-1' : 'px-8 py-2'}
                 rounded-lg
                 ${bgColor}
                 ${white ? 'text-white' : 'text-black'}
