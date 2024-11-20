@@ -347,7 +347,7 @@ const WAZ021100 = () => {
                         <td className={`text-wrap px-2 py-1`}>{item.cd_expl}</td>
                         <td className={`px-2 py-1`}>
                           <Button
-                            type={ButtonTypeEnum.DEFAULT}
+                            type={ButtonTypeEnum.SUCCESS}
                             onClickHandler={() => {
                               viewDetail(item.biz_ctgo_cd, item.grup_cd_id, 'EN')
                             }}
@@ -358,11 +358,6 @@ const WAZ021100 = () => {
                             onClickHandler={() => {console.log(`update for ${item.grup_cd_id}`)}}
                             small
                           >Edit</Button>
-                          <Button
-                            type={ButtonTypeEnum.DANGER}
-                            onClickHandler={() => {console.log(`delete for ${item.grup_cd_id}`)}}
-                            small
-                          >Delete</Button>
                         </td>
                       </tr>
                     );

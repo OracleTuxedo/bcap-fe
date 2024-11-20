@@ -6,7 +6,11 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
     return (
-        <div>
+        <div
+            className={`
+                flex flex-1
+            `}
+        >
             {children}
         </div>
     );

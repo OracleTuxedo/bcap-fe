@@ -13,38 +13,43 @@ export interface MainLayoutInterface {
 const MainLayout = ({ screenId, screenName, isFavorite, favoriteHandler, children } : MainLayoutInterface) => {
     const [activeTab, setActiveTab] = useState<TabEnum>(TabEnum.MERCHANT);
 
-return (
-    <div 
-        className={`
-            flex flex-1 flex-col
-            h-screen
-        `}
-    >
-        <Seo title={screenName} />
-        <Navbar activeTab={activeTab} setState={setActiveTab} />
-        <div className='flex flex-1'>
-            <Sidebar />
+    return (
+        <div
+            className={`
+                h-full w-full
+            `}
+        >
+            <Seo title={screenName} />
+            <Navbar activeTab={activeTab} setState={setActiveTab} />
             <div
                 className={`
-                    flex flex-1 flex-col
+                    flex flex-1 flex-row
                 `}
             >
-            <Header
-                screenId={screenId}
-                screenName={screenName}
-                isFavorite={isFavorite}
-                favoriteHandler={favoriteHandler}
-            />
+                <Sidebar />
                 <div
                     className={`
-                        flex flex-1
+                        flex flex-1 flex-col
+                        w-full
                     `}
                 >
-                    {children}
+                <Header
+                    screenId={screenId}
+                    screenName={screenName}
+                    isFavorite={isFavorite}
+                    favoriteHandler={favoriteHandler}
+                />
+                    <div
+                        className={`
+                            flex flex-1
+                            overflow-auto
+                        `}
+                    >
+                        {children}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     );
 };
 

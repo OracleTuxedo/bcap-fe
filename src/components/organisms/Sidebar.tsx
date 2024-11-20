@@ -36,15 +36,17 @@ const Sidebar = () => {
     return (
         <div
             className={`
+                h-[94.8vh]
                 bg-sidebar-normal
                 text-white
                 ${isCollapsed ? 'w-12' : 'w-60'}
                 transition-width duration-300 p-0
             `}
+            id="sidebar"
         >
             <div
                 className={`
-                    flex flex-row
+                    flex flex-1 flex-row
                     items-center
                 `}
             >
