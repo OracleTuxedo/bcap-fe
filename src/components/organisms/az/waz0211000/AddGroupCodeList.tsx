@@ -1,3 +1,4 @@
+import { Dropdown, InputText } from '@/components/atoms';
 import { dropdownOptionsInterface } from '@/types';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -63,9 +64,10 @@ export const AddGroupCodeList = ({ open, onClose }: AddGroupCodeListProps) => {
   const onSubmit = async (value: addNewGroupCode) => {
     setLoading(true);
     try {
-      const data: SAZ02F111UInSub1Vo;
+      // const data: SAZ02F111UInSub1Vo;
 
-      setload;
+      // setload;
+      console.log('value', value);
     } catch (err: unknown) {
       console.log(err);
     }
@@ -75,17 +77,37 @@ export const AddGroupCodeList = ({ open, onClose }: AddGroupCodeListProps) => {
     return <Loading />;
   }
 
+  const containerStyle = `
+    flex flex-row
+    justify-between
+    my-1
+  `;
+
+  const labelStyle = `
+    flex flex-1
+    mx-2
+    items-center
+  `;
+
+  const inputStyle = `
+    mx-2 p-1
+    flex flex-1
+    border border-sidebar-normal
+    shadow-sm
+  `
+
   return (
     <div>
       {open && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded shadow-lg w-[30rem]">
-            <form>
-              <div>
-                <label>System Division</label>
+        <div className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50`}>
+          <div className={`bg-white p-6 rounded shadow-lg w-[30rem]`}>
+            <form className='flex flex-1 flex-col'>
+
+              <div  className={containerStyle} >
+                <label className={labelStyle} >System Division</label>
                 <input
                   id="biz_ctgo_cd"
-                  className="border"
+                  className={inputStyle}
                   type="text"
                   {...register('biz_ctgo_id', {
                     required: 'required',
@@ -95,11 +117,12 @@ export const AddGroupCodeList = ({ open, onClose }: AddGroupCodeListProps) => {
                   {errors['biz_ctgo_id'] ? errors['biz_ctgo_id'].message : ''}
                 </label>
               </div>
-              <div>
-                <label>Grup Code</label>
+
+              <div className={containerStyle}>
+                <label className={labelStyle} >Grup Code</label>
                 <input
                   id="group_cd_id"
-                  className="border"
+                  className={inputStyle}
                   type="text"
                   {...register('group_cd_id', {
                     required: 'required',
@@ -109,28 +132,32 @@ export const AddGroupCodeList = ({ open, onClose }: AddGroupCodeListProps) => {
                   {errors['group_cd_id'] ? errors['group_cd_id'].message : ''}
                 </label>
               </div>
+
               <div>
-                <label>Group Code Name</label>
-                {languageCode.map((item, index) => (
-                  <div key={item.label + index}>
-                    <label>{item.label}</label>
-                    <input
-                      className="border"
-                      type="text"
-                      id={`msg_nm_${index}`}
-                      {...register(`msg_nm.${index}`, {
-                        required: 'required',
-                      })}
-                    />
-                    <label>
-                      {errors['msg_nm'] ? errors['msg_nm'].message : ''}
-                    </label>
-                  </div>
-                ))}
+                <label className={labelStyle} >Group Code Name</label>
+                <div>
+                  {languageCode.map((item, index) => (
+                    <div className={containerStyle} key={item.label + index}>
+                      <label className={labelStyle} >{item.label}</label>
+                      <input
+                        className={inputStyle}
+                        type="text"
+                        id={`msg_nm_${index}`}
+                        {...register(`msg_nm.${index}`, {
+                          required: 'required',
+                        })}
+                      />
+                      <label>
+                        {errors['msg_nm'] ? errors['msg_nm'].message : ''}
+                      </label>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div>
-                <label>Use Status</label>
-                <select
+
+              <div className={containerStyle}>
+                <label className={labelStyle} >Use Status</label>
+                <select className={inputStyle}
                   {...register('data_stat_id', {
                     required: 'required',
                   })}
@@ -145,11 +172,12 @@ export const AddGroupCodeList = ({ open, onClose }: AddGroupCodeListProps) => {
                   {errors['data_stat_id'] ? errors['data_stat_id'].message : ''}
                 </label>
               </div>
-              <div>
-                <label>Description</label>
+
+              <div className={containerStyle}>
+                <label className={labelStyle} >Description</label>
                 <input
                   id="cd_expl"
-                  className="border"
+                  className={inputStyle}
                   type="text"
                   {...register('cd_expl', {
                     required: 'required',
@@ -159,12 +187,13 @@ export const AddGroupCodeList = ({ open, onClose }: AddGroupCodeListProps) => {
                   {errors['cd_expl'] ? errors['cd_expl'].message : ''}
                 </label>
               </div>
+
             </form>
 
-            <div className="flex justify-end space-x-2">
+            <div className={`flex justify-end space-x-2`}>
               <button
                 onClick={onClose}
-                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                className={`px-4 py-2 bg-gray-300 rounded hover:bg-gray-400`}
               >
                 Close
               </button>

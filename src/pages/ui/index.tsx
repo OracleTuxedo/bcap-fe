@@ -62,7 +62,7 @@ const UiPage = () => {
         <AddGroupCodeList
           open={open}
           onClose={handlerCloseModal}
-          onConfirm={onSubmit}
+          // onConfirm={onSubmit}
         />
 
         <div
