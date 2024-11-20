@@ -3,14 +3,18 @@ import { ButtonTypeEnum } from '@/enums';
 import { MainLayout } from '@/layout';
 import { dropdownOptionsInterface } from '@/types';
 import { ChangeEvent, ReactElement, useState } from 'react';
-import { callSAZ02F110R, callSAZ02F114R } from '@/services';
+import { callSAZ02F110R, callSAZ02F114R, callSAZ02F111U } from '@/services';
 import {
   SAZ02F110RInVo,
   SAZ02F110ROutVo,
+  SAZ02F111UInSub1Vo,
+  SAZ02F111UInSub2Vo,
+  SAZ02F111UInSub3Vo,
+  SAZ02F111UInSub4Vo,
+  SAZ02F111UInVo,
   SAZ02F114RInVo,
   SAZ02F114ROutVo,
 } from '@/dto';
-import { mockupCallSAZ02F110R, mockupCallSAZ02F114R } from '@/services/mockup';
 import {
   AddGroupCodeList,
   addNewGroupCode,
@@ -61,14 +65,14 @@ const WAZ021100 = () => {
   };
   const [selectedRow, setSelectedRow] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false);
+  const [openGroupCodeModal, setOpenGroupCodeModal] = useState<boolean>(false);
 
   const handlerCloseModal = () => {
-    setOpen(false);
+    setOpenGroupCodeModal(false);
   };
 
   const handleOpenModal = () => {
-    setOpen(true);
+    setOpenGroupCodeModal(true);
   };
 
   const handleSelectRow = (id: string) => {
@@ -138,6 +142,65 @@ const WAZ021100 = () => {
       console.log(error);
     }
   };
+
+  const createGroupCode = () => {
+    const inVo1 = new SAZ02F111UInSub1Vo();
+    inVo1.biz_clcd = "I";
+    inVo1.biz_ctgo_cd = "AUT";
+    inVo1.grup_cd_id = "6969";
+    inVo1.data_stat_cd = 'U';
+    inVo1.cd_expl = 'Group Code 6969';
+
+    const inVo2En = new SAZ02F111UInSub2Vo();
+    inVo2En.biz_clcd = 'I';
+    inVo2En.msg_id = inVo1.biz_ctgo_cd + inVo1.grup_cd_id;
+    inVo2En.lang_clcd = "EN";
+    inVo2En.msg_nm = 'EN Group Code 6969';
+    inVo2En.data_stat_cd = "U";
+
+    const inVo2Id = new SAZ02F111UInSub2Vo();
+    inVo2Id.biz_clcd = 'I';
+    inVo2Id.msg_id = inVo1.biz_ctgo_cd + inVo1.grup_cd_id;
+    inVo2Id.lang_clcd = "ID";
+    inVo2Id.msg_nm = 'ID Group Code 6969';
+    inVo2Id.data_stat_cd = "U";
+
+    const inVo3 = new SAZ02F111UInSub3Vo();
+    inVo3.biz_clcd = "I";
+    inVo3.cmmn_cd_id = inVo1.biz_ctgo_cd + inVo1.grup_cd_id;
+    inVo3.dtl_cd_id = "01";
+    inVo3.msg_nm = inVo1.biz_ctgo_cd + inVo1.grup_cd_id + inVo3.dtl_cd_id;
+    inVo3.sort_req = 1;
+    inVo3.data_stat_cd = 'U';
+    inVo3.clss_info_val1 = '';
+    inVo3.clss_info_val2 = '';
+    inVo3.clss_info_val3 = '';
+    inVo3.cd_expl = "Detail Code 6969";
+
+    const inVo4En = new SAZ02F111UInSub4Vo();
+    inVo4En.biz_clcd = 'I';
+    inVo4En.msg_id = inVo1.biz_ctgo_cd + inVo1.grup_cd_id + inVo3.dtl_cd_id;
+    inVo4En.lang_clcd = "EN";
+    inVo4En.msg_nm = 'EN Detail Code 6969';
+    inVo4En.data_stat_cd = "U";
+
+    const inVo4Id = new SAZ02F111UInSub4Vo();
+    inVo4Id.biz_clcd = 'I';
+    inVo4Id.msg_id = inVo1.biz_ctgo_cd + inVo1.grup_cd_id + inVo3.dtl_cd_id;
+    inVo4Id.lang_clcd = "ID";
+    inVo4Id.msg_nm = 'ID Detail Code 6969';
+    inVo4Id.data_stat_cd = "U";
+
+    const inVo = new SAZ02F111UInVo();
+    inVo.sub1_vos = [inVo1];
+    inVo.sub2_vos = [inVo2En, inVo2Id];
+    inVo.sub3_vos = [inVo3];
+    inVo.sub4_vos = [inVo4En, inVo4Id];
+
+    console.log(inVo);
+
+    callSAZ02F111U(inVo, screenId);
+  }
 
   if (loading) {
     return <Loading />;
@@ -273,6 +336,13 @@ const WAZ021100 = () => {
             >
               Search
             </Button>
+            <Button
+              type={ButtonTypeEnum.DEFAULT}
+              onClickHandler={() => createGroupCode()}
+              white
+            >
+              Test Create SAZ02F111U
+            </Button>
           </div>
         </div>
 
@@ -320,7 +390,7 @@ const WAZ021100 = () => {
               </Button>
             </div>
             <AddGroupCodeList
-              open={open}
+              open={openGroupCodeModal}
               onClose={handlerCloseModal}
               onConfirm={(data: addNewGroupCode) => console.log(data)}
             />

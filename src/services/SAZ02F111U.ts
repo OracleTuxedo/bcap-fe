@@ -20,10 +20,13 @@ const encodeSAZ02F111U = (
   screenId: string,
   inVo: SAZ02F111UInVo
 ): string | null => {
+  console.log(inVo);
   const userDataInput: TelegramUserDataIn = makeTelegramUserDataIn({
     tuxedoCode: "SAZ02F111U",
     screenId,
   });
+
+  console.log(userDataInput);
 
   const telegramIn: TelegramIn<SAZ02F111UInVo> | null =
     makeTelegramIn<SAZ02F111UInVo>({
@@ -31,6 +34,8 @@ const encodeSAZ02F111U = (
       data: inVo,
       userDataInput: userDataInput,
     });
+
+  console.log(telegramIn);
 
   if (!telegramIn) return null;
 
@@ -56,8 +61,13 @@ const callSAZ02F111U = async (inVo: SAZ02F111UInVo, screenId: string) => {
   console.log("callSAZ02F111U");
 
   const requestToTuxedo: string | null = encodeSAZ02F111U(screenId, inVo);
+
+  console.log(requestToTuxedo);
+
   if (!requestToTuxedo) return;
 
+  console.log("GLORY KALEM ZUNGKEM");
+  console.log(requestToTuxedo.length);
   console.log(requestToTuxedo);
 
   let responseFromTuxedo = "";
@@ -65,7 +75,7 @@ const callSAZ02F111U = async (inVo: SAZ02F111UInVo, screenId: string) => {
   const body: EncryptDecryptParam = encryption(requestToTuxedo);
 
   try {
-    const response = await axios.post(`${BACKEND_ENDPOINT}/message`, body, {
+    const response = await axios.post(`http://localhost:8080/message`, body, {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
@@ -73,6 +83,9 @@ const callSAZ02F111U = async (inVo: SAZ02F111UInVo, screenId: string) => {
       },
     });
     const originalMessage: string = decryption(response.data);
+    console.log("GLORY KALEM");
+    console.log(originalMessage.length);
+    console.log(originalMessage);
     responseFromTuxedo = originalMessage;
   } catch (error) {
     return;
@@ -81,6 +94,7 @@ const callSAZ02F111U = async (inVo: SAZ02F111UInVo, screenId: string) => {
 
   const parsed = decodeSAZ02F110R(responseFromTuxedo);
 
+  console.log("Result callSAZ02F111U");
   console.log(parsed);
 
   return parsed?.data.data;
