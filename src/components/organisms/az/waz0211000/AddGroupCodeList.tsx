@@ -6,8 +6,8 @@ import { useForm, UseFormHandleSubmit } from 'react-hook-form';
 export type GroupCodeMessageList = {
   biz_cd: string;
   msg_id: string;
-  lang_clcd: string;
-  msg_nm: string;
+  lang_clcd: string[];
+  msg_nm: string[];
   data_stat_id: string;
 };
 
@@ -48,19 +48,18 @@ export interface AddGroupCodeList {
   codeType?: string;
   groupCodeList?: GroupCodeList;
   groupCodeMessageList?: GroupCodeMessageList[];
-  onConfirm?: (data: addNewGroupCode) => void;
 }
 
-export const AddGroupCodeList = ({
-  open,
-  onClose,
-  onConfirm,
-}: AddGroupCodeList) => {
+export const AddGroupCodeList = ({ open, onClose }: AddGroupCodeList) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<addNewGroupCode>();
+
+  const onSubmit = (data: addNewGroupCode) => {
+    console.log(data);
+  };
 
   return (
     <div>
@@ -104,8 +103,8 @@ export const AddGroupCodeList = ({
                     <input
                       className="border"
                       type="text"
-                      id="msg_nm"
-                      {...register('msg_nm', {
+                      id={`msg_nm_${index}`}
+                      {...register(`msg_nm.${index}`, {
                         required: 'required',
                       })}
                     />
@@ -156,7 +155,7 @@ export const AddGroupCodeList = ({
                 Close
               </button>
               <button
-                onClick={handleSubmit(onConfirm)}
+                onClick={handleSubmit(onSubmit)}
                 className="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700"
               >
                 Confirm
