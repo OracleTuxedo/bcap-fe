@@ -19,12 +19,29 @@ export type GroupCodeList = {
   cd_expl: string;
 };
 
+export type messageList = {
+  label: string;
+  value: string;
+};
+
 export type addNewGroupCode = Pick<
   GroupCodeList,
   'biz_ctgo_id' | 'group_cd_id' | 'cd_expl' | 'data_stat_id'
 > &
   Pick<GroupCodeMessageList, 'msg_nm'>;
 
+const useStatusData: dropdownOptionsInterface[] = [
+  { value: 'U', label: 'Valid' },
+  { value: 'D', label: 'Not Valid' },
+];
+
+const languageCode: messageList[] = [
+  {
+    label: 'English',
+    value: 'EN',
+  },
+  { label: 'Bahasa Indonesia', value: 'ID' },
+];
 export interface AddGroupCodeList {
   open: boolean;
   onClose: () => void;
@@ -33,19 +50,6 @@ export interface AddGroupCodeList {
   groupCodeMessageList?: GroupCodeMessageList[];
   onConfirm?: (data: addNewGroupCode) => void;
 }
-
-const useStatusData: dropdownOptionsInterface[] = [
-  { value: 'U', label: 'Valid' },
-  { value: 'D', label: 'Not Valid' },
-];
-
-const languageCode = [
-  {
-    label: 'English',
-    value: 'EN',
-  },
-  { label: 'Bahasa Indonesia', value: 'ID' },
-];
 
 export const AddGroupCodeList = ({
   open,
@@ -57,8 +61,6 @@ export const AddGroupCodeList = ({
     handleSubmit,
     formState: { errors },
   } = useForm<addNewGroupCode>();
-
-  const [dataStatCd, setDataStatCd] = useState<string>('U');
 
   return (
     <div>
@@ -94,24 +96,25 @@ export const AddGroupCodeList = ({
                   {errors['group_cd_id'] ? errors['group_cd_id'].message : ''}
                 </label>
               </div>
-              {/* <div>
+              <div>
                 <label>Group Code Name</label>
-                {groupCodeMessageList.map((item, index) => (
-                  <div key={item.data_stat_id + index}
-                  ></div>
+                {languageCode.map((item, index) => (
+                  <div key={item.label + index}>
+                    <label>{item.label}</label>
+                    <input
+                      className="border"
+                      type="text"
+                      id="msg_nm"
+                      {...register('msg_nm', {
+                        required: 'required',
+                      })}
+                    />
+                    <label>
+                      {errors['msg_nm'] ? errors['msg_nm'].message : ''}
+                    </label>
+                  </div>
                 ))}
-                <input
-                  className="border"
-                  type="text"
-                  id="data_stat_id"
-                  {...register('data_stat_id', {
-                    required: 'required',
-                  })}
-                />
-                <label>
-                  {errors['biz_ctgo_id'] ? errors['biz_ctgo_id'].message : ''}
-                </label>
-              </div> */}
+              </div>
               <div>
                 <label>Use Status</label>
                 <select
