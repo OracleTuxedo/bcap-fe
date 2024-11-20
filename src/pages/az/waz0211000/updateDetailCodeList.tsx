@@ -1,7 +1,7 @@
 import { dropdownOptionsInterface } from '@/types';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Loading from '../../Loading';
+import Loading from '../../../components/organisms/Loading';
 import { SAZ02F111UInSub3Vo, SAZ02F111UInSub4Vo, SAZ02F111UInVo } from '@/dto';
 import { callSAZ02F111U } from '@/services';
 
@@ -31,7 +31,7 @@ export type messageList = {
   value: string;
 };
 
-export type addNewDetailCode = Pick<
+export type UpdateNewDetailCode = Pick<
   DetailCodeList,
   | 'cmmn_cd_id'
   | 'dtl_cd_id'
@@ -56,30 +56,33 @@ const languageCode: messageList[] = [
   },
   { label: 'Bahasa Indonesia', value: 'ID' },
 ];
-export interface AddGroupCodeListProps {
+export interface UpdateGroupCodeListProps {
   open: boolean;
   biz_ctgo_cd: string;
   grup_cd_id: string;
   onClose: () => void;
   screenId: string;
+  data : UpdateNewDetailCode;
 }
 
-export const AddDetailCodeList = ({
+export const UpdateDetailCodeList = ({
   open,
   biz_ctgo_cd,
   grup_cd_id,
   screenId,
   onClose,
-}: AddGroupCodeListProps) => {
+  data,
+}: UpdateGroupCodeListProps) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [updateValue, setUpdateValue] = useState<UpdateNewDetailCode>(data);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<addNewDetailCode>();
+  } = useForm<UpdateNewDetailCode>();
 
-  const onSubmit = async (value: addNewDetailCode) => {
+  const onSubmit = async (value: UpdateNewDetailCode) => {
     setLoading(true);
     try {
       const detailCodeList = new SAZ02F111UInSub3Vo();
@@ -156,6 +159,8 @@ export const AddDetailCodeList = ({
                 <label className={labelStyle}>Group Code ID</label>
                 <input
                   id="cmmn_cd_id"
+                  value={updateValue.cmmn_cd_id}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, cmmn_cd_id : e.target.value}))}
                   className={inputStyle}
                   type="text"
                   {...register('cmmn_cd_id', {
@@ -171,6 +176,8 @@ export const AddDetailCodeList = ({
                 <label className={labelStyle}>Detail Code ID</label>
                 <input
                   id="dtl_cd_id"
+                  value={updateValue.dtl_cd_id}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, dtl_cd_id : e.target.value}))}
                   className={inputStyle}
                   type="text"
                   {...register('dtl_cd_id', {
@@ -190,6 +197,12 @@ export const AddDetailCodeList = ({
                       <label className={labelStyle}>{item.label}</label>
                       <input
                         className={inputStyle}
+                        value={updateValue.msg_nm[index]}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => {
+                            const updatedMsgNm = [...prev.msg_nm];
+                            updatedMsgNm[index] = e.target.value;
+                            return {...prev, msg_nm : updatedMsgNm}
+                        })}
                         type="text"
                         id={`msg_nm_${index}`}
                         {...register(`msg_nm.${index}`, {
@@ -209,6 +222,8 @@ export const AddDetailCodeList = ({
                 <input
                   id="sort_req"
                   className={inputStyle}
+                  value={updateValue.sort_req}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, sort_req : +e.target.value}))}
                   type="text"
                   {...register('sort_req', {
                     required: 'required',
@@ -243,6 +258,8 @@ export const AddDetailCodeList = ({
                 <input
                   id="cd_expl"
                   className={inputStyle}
+                  value={updateValue.cd_expl}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, cd_expl : e.target.value}))}
                   type="text"
                   {...register('cd_expl', {
                     required: 'required',
@@ -258,6 +275,8 @@ export const AddDetailCodeList = ({
                 <input
                   id="clss_info_val1"
                   className={inputStyle}
+                  value={updateValue.clss_info_val1}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, clss_info_val1 : e.target.value}))}
                   type="text"
                   {...register('clss_info_val1', {
                     required: 'required',
@@ -275,6 +294,8 @@ export const AddDetailCodeList = ({
                 <input
                   id="clss_info_val2"
                   className={inputStyle}
+                  value={updateValue.clss_info_val2}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, biz_ctgo_id : e.target.value}))}
                   type="text"
                   {...register('clss_info_val2', {
                     required: 'required',
@@ -291,6 +312,8 @@ export const AddDetailCodeList = ({
                 <input
                   id="clss_info_val3"
                   className={inputStyle}
+                  value={updateValue.clss_info_val3}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, clss_info_val3 : e.target.value}))}
                   type="text"
                   {...register('clss_info_val3', {
                     required: 'required',

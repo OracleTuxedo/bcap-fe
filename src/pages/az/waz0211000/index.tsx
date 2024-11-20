@@ -11,11 +11,10 @@ import {
   SAZ02F114ROutVo,
 } from '@/dto';
 import { mockupCallSAZ02F110R, mockupCallSAZ02F114R } from '@/services/mockup';
-import {
-  AddGroupCodeList,
-  addNewGroupCode,
-} from '@/components/organisms/az/waz0211000/AddGroupCodeList';
-import { AddDetailCodeList } from '@/components/organisms/az/waz0211000/AddDetailCodeList';
+import {AddGroupCodeList } from '@/pages/az/waz0211000/AddGroupCodeList';
+import { AddDetailCodeList } from '@/pages/az/waz0211000/AddDetailCodeList';
+import { UpdateGroupCodeList } from '@/pages/az/waz0211000/updateGroupCodeList';
+import { UpdateDetailCodeList } from './updateDetailCodeList';
 
 const systemDivisionData: dropdownOptionsInterface[] = [
   { value: '', label: 'All' },
@@ -42,6 +41,11 @@ const useStatusOptionValue: dropdownOptionsInterface[] = [
   { value: 'D', label: 'Not Valid' },
 ];
 
+export interface detailGroupCredential {
+  biz_ctgo_cd : string;
+  grup_cd_id : string;
+}
+
 const WAZ021100 = () => {
   const screenId = 'WSZ0211000';
   const [outVoSAZ02F110R, setOutVoSAZ02F110R] = useState<SAZ02F110ROutVo>();
@@ -63,8 +67,11 @@ const WAZ021100 = () => {
   const [selectedRow, setSelectedRow] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [openGroupCodeModal, setOpenGroupCodeModal] = useState<boolean>(false);
-  const [openDetailCodeModal, setOpenDetailCodeModal] =
-    useState<boolean>(false);
+  const [openDetailCodeModal, setOpenDetailCodeModal] = useState<boolean>(false);
+  const [openGroupCodeUpdateModal, setOpenGroupCodeUpdateModal] = useState<boolean>(false);
+  const [openDetailCodeUpdateModal, setOpenDetailCodeUpdateModal] = useState<boolean>(false);
+
+  const [detailCredential, setDetailCredential] = useState<detailGroupCredential>();
 
   const handlerCloseGroupCodeModal = () => {
     setOpenGroupCodeModal(false);
@@ -80,6 +87,22 @@ const WAZ021100 = () => {
 
   const handleOpenDetailCodeModal = () => {
     setOpenDetailCodeModal(true);
+  };
+  
+  const handlerCloseUpdateModal = () => {
+    setOpenGroupCodeUpdateModal(false);
+  };
+  
+  const handleOpenUpdateModal = () => {
+    setOpenGroupCodeUpdateModal(true);
+  };
+
+  const handlerCloseDetailCodeUpdateModal = () => {
+    setOpenDetailCodeUpdateModal(false);
+  };
+
+  const handleOpenDetailCodeUpdateModal = () => {
+    setOpenDetailCodeUpdateModal(true);
   };
 
   const handleSelectRow = (id: string) => {
@@ -112,10 +135,10 @@ const WAZ021100 = () => {
       data.page_no = pageNo;
       data.page_size = pageSize;
 
-      const listData = await callSAZ02F110R(screenId, data).catch((err) => {
-        throw new Error(err);
-      });
-      // const listData = await mockupCallSAZ02F110R()
+      // const listData = await callSAZ02F110R(screenId, data).catch((err) => {
+      //   throw new Error(err);
+      // });
+      const listData = await mockupCallSAZ02F110R()
       setOutVoSAZ02F110R(listData);
       setLoading(() => false);
     } catch (error) {
@@ -138,10 +161,11 @@ const WAZ021100 = () => {
       data.page_no = pageNo;
       data.page_size = pageSize;
 
-      const listData = await callSAZ02F114R(screenId, data).catch((err) => {
-        throw new Error(err);
-      });
-      // const listData = await mockupCallSAZ02F114R();
+      // const listData = await callSAZ02F114R(screenId, data).catch((err) => {
+      //   throw new Error(err);
+      // });
+      const listData = await mockupCallSAZ02F114R();
+
       setOutVoSAZ02F114R(listData);
       setLoading(() => false);
     } catch (error) {
@@ -313,7 +337,7 @@ const WAZ021100 = () => {
                 mx-8
               `}
             >
-              List
+              Detail List
             </label>
 
             <div
@@ -330,12 +354,13 @@ const WAZ021100 = () => {
                 Add
               </Button>
             </div>
-            <AddGroupCodeList
-              open={openGroupCodeModal}
-              screenId="AZ0211000"
-              onClose={handlerCloseGroupCodeModal}
-            />
           </div>
+          <AddGroupCodeList
+            open={openGroupCodeModal}
+            screenId="AZ0211000"
+            onClose={handlerCloseGroupCodeModal}
+          />
+
           <div
             className={`
             overflow-x-auto
@@ -390,6 +415,10 @@ const WAZ021100 = () => {
                           <Button
                             type={ButtonTypeEnum.SUCCESS}
                             onClickHandler={() => {
+                              setDetailCredential({
+                                biz_ctgo_cd : item.biz_ctgo_cd,
+                                grup_cd_id : item.grup_cd_id
+                              })
                               viewDetail(
                                 item.biz_ctgo_cd,
                                 item.grup_cd_id,
@@ -402,13 +431,18 @@ const WAZ021100 = () => {
                           </Button>
                           <Button
                             type={ButtonTypeEnum.WARNING}
-                            onClickHandler={() => {
-                              console.log(`update for ${item.grup_cd_id}`);
-                            }}
+                            onClickHandler={handleOpenUpdateModal}
                             small
                           >
                             Edit
                           </Button>
+                          <UpdateGroupCodeList data={{
+                            biz_ctgo_id : item.biz_ctgo_cd,
+                            group_cd_id : item.grup_cd_id,
+                            cd_expl : item.cd_expl,
+                            data_stat_cd : item.data_stat_cd,
+                            msg_nm : [item.msg_nm, item.msg_nm],
+                          }} onClose={handlerCloseUpdateModal} screenId={screenId} open={openGroupCodeUpdateModal} />
                         </td>
                       </tr>
                     );
@@ -543,15 +577,23 @@ const WAZ021100 = () => {
                         <td className={`px-2 py-1`}>
                           <Button
                             type={ButtonTypeEnum.WARNING}
-                            onClickHandler={() => {
-                              console.log(
-                                `update for ${item.cmmn_cd_id}${item.dtl_cd_id}`,
-                              );
-                            }}
+                            onClickHandler={handleOpenDetailCodeUpdateModal}
                             small
                           >
                             Edit
                           </Button>
+                          <UpdateDetailCodeList
+                            data={{
+                              ...item,
+                              sort_req : 1,
+                              msg_nm : [item.msg_nm, item.msg_nm],
+                            }}
+                            biz_ctgo_cd={detailCredential.biz_ctgo_cd}
+                            grup_cd_id={detailCredential.grup_cd_id}
+                            onClose={handlerCloseDetailCodeUpdateModal}
+                            screenId={screenId}
+                            open={openDetailCodeUpdateModal}
+                          />
                         </td>
                       </tr>
                     );

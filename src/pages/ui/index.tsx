@@ -2,7 +2,7 @@ import { Button, Dropdown, InputText, Loading } from '@/components';
 import {
   AddGroupCodeList,
   addNewGroupCode,
-} from '@/components/organisms/az/waz0211000/AddGroupCodeList';
+} from '@/pages/az/waz0211000/AddGroupCodeList';
 import { ButtonTypeEnum } from '@/enums';
 import { MainLayout } from '@/layout';
 import { dropdownOptionsInterface } from '@/types';

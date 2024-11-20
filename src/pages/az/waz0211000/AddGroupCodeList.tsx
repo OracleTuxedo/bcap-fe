@@ -1,7 +1,7 @@
 import { dropdownOptionsInterface } from '@/types';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Loading from '../../Loading';
+import Loading from '../../../components/organisms/Loading';
 import { SAZ02F111UInSub1Vo, SAZ02F111UInSub2Vo, SAZ02F111UInVo } from '@/dto';
 import { callSAZ02F111U } from '@/services';
 
