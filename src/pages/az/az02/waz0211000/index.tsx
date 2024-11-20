@@ -316,7 +316,6 @@ const WAZ021100 = () => {
                   `}
               >
                 <tr>
-                  <th className={`px-2 py-1`}>St</th>
                   <th className={`px-2 py-1`}>No</th>
                   <th className={`px-2 py-1`}>System Division</th>
                   <th className={`px-2 py-1`}>Group Code</th>
@@ -336,7 +335,6 @@ const WAZ021100 = () => {
                           even:bg-main-active
                         `}
                       >
-                        <td className={`px-2 py-1`}></td>
                         <td className={`px-2 py-1`}>{index + 1}</td>
                         <td className={`px-2 py-1`}>{item.biz_ctgo_cd}</td>
                         <td className={`px-2 py-1`}>{item.grup_cd_id}</td>
@@ -418,7 +416,6 @@ const WAZ021100 = () => {
                   `}
               >
                 <tr>
-                  <th className={`px-2 py-1`}>St</th>
                   <th className={`px-2 py-1`}>
                     <input
                       type="checkbox"
@@ -436,6 +433,7 @@ const WAZ021100 = () => {
                   <th className={`px-2 py-1`}>Ext 1</th>
                   <th className={`px-2 py-1`}>Ext 2</th>
                   <th className={`px-2 py-1`}>Display Option</th>
+                  <th className={`px-2 py-1`}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -448,7 +446,6 @@ const WAZ021100 = () => {
                           even:bg-main-active
                         `}
                       >
-                        <td className={`px-2 py-1`}>{''}</td>
                         <td className={`px-2 py-1`}>
                           <input
                             type="checkbox"
@@ -466,6 +463,13 @@ const WAZ021100 = () => {
                         <td className={`px-2 py-1`}>{item.clss_info_val1}</td>
                         <td className={`px-2 py-1`}>{item.clss_info_val2}</td>
                         <td className={`px-2 py-1`}>{item.clss_info_val3}</td>
+                        <td className={`px-2 py-1`}>
+                          <Button
+                              type={ButtonTypeEnum.WARNING}
+                              onClickHandler={() => {console.log(`update for ${item.cmmn_cd_id}${item.dtl_cd_id}`)}}
+                              small
+                            >Edit</Button>
+                        </td>
                       </tr>
                     );
                   })}
