@@ -74,19 +74,19 @@ const WAZ021100 = () => {
   const onClickSearch = async () => {
     setLoading(() => true);
     try {
-      // const data : SAZ02F110RInVo = new SAZ02F110RInVo()
-      // data.biz_ctgo_cd  = bizCtgoCd;
-      // data.data_stat_cd = dataStatCd;
-      // data.grup_cd_id   = grupCdId;
-      // data.lang_clcd    = langClcd;
-      // data.msg_nm       = msgNm;
-      // data.page_no      = pageNo;
-      // data.page_size    = pageSize;
+      const data : SAZ02F110RInVo = new SAZ02F110RInVo()
+      data.biz_ctgo_cd  = bizCtgoCd;
+      data.data_stat_cd = dataStatCd;
+      data.grup_cd_id   = grupCdId;
+      data.lang_clcd    = langClcd;
+      data.msg_nm       = msgNm;
+      data.page_no      = pageNo;
+      data.page_size    = pageSize;
 
-      // const listData = await callSAZ02F110R(screenId, data).catch((err) => {
-      const listData = await mockupCallSAZ02F110R()
-      //   throw new Error(err);
-      // });
+      const listData = await callSAZ02F110R(screenId, data).catch((err) => {
+        throw new Error(err);
+      });
+      // const listData = await mockupCallSAZ02F110R()
       setOutVoSAZ02F110R(listData);
       setLoading(() => false);
     } catch (error) {
@@ -102,17 +102,17 @@ const WAZ021100 = () => {
   ) => {
     setLoading(() => true);
     try {
-      // const data : SAZ02F114RInVo = new SAZ02F114RInVo()
-      // data.biz_ctgo_cd  = bizCtgoCdDetail;
-      // data.grup_cd_id   = grupCdIdDetail;
-      // data.lang_clcd    = langClcdDetail;
-      // data.page_no      = pageNo;
-      // data.page_size    = pageSize;
+      const data : SAZ02F114RInVo = new SAZ02F114RInVo()
+      data.biz_ctgo_cd  = bizCtgoCdDetail;
+      data.grup_cd_id   = grupCdIdDetail;
+      data.lang_clcd    = langClcdDetail;
+      data.page_no      = pageNo;
+      data.page_size    = pageSize;
 
-      // const listData = await callSAZ02F114R(screenId, data).catch((err) => {
-      const listData = await mockupCallSAZ02F114R();
-      //   throw new Error(err);
-      // });
+      const listData = await callSAZ02F114R(screenId, data).catch((err) => {
+        throw new Error(err);
+      });
+      // const listData = await mockupCallSAZ02F114R();
       setOutVoSAZ02F114R(listData);
       setLoading(() => false);
     } catch (error) {
