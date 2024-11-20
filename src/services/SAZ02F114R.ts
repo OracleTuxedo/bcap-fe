@@ -52,7 +52,7 @@ const decodeSAZ02F110R = (
   return parsed;
 };
 
-const callSAZ02F114R = async (inVo: SAZ02F114RInVo, screenId: string) => {
+const callSAZ02F114R = async (screenId: string, inVo: SAZ02F114RInVo) => {
   console.log("callSAZ02F114R");
 
   const requestToTuxedo: string | null = encodeSAZ02F114R(screenId, inVo);

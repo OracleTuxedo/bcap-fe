@@ -1,11 +1,11 @@
 import { Button, Dropdown, InputText, Loading } from '@/components';
 import { ButtonTypeEnum } from '@/enums';
-import { SAZ02F110ROutVo } from '@/dto/SAZ02F110R';
-import { SAZ02F114ROutVo } from '@/dto/SAZ02F114R';
 import { MainLayout } from '@/layout';
 import { dropdownOptionsInterface } from '@/types';
 import { ChangeEvent, ReactElement, useState } from 'react';
-import { callSAZ02F110R } from '@/services';
+import { callSAZ02F110R, callSAZ02F114R } from '@/services';
+import { SAZ02F110RInVo, SAZ02F110ROutVo, SAZ02F114RInVo, SAZ02F114ROutVo } from '@/dto';
+import { mockupCallSAZ02F110R, mockupCallSAZ02F114R } from '@/services/mockup';
 
 const systemDivisionData: dropdownOptionsInterface[] = [
   { value: '', label: 'All' },
@@ -15,9 +15,9 @@ const systemDivisionData: dropdownOptionsInterface[] = [
   { value: 'TMS', label: 'TMS' },
   { value: 'WDS', label: 'WDS' },
   { value: 'AUT', label: 'Authorization' },
-  { value: 'C&S', label: 'Clearing & Settlement' },
+  { value: 'ACA', label: 'Clearing & Settlement' },
   { value: 'MET', label: 'Metering' },
-  { value: 'ADM', label: 'Admin & Common' },
+  { value: 'AZA', label: 'Admin & Common' },
   { value: 'EXT', label: 'External' },
 ];
 
@@ -74,18 +74,19 @@ const WAZ021100 = () => {
   const onClickSearch = async () => {
     setLoading(() => true);
     try {
-      const listData = await callSAZ02F110R(screenId, 
-        {
-          biz_ctgo_cd : bizCtgoCd,
-          data_stat_cd : dataStatCd,
-          grup_cd_id : grupCdId,
-          lang_clcd : langClcd,
-          msg_nm : msgNm,
-          page_no : pageNo,
-          page_size : pageSize,
-      }).catch((err) => {
+      const data : SAZ02F110RInVo = new SAZ02F110RInVo()
+      data.biz_ctgo_cd  = bizCtgoCd;
+      data.data_stat_cd = dataStatCd;
+      data.grup_cd_id   = grupCdId;
+      data.lang_clcd    = langClcd;
+      data.msg_nm       = msgNm;
+      data.page_no      = pageNo;
+      data.page_size    = pageSize;
+
+      const listData = await callSAZ02F110R(screenId, data).catch((err) => {
         throw new Error(err);
       });
+      // const listData = await mockupCallSAZ02F110R()
       setOutVoSAZ02F110R(listData);
       setLoading(() => false);
     } catch (error) {
@@ -94,8 +95,36 @@ const WAZ021100 = () => {
     }
   };
 
+  const viewDetail = async (
+    bizCtgoCdDetail : string,
+    grupCdIdDetail : string,
+    langClcdDetail : string,
+  ) => {
+    setLoading(() => true);
+    try {
+      const data : SAZ02F114RInVo = new SAZ02F114RInVo()
+      data.biz_ctgo_cd  = bizCtgoCdDetail;
+      data.grup_cd_id   = grupCdIdDetail;
+      data.lang_clcd    = langClcdDetail;
+      data.page_no      = pageNo;
+      data.page_size    = pageSize;
+
+      const listData = await callSAZ02F114R(screenId, data).catch((err) => {
+        throw new Error(err);
+      });
+      // const listData = await mockupCallSAZ02F114R();
+      setOutVoSAZ02F114R(listData);
+      setLoading(() => false);
+    } catch (error) {
+      setLoading(() => false);
+      console.log(error);
+    }
+  };
+
   if (loading) {
-    <Loading />
+    return (
+      <Loading />
+    )
   }
 
   return (
@@ -294,6 +323,7 @@ const WAZ021100 = () => {
                   <th className={`px-2 py-1`}>Group Code Name</th>
                   <th className={`px-2 py-1`}>Use Status</th>
                   <th className={`px-2 py-1`}>Description</th>
+                  <th className={`px-2 py-1`}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -311,17 +341,29 @@ const WAZ021100 = () => {
                         <td className={`px-2 py-1`}>{item.biz_ctgo_cd}</td>
                         <td className={`px-2 py-1`}>{item.grup_cd_id}</td>
                         <td className={`px-2 py-1`}>{`${item.msg_nm}`}</td>
-                        <td className={`text-wrap px-2 py-1`}>
-                          <Dropdown value={item.data_stat_cd} options={useStatusOptionValue} onChangeHandler={(e) => {
-                            setOutVoSAZ02F110R((prev) => ({
-                              ...prev, sub1_vos : {
-                                ...prev.sub1_vos,
-                                data_stat_cd : e.target.value
-                              }
-                            }))
-                          } } name={`use-statue-${index}`} />
+                        <td className={`px-2 py-1`}>{
+                          item.data_stat_cd == 'U' ? 'Valid' : 'Not Valid'
+                        }</td>
+                        <td className={`text-wrap px-2 py-1`}>{item.cd_expl}</td>
+                        <td className={`px-2 py-1`}>
+                          <Button
+                            type={ButtonTypeEnum.DEFAULT}
+                            onClickHandler={() => {
+                              viewDetail(item.biz_ctgo_cd, item.grup_cd_id, 'EN')
+                            }}
+                            small
+                          >View</Button>
+                          <Button
+                            type={ButtonTypeEnum.WARNING}
+                            onClickHandler={() => {console.log(`update for ${item.grup_cd_id}`)}}
+                            small
+                          >Edit</Button>
+                          <Button
+                            type={ButtonTypeEnum.DANGER}
+                            onClickHandler={() => {console.log(`delete for ${item.grup_cd_id}`)}}
+                            small
+                          >Delete</Button>
                         </td>
-                        <td className={`px-2 py-1`}>{item.cd_expl}</td>
                       </tr>
                     );
                   })}
@@ -381,7 +423,7 @@ const WAZ021100 = () => {
                   `}
               >
                 <tr>
-                  <th>St</th>
+                  <th className={`px-2 py-1`}>St</th>
                   <th className={`px-2 py-1`}>
                     <input
                       type="checkbox"
@@ -389,16 +431,16 @@ const WAZ021100 = () => {
                       checked={selectAll}
                     />
                   </th>
-                  <th>No</th>
-                  <th>Group Code ID</th>
-                  <th>Detail Code ID</th>
-                  <th>Code Name</th>
-                  <th>Sort No</th>
-                  <th>Use Status</th>
-                  <th>Description</th>
-                  <th>Ext 1</th>
-                  <th>Ext 2</th>
-                  <th>Display Option</th>
+                  <th className={`px-2 py-1`}>No</th>
+                  <th className={`px-2 py-1`}>Group Code ID</th>
+                  <th className={`px-2 py-1`}>Detail Code ID</th>
+                  <th className={`px-2 py-1`}>Code Name</th>
+                  <th className={`px-2 py-1`}>Sort No</th>
+                  <th className={`px-2 py-1`}>Use Status</th>
+                  <th className={`px-2 py-1`}>Description</th>
+                  <th className={`px-2 py-1`}>Ext 1</th>
+                  <th className={`px-2 py-1`}>Ext 2</th>
+                  <th className={`px-2 py-1`}>Display Option</th>
                 </tr>
               </thead>
               <tbody>
@@ -411,23 +453,24 @@ const WAZ021100 = () => {
                           even:bg-main-active
                         `}
                       >
-                        <td>{''}</td>
-                        <td>
+                        <td className={`px-2 py-1`}>{''}</td>
+                        <td className={`px-2 py-1`}>
                           <input
                             type="checkbox"
                             checked={selectedRow.includes(item.cmmn_cd_id)}
                             onChange={() => handleSelectRow(item.cmmn_cd_id)}
                           />
                         </td>
-                        <td>{item.cmmn_cd_id}</td>
-                        <td>{item.dtl_cd_id}</td>
-                        <td>{item.msg_nm}</td>
-                        <td>{item.sort_seq}</td>
-                        <td>{item.data_stat_cd}</td>
-                        <td>{item.cd_expl}</td>
-                        <td>{item.clss_info_val1}</td>
-                        <td>{item.clss_info_val2}</td>
-                        <td>{item.clss_info_val3}</td>
+                        <td className={`px-2 py-1`}>{index+1}</td>
+                        <td className={`px-2 py-1`}>{item.cmmn_cd_id}</td>
+                        <td className={`px-2 py-1`}>{item.dtl_cd_id}</td>
+                        <td className={`px-2 py-1`}>{item.msg_nm}</td>
+                        <td className={`px-2 py-1`}>{item.sort_seq}</td>
+                        <td className={`px-2 py-1`}>{item.data_stat_cd == 'U' ? 'Valid' : 'Not Valid'}</td>
+                        <td className={`px-2 py-1`}>{item.cd_expl}</td>
+                        <td className={`px-2 py-1`}>{item.clss_info_val1}</td>
+                        <td className={`px-2 py-1`}>{item.clss_info_val2}</td>
+                        <td className={`px-2 py-1`}>{item.clss_info_val3}</td>
                       </tr>
                     );
                   })}
