@@ -1,7 +1,8 @@
-import { Dropdown } from '@/components/atoms';
 import { dropdownOptionsInterface } from '@/types';
 import { useState } from 'react';
-import { useForm, UseFormHandleSubmit } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import Loading from '../../Loading';
+import { SAZ02F111UInSub1Vo } from '@/dto';
 
 export type GroupCodeMessageList = {
   biz_cd: string;
@@ -50,20 +51,29 @@ export interface AddGroupCodeListProps {
   groupCodeMessageList?: GroupCodeMessageList[];
 }
 
-export const AddGroupCodeList = ({
-  open,
-  onClose,
-  onConfirm,
-}: AddGroupCodeListProps) => {
+export const AddGroupCodeList = ({ open, onClose }: AddGroupCodeListProps) => {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<addNewGroupCode>();
 
-  const onSubmit = (data: addNewGroupCode) => {
-    console.log(data);
+  const onSubmit = async (value: addNewGroupCode) => {
+    setLoading(true);
+    try {
+      const data: SAZ02F111UInSub1Vo;
+
+      setload;
+    } catch (err: unknown) {
+      console.log(err);
+    }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div>
