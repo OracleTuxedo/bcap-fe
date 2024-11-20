@@ -2,10 +2,10 @@ import { dropdownOptionsInterface } from '@/types';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Loading from '../../Loading';
-import { SAZ02F111UInSub1Vo, SAZ02F111UInSub2Vo, SAZ02F111UInVo } from '@/dto';
+import { SAZ02F111UInSub3Vo, SAZ02F111UInSub4Vo, SAZ02F111UInVo } from '@/dto';
 import { callSAZ02F111U } from '@/services';
 
-export type GroupCodeMessageList = {
+export type DetailCodeMessageList = {
   biz_cd: string;
   msg_id: string;
   lang_clcd: string[];
@@ -13,11 +13,16 @@ export type GroupCodeMessageList = {
   data_stat_cd: string;
 };
 
-export type GroupCodeList = {
-  biz_cd: string;
-  biz_ctgo_cd: string;
-  grup_cd_id: string;
+export type DetailCodeList = {
+  biz_clcd: string;
+  cmmn_cd_id: string;
+  dtl_cd_id: string;
+  msg_nm: string;
+  sort_req: number;
   data_stat_cd: string;
+  clss_info_val1: string;
+  clss_info_val2: string;
+  clss_info_val3: string;
   cd_expl: string;
 };
 
@@ -26,11 +31,18 @@ export type messageList = {
   value: string;
 };
 
-export type addNewGroupCode = Pick<
-  GroupCodeList,
-  'biz_ctgo_cd' | 'grup_cd_id' | 'cd_expl' | 'data_stat_cd'
+export type addNewDetailCode = Pick<
+  DetailCodeList,
+  | 'cmmn_cd_id'
+  | 'dtl_cd_id'
+  | 'sort_req'
+  | 'data_stat_cd'
+  | 'clss_info_val1'
+  | 'clss_info_val2'
+  | 'clss_info_val3'
+  | 'cd_expl'
 > &
-  Pick<GroupCodeMessageList, 'msg_nm'>;
+  Pick<DetailCodeMessageList, 'msg_nm'>;
 
 const useStatusData: dropdownOptionsInterface[] = [
   { value: 'U', label: 'Valid' },
@@ -46,15 +58,16 @@ const languageCode: messageList[] = [
 ];
 export interface AddGroupCodeListProps {
   open: boolean;
+  biz_ctgo_cd: string;
+  grup_cd_id: string;
   onClose: () => void;
   screenId: string;
-  codeType?: string;
-  groupCodeList?: GroupCodeList;
-  groupCodeMessageList?: GroupCodeMessageList[];
 }
 
-export const AddGroupCodeList = ({
+export const AddDetailCodeList = ({
   open,
+  biz_ctgo_cd,
+  grup_cd_id,
   screenId,
   onClose,
 }: AddGroupCodeListProps) => {
@@ -64,35 +77,39 @@ export const AddGroupCodeList = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<addNewGroupCode>();
+  } = useForm<addNewDetailCode>();
 
-  const onSubmit = async (value: addNewGroupCode) => {
+  const onSubmit = async (value: addNewDetailCode) => {
     setLoading(true);
     try {
-      const groupCodeList = new SAZ02F111UInSub1Vo();
-      groupCodeList.biz_clcd = 'I';
-      groupCodeList.biz_ctgo_cd = value.biz_ctgo_cd;
-      groupCodeList.grup_cd_id = value.grup_cd_id;
-      groupCodeList.data_stat_cd = value.data_stat_cd;
-      groupCodeList.cd_expl = value.cd_expl;
+      const detailCodeList = new SAZ02F111UInSub3Vo();
+      detailCodeList.cmmn_cd_id = value.cmmn_cd_id;
+      detailCodeList.dtl_cd_id = value.dtl_cd_id;
+      detailCodeList.msg_nm = '';
+      detailCodeList.sort_req = value.sort_req;
+      detailCodeList.data_stat_cd = value.data_stat_cd;
+      detailCodeList.clss_info_val1 = value.clss_info_val1;
+      detailCodeList.clss_info_val2 = value.clss_info_val2;
+      detailCodeList.clss_info_val3 = value.clss_info_val3;
+      detailCodeList.cd_expl = value.cd_expl;
 
-      const groupCodeMessageEn = new SAZ02F111UInSub2Vo();
-      groupCodeMessageEn.biz_clcd = 'I';
-      groupCodeMessageEn.msg_id = value.biz_ctgo_cd + value.grup_cd_id;
-      groupCodeMessageEn.lang_clcd = 'EN';
-      groupCodeMessageEn.msg_nm = value.msg_nm[0];
-      groupCodeMessageEn.data_stat_cd = value.data_stat_cd;
+      const detailCodeMessageEn = new SAZ02F111UInSub4Vo();
+      detailCodeMessageEn.biz_clcd = 'I';
+      detailCodeMessageEn.msg_id = biz_ctgo_cd + grup_cd_id;
+      detailCodeMessageEn.lang_clcd = 'EN';
+      detailCodeMessageEn.msg_nm = value.msg_nm[0];
+      detailCodeMessageEn.data_stat_cd = value.data_stat_cd;
 
-      const groupCodeMessageId = new SAZ02F111UInSub2Vo();
-      groupCodeMessageId.biz_clcd = 'I';
-      groupCodeMessageId.msg_id = value.biz_ctgo_cd + value.grup_cd_id;
-      groupCodeMessageId.lang_clcd = 'ID';
-      groupCodeMessageId.msg_nm = value.msg_nm[1];
-      groupCodeMessageId.data_stat_cd = value.data_stat_cd;
+      const detailCodeMessageId = new SAZ02F111UInSub4Vo();
+      detailCodeMessageId.biz_clcd = 'I';
+      detailCodeMessageId.msg_id = biz_ctgo_cd + grup_cd_id;
+      detailCodeMessageId.lang_clcd = 'ID';
+      detailCodeMessageId.msg_nm = value.msg_nm[1];
+      detailCodeMessageId.data_stat_cd = value.data_stat_cd;
 
       const inVo = new SAZ02F111UInVo();
-      inVo.sub1_vos = [groupCodeList];
-      inVo.sub2_vos = [groupCodeMessageEn, groupCodeMessageId];
+      inVo.sub3_vos = [detailCodeList];
+      inVo.sub4_vos = [detailCodeMessageEn, detailCodeMessageId];
 
       await callSAZ02F111U(inVo, screenId).catch((err) => {
         throw new Error(err);
@@ -136,37 +153,37 @@ export const AddGroupCodeList = ({
           <div className={`bg-white p-6 rounded shadow-lg w-[30rem]`}>
             <form className="flex flex-1 flex-col">
               <div className={containerStyle}>
-                <label className={labelStyle}>System Division</label>
+                <label className={labelStyle}>Group Code ID</label>
                 <input
-                  id="biz_ctgo_cd"
+                  id="cmmn_cd_id"
                   className={inputStyle}
                   type="text"
-                  {...register('biz_ctgo_cd', {
+                  {...register('cmmn_cd_id', {
                     required: 'required',
                   })}
                 />
                 <label>
-                  {errors['biz_ctgo_cd'] ? errors['biz_ctgo_cd'].message : ''}
+                  {errors['cmmn_cd_id'] ? errors['cmmn_cd_id'].message : ''}
                 </label>
               </div>
 
               <div className={containerStyle}>
-                <label className={labelStyle}>Grup Code</label>
+                <label className={labelStyle}>Detail Code ID</label>
                 <input
-                  id="grup_cd_id"
+                  id="dtl_cd_id"
                   className={inputStyle}
                   type="text"
-                  {...register('grup_cd_id', {
+                  {...register('dtl_cd_id', {
                     required: 'required',
                   })}
                 />
                 <label>
-                  {errors['grup_cd_id'] ? errors['grup_cd_id'].message : ''}
+                  {errors['dtl_cd_id'] ? errors['dtl_cd_id'].message : ''}
                 </label>
               </div>
 
               <div>
-                <label className={labelStyle}>Group Code Name</label>
+                <label className={labelStyle}>Code Name</label>
                 <div>
                   {languageCode.map((item, index) => (
                     <div className={containerStyle} key={item.label + index}>
@@ -185,6 +202,21 @@ export const AddGroupCodeList = ({
                     </div>
                   ))}
                 </div>
+              </div>
+
+              <div className={containerStyle}>
+                <label className={labelStyle}>Sort No</label>
+                <input
+                  id="sort_req"
+                  className={inputStyle}
+                  type="text"
+                  {...register('sort_req', {
+                    required: 'required',
+                  })}
+                />
+                <label>
+                  {errors['sort_req'] ? errors['sort_req'].message : ''}
+                </label>
               </div>
 
               <div className={containerStyle}>
@@ -218,6 +250,56 @@ export const AddGroupCodeList = ({
                 />
                 <label>
                   {errors['cd_expl'] ? errors['cd_expl'].message : ''}
+                </label>
+              </div>
+
+              <div className={containerStyle}>
+                <label className={labelStyle}>Ext 1</label>
+                <input
+                  id="clss_info_val1"
+                  className={inputStyle}
+                  type="text"
+                  {...register('clss_info_val1', {
+                    required: 'required',
+                  })}
+                />
+                <label>
+                  {errors['clss_info_val1']
+                    ? errors['clss_info_val1'].message
+                    : ''}
+                </label>
+              </div>
+
+              <div className={containerStyle}>
+                <label className={labelStyle}>Ext 2</label>
+                <input
+                  id="clss_info_val2"
+                  className={inputStyle}
+                  type="text"
+                  {...register('clss_info_val2', {
+                    required: 'required',
+                  })}
+                />
+                <label>
+                  {errors['clss_info_val2']
+                    ? errors['clss_info_val2'].message
+                    : ''}
+                </label>
+              </div>
+              <div className={containerStyle}>
+                <label className={labelStyle}>Display Option</label>
+                <input
+                  id="clss_info_val3"
+                  className={inputStyle}
+                  type="text"
+                  {...register('clss_info_val3', {
+                    required: 'required',
+                  })}
+                />
+                <label>
+                  {errors['clss_info_val3']
+                    ? errors['clss_info_val3'].message
+                    : ''}
                 </label>
               </div>
             </form>

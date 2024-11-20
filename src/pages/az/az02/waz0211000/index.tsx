@@ -15,6 +15,7 @@ import {
   AddGroupCodeList,
   addNewGroupCode,
 } from '@/components/organisms/az/waz0211000/AddGroupCodeList';
+import { AddDetailCodeList } from '@/components/organisms/az/waz0211000/AddDetailCodeList';
 
 const systemDivisionData: dropdownOptionsInterface[] = [
   { value: '', label: 'All' },
@@ -62,13 +63,23 @@ const WAZ021100 = () => {
   const [selectedRow, setSelectedRow] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [openGroupCodeModal, setOpenGroupCodeModal] = useState<boolean>(false);
+  const [openDetailCodeModal, setOpenDetailCodeModal] =
+    useState<boolean>(false);
 
-  const handlerCloseModal = () => {
+  const handlerCloseGroupCodeModal = () => {
     setOpenGroupCodeModal(false);
   };
 
-  const handleOpenModal = () => {
+  const handleOpenGroupCodeModal = () => {
     setOpenGroupCodeModal(true);
+  };
+
+  const handlerCloseDetailCodeModal = () => {
+    setOpenDetailCodeModal(false);
+  };
+
+  const handleOpenDetailCodeModal = () => {
+    setOpenDetailCodeModal(true);
   };
 
   const handleSelectRow = (id: string) => {
@@ -313,7 +324,7 @@ const WAZ021100 = () => {
             >
               <Button
                 type={ButtonTypeEnum.SUCCESS}
-                onClickHandler={handleOpenModal}
+                onClickHandler={handleOpenGroupCodeModal}
                 white
               >
                 Add
@@ -322,7 +333,7 @@ const WAZ021100 = () => {
             <AddGroupCodeList
               open={openGroupCodeModal}
               screenId="AZ0211000"
-              onClose={handlerCloseModal}
+              onClose={handlerCloseGroupCodeModal}
             />
           </div>
           <div
@@ -444,11 +455,18 @@ const WAZ021100 = () => {
             >
               <Button
                 type={ButtonTypeEnum.SUCCESS}
-                onClickHandler={() => console.log('add detail')}
+                onClickHandler={handleOpenDetailCodeModal}
                 white
               >
                 Add
               </Button>
+              <AddDetailCodeList
+                open={openDetailCodeModal}
+                grup_cd_id={grupCdId}
+                biz_ctgo_cd={bizCtgoCd}
+                screenId="AZ0211000"
+                onClose={handlerCloseDetailCodeModal}
+              />
             </div>
           </div>
 
