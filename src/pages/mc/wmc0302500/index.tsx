@@ -273,9 +273,11 @@ const WMC0302500 = () => {
               </Button>
             </div>
           </div>
-          <div className={`
-            overflow-x-auto
-          `}>
+          <div 
+            className={`
+              overflow-x-auto
+            `}
+          >
             <table
               id="table-list"
               className={`
@@ -406,9 +408,10 @@ const WMC0302500 = () => {
             </label>
           </div>
 
-          <div className={`
-            overflow-x-auto
-          `}>
+          <div
+            className={`
+              overflow-x-auto
+            `}>
             <table
               id="table-detail"
               className={`

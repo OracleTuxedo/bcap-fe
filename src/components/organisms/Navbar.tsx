@@ -8,10 +8,10 @@ export interface NavbarInterface {
 
 const Navbar = ({activeTab, setState} : NavbarInterface) => {
     return(
-        <div className={`flex`}>
         <div
+            id="navbar"
             className={`
-                flex flex-row w-full
+                flex flex-1 flex-row w-full
                 bg-secondary
                 border-b-4
                 border-b-yellow
@@ -25,7 +25,7 @@ const Navbar = ({activeTab, setState} : NavbarInterface) => {
                 onClick={() => setState(TabEnum.MERCHANT)}
             />
 
-            <div className={`flex  flex-row items-end ml-12`}>
+            <div className={`flex flex-row items-end ml-12`}>
                 <TabItem active={activeTab} tabName={TabEnum.SFA} onClickHandler={() => setState(TabEnum.SFA)}/>
                 <TabItem active={activeTab} tabName={TabEnum.MERCHANT} onClickHandler={() => setState(TabEnum.MERCHANT)}/>
                 <TabItem active={activeTab} tabName={TabEnum.MMP} onClickHandler={() => setState(TabEnum.MMP)}/>
@@ -39,7 +39,6 @@ const Navbar = ({activeTab, setState} : NavbarInterface) => {
                 <TabItem active={activeTab} tabName={TabEnum.EDUTEST} onClickHandler={() => setState(TabEnum.EDUTEST)}/>
             </div>
         </div>
-    </div>
     );
 }
 

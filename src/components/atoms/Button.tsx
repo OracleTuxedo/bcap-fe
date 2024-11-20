@@ -33,7 +33,7 @@ const Button = ( { type, white, small, disable = false, onClickHandler, children
         <button onClick={onClickHandler}
             className={`
                 flex flex-1
-                ${small ? 'px-2 py-1' : 'px-8 py-2'}
+                ${small ? 'px-2 py-1 m-1' : 'px-8 py-2 m-1'}
                 rounded-lg
                 ${bgColor}
                 ${white ? 'text-white' : 'text-black'}
