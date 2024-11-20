@@ -232,7 +232,7 @@ const WMC0302500 = () => {
         <div
           id="list"
           className={`
-            h-72
+            h-96
             m-2
             flex flex-col
             justify-start
@@ -384,7 +384,7 @@ const WMC0302500 = () => {
             flex flex-col
             justify-start
             border
-            h-60
+            h-80
             m-2
             text-lg
           `}
