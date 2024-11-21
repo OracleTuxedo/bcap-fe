@@ -549,7 +549,7 @@ const WAZ021100 = () => {
                   cd_expl : updateListValue.cd_expl,
                   data_stat_cd : updateListValue.data_stat_cd,
                   group_cd_id : updateListValue.group_cd_id,
-                  msg_nm : [updateListValue.msg_nm[0], updateListValue.msg_nm[1]],
+                  msg_nm : updateListValue.msg_nm,
                 }}
                 onClose={handlerCloseUpdateModal}
                 screenId={screenId}
@@ -676,20 +676,20 @@ const WAZ021100 = () => {
                           >
                             Edit
                           </Button>
-                          <UpdateDetailCodeList
-                            data={updateDetailValue}
-                            biz_ctgo_cd={detailCredential.biz_ctgo_cd}
-                            grup_cd_id={detailCredential.grup_cd_id}
-                            onClose={handlerCloseDetailCodeUpdateModal}
-                            screenId={screenId}
-                            open={updateDetailValue.isOpen}
-                        />
                         </td>
                       </tr>
                     );
                   })}
               </tbody>
             </table>
+              <UpdateDetailCodeList
+                data={updateDetailValue}
+                biz_ctgo_cd={detailCredential.biz_ctgo_cd}
+                grup_cd_id={detailCredential.grup_cd_id}
+                onClose={handlerCloseDetailCodeUpdateModal}
+                screenId={screenId}
+                open={updateDetailValue.isOpen}
+              />
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { dropdownOptionsInterface } from '@/types';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Loading from '../../../components/organisms/Loading';
 import { SAZ02F111UInSub1Vo, SAZ02F111UInSub2Vo, SAZ02F111UInVo } from '@/dto';
@@ -63,7 +63,7 @@ export const UpdateGroupCodeList = ({
 }: UpdateGroupCodeListProps) => {
 
   console.log("data", data);
-  
+
   const [loading, setLoading] = useState<boolean>(false);
   const [updateValue, setUpdateValue] = useState<addNewGroupCode>(data);
 
@@ -77,7 +77,7 @@ export const UpdateGroupCodeList = ({
       group_cd_id : '',
       cd_expl : '',
       data_stat_cd : '',
-      msg_nm : ['', ''],
+      msg_nm : [''],
     }
   });
 
@@ -102,7 +102,7 @@ export const UpdateGroupCodeList = ({
       groupCodeMessageId.biz_clcd = 'U';
       groupCodeMessageId.msg_id = value.biz_ctgo_id + value.group_cd_id;
       groupCodeMessageId.lang_clcd = 'ID';
-      groupCodeMessageId.msg_nm = value.msg_nm[1];
+      groupCodeMessageId.msg_nm = value.msg_nm[0];
       groupCodeMessageId.data_stat_cd = value.data_stat_cd;
 
       const inVo = new SAZ02F111UInVo();
@@ -205,12 +205,10 @@ export const UpdateGroupCodeList = ({
                         type="text"
                         value={updateValue.msg_nm[index]}
                         id={`msg_nm_${index}`}
-                        {...register(`msg_nm.${index}`, {
+                        {...register(`msg_nm`, {
                           required: 'required',
                           onChange : (e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => {
-                              const updatedMsgNm = [...prev.msg_nm];
-                              updatedMsgNm[index] = e.target.value;
-                              return {...prev, msg_nm : updatedMsgNm}
+                              return {...prev, msg_nm : [e.target.value]}
                           })
                         })}
                       />
