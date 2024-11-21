@@ -40,7 +40,7 @@ const Header = ({ screenId, screenName, isFavorite, favoriteHandler } : HeaderIn
                     justify-center items-center
                     w-36 h-10
                     mx-2
-                    bg-badge
+                    bg-badge-blue
                     text-white text-lg
                     shadow-lg
                 `}
