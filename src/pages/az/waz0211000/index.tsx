@@ -537,24 +537,24 @@ const WAZ021100 = () => {
                           >
                             Edit
                           </Button>
-                          <UpdateGroupCodeList
-                            data={{
-                              biz_ctgo_id : updateListValue.biz_ctgo_cd,
-                              cd_expl : updateListValue.cd_expl,
-                              data_stat_cd : updateListValue.data_stat_cd,
-                              group_cd_id : updateListValue.group_cd_id,
-                              msg_nm : [updateListValue.msg_nm[0], updateListValue.msg_nm[1]],
-                            }}
-                            onClose={handlerCloseUpdateModal}
-                            screenId={screenId}
-                            open={updateListValue.isOpen}
-                          />
                         </td>
                       </tr>
                     );
                   })}
               </tbody>
             </table>
+              <UpdateGroupCodeList
+                data={{
+                  biz_ctgo_id : updateListValue.biz_ctgo_cd,
+                  cd_expl : updateListValue.cd_expl,
+                  data_stat_cd : updateListValue.data_stat_cd,
+                  group_cd_id : updateListValue.group_cd_id,
+                  msg_nm : [updateListValue.msg_nm[0], updateListValue.msg_nm[1]],
+                }}
+                onClose={handlerCloseUpdateModal}
+                screenId={screenId}
+                open={updateListValue.isOpen}
+              />
           </div>
         </div>
 

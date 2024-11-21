@@ -61,6 +61,9 @@ export const UpdateGroupCodeList = ({
   onClose,
   data,
 }: UpdateGroupCodeListProps) => {
+
+  console.log("data", data);
+  
   const [loading, setLoading] = useState<boolean>(false);
   const [updateValue, setUpdateValue] = useState<addNewGroupCode>(data);
 
