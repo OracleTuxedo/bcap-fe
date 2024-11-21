@@ -67,19 +67,31 @@ export const UpdateGroupCodeList = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [updateValue, setUpdateValue] = useState<addNewGroupCode>(data);
 
+  console.log(data.biz_ctgo_id);
+
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<addNewGroupCode>({
-    defaultValues : {
-      biz_ctgo_id : '',
-      group_cd_id : '',
-      cd_expl : '',
-      data_stat_cd : '',
-      msg_nm : [''],
-    }
+    defaultValues: {
+      biz_ctgo_id: data.biz_ctgo_id,
+      group_cd_id: data.group_cd_id,
+      cd_expl: '',
+      data_stat_cd: '',
+      msg_nm: ['', ''],
+    },
   });
+
+  useEffect(() => {
+    setValue('biz_ctgo_id', data.biz_ctgo_id);
+    setValue('group_cd_id', data.group_cd_id);
+    setValue('cd_expl', data.cd_expl);
+    setValue('data_stat_cd', data.data_stat_cd);
+    setValue('msg_nm.0', data.msg_nm[0]);
+    setValue('msg_nm.1', data.msg_nm[1]);
+  }, [setValue, data]);
 
   const onSubmit = async (value: addNewGroupCode) => {
     setLoading(true);
@@ -166,11 +178,11 @@ export const UpdateGroupCodeList = ({
                     required: 'required',
                   })}
                 >
-                    {systemDivisionData.map((option, index) => (
-                        <option key={index} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
+                  {systemDivisionData.map((option, index) => (
+                    <option key={index} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
                 </select>
                 <label>
                   {errors['biz_ctgo_id'] ? errors['biz_ctgo_id'].message : ''}
@@ -186,7 +198,11 @@ export const UpdateGroupCodeList = ({
                   type="text"
                   {...register('group_cd_id', {
                     required: 'required',
-                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, group_cd_id : e.target.value}))
+                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        group_cd_id: e.target.value,
+                      })),
                   })}
                 />
                 <label>
@@ -223,11 +239,15 @@ export const UpdateGroupCodeList = ({
               <div className={containerStyle}>
                 <label className={labelStyle}>Use Status</label>
                 <select
-                    value={updateValue.data_stat_cd}
-                    className={inputStyle}
-                    {...register('data_stat_cd', {
-                      required: 'required',
-                      onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, data_stat_cd : e.target.value}))
+                  value={updateValue.data_stat_cd}
+                  className={inputStyle}
+                  {...register('data_stat_cd', {
+                    required: 'required',
+                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        data_stat_cd: e.target.value,
+                      })),
                   })}
                 >
                   {useStatusData.map((item, index) => (
@@ -250,7 +270,11 @@ export const UpdateGroupCodeList = ({
                   type="text"
                   {...register('cd_expl', {
                     required: 'required',
-                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, cd_expl : e.target.value}))
+                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        cd_expl: e.target.value,
+                      })),
                   })}
                 />
                 <label>
