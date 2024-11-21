@@ -11,21 +11,24 @@ import {
   SAZ02F114ROutVo,
 } from '@/dto';
 import { mockupCallSAZ02F110R, mockupCallSAZ02F114R } from '@/services/mockup';
-import {AddGroupCodeList } from '@/pages/az/waz0211000/AddGroupCodeList';
+import { AddGroupCodeList } from '@/pages/az/waz0211000/AddGroupCodeList';
 import { AddDetailCodeList } from '@/pages/az/waz0211000/AddDetailCodeList';
 import { UpdateGroupCodeList } from '@/pages/az/waz0211000/updateGroupCodeList';
-import { UpdateDetailCodeList } from './updateDetailCodeList';
+import {
+  UpdateDetailCodeList,
+  UpdateNewDetailCode,
+} from './updateDetailCodeList';
 
 const systemDivisionData: dropdownOptionsInterface[] = [
   { value: '', label: 'All' },
   { value: 'SFA', label: 'SFA' },
-  { value: 'MER', label: 'Merchant' },
+  { value: 'MCA', label: 'Merchant' },
   { value: 'MMP', label: 'MMP' },
   { value: 'TMS', label: 'TMS' },
   { value: 'WDS', label: 'WDS' },
   { value: 'AUT', label: 'Authorization' },
   { value: 'ACA', label: 'Clearing & Settlement' },
-  { value: 'MET', label: 'Metering' },
+  { value: 'MTA', label: 'Metering' },
   { value: 'AZA', label: 'Admin & Common' },
   { value: 'EXT', label: 'External' },
 ];
@@ -42,8 +45,9 @@ const useStatusOptionValue: dropdownOptionsInterface[] = [
 ];
 
 export interface detailGroupCredential {
-  biz_ctgo_cd : string;
-  grup_cd_id : string;
+  data: UpdateNewDetailCode;
+  biz_ctgo_cd: string;
+  grup_cd_id: string;
 }
 
 const WAZ021100 = () => {
@@ -67,11 +71,29 @@ const WAZ021100 = () => {
   const [selectedRow, setSelectedRow] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [openGroupCodeModal, setOpenGroupCodeModal] = useState<boolean>(false);
-  const [openDetailCodeModal, setOpenDetailCodeModal] = useState<boolean>(false);
-  const [openGroupCodeUpdateModal, setOpenGroupCodeUpdateModal] = useState<boolean>(false);
-  const [openDetailCodeUpdateModal, setOpenDetailCodeUpdateModal] = useState<boolean>(false);
+  const [openDetailCodeModal, setOpenDetailCodeModal] =
+    useState<boolean>(false);
+  const [openGroupCodeUpdateModal, setOpenGroupCodeUpdateModal] =
+    useState<boolean>(false);
+  const [openDetailCodeUpdateModal, setOpenDetailCodeUpdateModal] =
+    useState<boolean>(false);
 
-  const [detailCredential, setDetailCredential] = useState<detailGroupCredential>();
+  const [detailCredential, setDetailCredential] =
+    useState<detailGroupCredential>({
+      biz_ctgo_cd: '',
+      grup_cd_id: '',
+      data: {
+        cd_expl: '',
+        cmmn_cd_id: '',
+        dtl_cd_id: '',
+        sort_req: 0,
+        data_stat_cd: '',
+        msg_nm: ['', ''],
+        clss_info_val1: '',
+        clss_info_val2: '',
+        clss_info_val3: '',
+      },
+    });
 
   const handlerCloseGroupCodeModal = () => {
     setOpenGroupCodeModal(false);
@@ -88,11 +110,11 @@ const WAZ021100 = () => {
   const handleOpenDetailCodeModal = () => {
     setOpenDetailCodeModal(true);
   };
-  
+
   const handlerCloseUpdateModal = () => {
     setOpenGroupCodeUpdateModal(false);
   };
-  
+
   const handleOpenUpdateModal = () => {
     setOpenGroupCodeUpdateModal(true);
   };
@@ -135,10 +157,10 @@ const WAZ021100 = () => {
       data.page_no = pageNo;
       data.page_size = pageSize;
 
-      // const listData = await callSAZ02F110R(screenId, data).catch((err) => {
-      //   throw new Error(err);
-      // });
-      const listData = await mockupCallSAZ02F110R()
+      const listData = await callSAZ02F110R(screenId, data).catch((err) => {
+        throw new Error(err);
+      });
+      // const listData = await mockupCallSAZ02F110R()
       setOutVoSAZ02F110R(listData);
       setLoading(() => false);
     } catch (error) {
@@ -161,10 +183,10 @@ const WAZ021100 = () => {
       data.page_no = pageNo;
       data.page_size = pageSize;
 
-      // const listData = await callSAZ02F114R(screenId, data).catch((err) => {
-      //   throw new Error(err);
-      // });
-      const listData = await mockupCallSAZ02F114R();
+      const listData = await callSAZ02F114R(screenId, data).catch((err) => {
+        throw new Error(err);
+      });
+      // const listData = await mockupCallSAZ02F114R();
 
       setOutVoSAZ02F114R(listData);
       setLoading(() => false);
@@ -415,10 +437,11 @@ const WAZ021100 = () => {
                           <Button
                             type={ButtonTypeEnum.SUCCESS}
                             onClickHandler={() => {
-                              setDetailCredential({
-                                biz_ctgo_cd : item.biz_ctgo_cd,
-                                grup_cd_id : item.grup_cd_id
-                              })
+                              setDetailCredential((prev) => ({
+                                ...prev,
+                                biz_ctgo_cd: item.biz_ctgo_cd,
+                                grup_cd_id: item.grup_cd_id,
+                              }));
                               viewDetail(
                                 item.biz_ctgo_cd,
                                 item.grup_cd_id,
@@ -436,13 +459,18 @@ const WAZ021100 = () => {
                           >
                             Edit
                           </Button>
-                          <UpdateGroupCodeList data={{
-                            biz_ctgo_id : item.biz_ctgo_cd,
-                            group_cd_id : item.grup_cd_id,
-                            cd_expl : item.cd_expl,
-                            data_stat_cd : item.data_stat_cd,
-                            msg_nm : [item.msg_nm, item.msg_nm],
-                          }} onClose={handlerCloseUpdateModal} screenId={screenId} open={openGroupCodeUpdateModal} />
+                          <UpdateGroupCodeList
+                            data={{
+                              biz_ctgo_id: item.biz_ctgo_cd,
+                              group_cd_id: item.grup_cd_id,
+                              cd_expl: item.cd_expl,
+                              data_stat_cd: item.data_stat_cd,
+                              msg_nm: [item.msg_nm, item.msg_nm],
+                            }}
+                            onClose={handlerCloseUpdateModal}
+                            screenId={screenId}
+                            open={openGroupCodeUpdateModal}
+                          />
                         </td>
                       </tr>
                     );
@@ -577,29 +605,41 @@ const WAZ021100 = () => {
                         <td className={`px-2 py-1`}>
                           <Button
                             type={ButtonTypeEnum.WARNING}
-                            onClickHandler={handleOpenDetailCodeUpdateModal}
+                            onClickHandler={() => {
+                              setDetailCredential((prev) => ({
+                                ...prev,
+                                data: {
+                                  cd_expl: item.cd_expl,
+                                  cmmn_cd_id: item.cmmn_cd_id,
+                                  dtl_cd_id: item.dtl_cd_id,
+                                  data_stat_cd: item.data_stat_cd,
+                                  msg_nm: [item.msg_nm, item.msg_nm],
+                                  sort_req: 1,
+                                  clss_info_val1: item.clss_info_val1,
+                                  clss_info_val2: item.clss_info_val2,
+                                  clss_info_val3: item.clss_info_val3,
+                                },
+                              }));
+                              handleOpenDetailCodeUpdateModal();
+                            }}
                             small
                           >
                             Edit
                           </Button>
-                          <UpdateDetailCodeList
-                            data={{
-                              ...item,
-                              sort_req : 1,
-                              msg_nm : [item.msg_nm, item.msg_nm],
-                            }}
-                            biz_ctgo_cd={detailCredential.biz_ctgo_cd}
-                            grup_cd_id={detailCredential.grup_cd_id}
-                            onClose={handlerCloseDetailCodeUpdateModal}
-                            screenId={screenId}
-                            open={openDetailCodeUpdateModal}
-                          />
                         </td>
                       </tr>
                     );
                   })}
               </tbody>
             </table>
+            <UpdateDetailCodeList
+              data={detailCredential.data}
+              biz_ctgo_cd={detailCredential.biz_ctgo_cd}
+              grup_cd_id={detailCredential.grup_cd_id}
+              onClose={handlerCloseDetailCodeUpdateModal}
+              screenId={screenId}
+              open={openDetailCodeUpdateModal}
+            />
           </div>
         </div>
       </div>

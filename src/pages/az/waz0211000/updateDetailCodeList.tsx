@@ -75,12 +75,25 @@ export const UpdateDetailCodeList = ({
 }: UpdateGroupCodeListProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [updateValue, setUpdateValue] = useState<UpdateNewDetailCode>(data);
+  console.log('updateValue', updateValue);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UpdateNewDetailCode>();
+  } = useForm<UpdateNewDetailCode>({
+    defaultValues: {
+      cmmn_cd_id: updateValue.cmmn_cd_id,
+      cd_expl : updateValue.cd_expl,
+      clss_info_val1 : updateValue.clss_info_val1,
+      clss_info_val2 : updateValue.clss_info_val2,
+      clss_info_val3 : updateValue.clss_info_val3,
+      data_stat_cd : updateValue.data_stat_cd,
+      dtl_cd_id : updateValue.dtl_cd_id,
+      sort_req : updateValue.sort_req,
+      msg_nm : updateValue.msg_nm,
+    },
+  });
 
   const onSubmit = async (value: UpdateNewDetailCode) => {
     setLoading(true);
@@ -159,12 +172,11 @@ export const UpdateDetailCodeList = ({
                 <label className={labelStyle}>Group Code ID</label>
                 <input
                   id="cmmn_cd_id"
-                  value={updateValue.cmmn_cd_id}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, cmmn_cd_id : e.target.value}))}
                   className={inputStyle}
                   type="text"
                   {...register('cmmn_cd_id', {
                     required: 'required',
+                    onChange: (e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, cmmn_cd_id : e.target.value}))
                   })}
                 />
                 <label>
@@ -176,12 +188,11 @@ export const UpdateDetailCodeList = ({
                 <label className={labelStyle}>Detail Code ID</label>
                 <input
                   id="dtl_cd_id"
-                  value={updateValue.dtl_cd_id}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, dtl_cd_id : e.target.value}))}
                   className={inputStyle}
                   type="text"
                   {...register('dtl_cd_id', {
                     required: 'required',
+                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, dtl_cd_id : e.target.value}))
                   })}
                 />
                 <label>
@@ -197,16 +208,15 @@ export const UpdateDetailCodeList = ({
                       <label className={labelStyle}>{item.label}</label>
                       <input
                         className={inputStyle}
-                        value={updateValue.msg_nm[index]}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => {
-                            const updatedMsgNm = [...prev.msg_nm];
-                            updatedMsgNm[index] = e.target.value;
-                            return {...prev, msg_nm : updatedMsgNm}
-                        })}
                         type="text"
                         id={`msg_nm_${index}`}
                         {...register(`msg_nm.${index}`, {
                           required: 'required',
+                          onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => {
+                              const updatedMsgNm = [...prev.msg_nm];
+                              updatedMsgNm[index] = e.target.value;
+                              return {...prev, msg_nm : updatedMsgNm}
+                          })
                         })}
                       />
                       <label>
@@ -222,11 +232,10 @@ export const UpdateDetailCodeList = ({
                 <input
                   id="sort_req"
                   className={inputStyle}
-                  value={updateValue.sort_req}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, sort_req : +e.target.value}))}
                   type="text"
                   {...register('sort_req', {
                     required: 'required',
+                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, sort_req : +e.target.value}))
                   })}
                 />
                 <label>
@@ -258,11 +267,10 @@ export const UpdateDetailCodeList = ({
                 <input
                   id="cd_expl"
                   className={inputStyle}
-                  value={updateValue.cd_expl}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, cd_expl : e.target.value}))}
                   type="text"
                   {...register('cd_expl', {
                     required: 'required',
+                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, cd_expl : e.target.value}))
                   })}
                 />
                 <label>
@@ -275,11 +283,10 @@ export const UpdateDetailCodeList = ({
                 <input
                   id="clss_info_val1"
                   className={inputStyle}
-                  value={updateValue.clss_info_val1}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, clss_info_val1 : e.target.value}))}
                   type="text"
                   {...register('clss_info_val1', {
                     required: 'required',
+                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, clss_info_val1 : e.target.value}))
                   })}
                 />
                 <label>
@@ -294,11 +301,10 @@ export const UpdateDetailCodeList = ({
                 <input
                   id="clss_info_val2"
                   className={inputStyle}
-                  value={updateValue.clss_info_val2}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, biz_ctgo_id : e.target.value}))}
                   type="text"
                   {...register('clss_info_val2', {
                     required: 'required',
+                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, biz_ctgo_id : e.target.value}))
                   })}
                 />
                 <label>
@@ -312,11 +318,10 @@ export const UpdateDetailCodeList = ({
                 <input
                   id="clss_info_val3"
                   className={inputStyle}
-                  value={updateValue.clss_info_val3}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, clss_info_val3 : e.target.value}))}
                   type="text"
                   {...register('clss_info_val3', {
                     required: 'required',
+                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, clss_info_val3 : e.target.value}))
                   })}
                 />
                 <label>

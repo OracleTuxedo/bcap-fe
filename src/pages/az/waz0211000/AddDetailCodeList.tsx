@@ -66,8 +66,6 @@ export interface AddGroupCodeListProps {
 
 export const AddDetailCodeList = ({
   open,
-  biz_ctgo_cd,
-  grup_cd_id,
   screenId,
   onClose,
 }: AddGroupCodeListProps) => {
@@ -95,14 +93,16 @@ export const AddDetailCodeList = ({
 
       const detailCodeMessageEn = new SAZ02F111UInSub4Vo();
       detailCodeMessageEn.biz_clcd = 'I';
-      detailCodeMessageEn.msg_id = biz_ctgo_cd + grup_cd_id;
+      detailCodeMessageEn.msg_id =
+        detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
       detailCodeMessageEn.lang_clcd = 'EN';
       detailCodeMessageEn.msg_nm = value.msg_nm[0];
       detailCodeMessageEn.data_stat_cd = value.data_stat_cd;
 
       const detailCodeMessageId = new SAZ02F111UInSub4Vo();
       detailCodeMessageId.biz_clcd = 'I';
-      detailCodeMessageId.msg_id = biz_ctgo_cd + grup_cd_id;
+      detailCodeMessageId.msg_id =
+        detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
       detailCodeMessageId.lang_clcd = 'ID';
       detailCodeMessageId.msg_nm = value.msg_nm[1];
       detailCodeMessageId.data_stat_cd = value.data_stat_cd;
