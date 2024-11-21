@@ -38,6 +38,7 @@ const Sidebar = ({ menuItems, initial } : SidebarInterface) => {
         <div
             className={`
                 flex flex-col
+                h-[95vh]
                 bg-sidebar-normal
                 text-white
                 ${isCollapsed ? 'w-12' : 'w-60'}

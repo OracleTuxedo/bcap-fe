@@ -11,7 +11,8 @@ const Navbar = ({activeTab, setState} : NavbarInterface) => {
         <div
             id="navbar"
             className={`
-                flex flex-1 flex-row w-full
+                flex flex-row w-full
+                h-[5vh]
                 bg-secondary
                 border-b-4
                 border-b-yellow
