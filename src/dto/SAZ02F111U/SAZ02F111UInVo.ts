@@ -13,14 +13,14 @@ export class SAZ02F111UInVo {
   }
 
   @Field({ type: "LIST", length: 0, trim: "NONE" })
-  sub1_vos: Array<SAZ02F111UInSub1Vo>;
+  sub1_vos: Array<SAZ02F111UInSub1Vo> | null;
 
   @Field({ type: "LIST", length: 0, trim: "NONE" })
-  sub2_vos: Array<SAZ02F111UInSub2Vo>;
+  sub2_vos: Array<SAZ02F111UInSub2Vo> | null;
 
   @Field({ type: "LIST", length: 0, trim: "NONE" })
-  sub3_vos: Array<SAZ02F111UInSub3Vo>;
+  sub3_vos: Array<SAZ02F111UInSub3Vo> | null;
 
   @Field({ type: "LIST", length: 0, trim: "NONE" })
-  sub4_vos: Array<SAZ02F111UInSub4Vo>;
+  sub4_vos: Array<SAZ02F111UInSub4Vo> | null;
 }
