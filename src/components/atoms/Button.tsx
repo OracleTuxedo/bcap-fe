@@ -25,6 +25,12 @@ const Button = ( { type, white, small, disable = false, onClickHandler, children
         case ButtonTypeEnum.SUCCESS:
             bgColor = 'bg-success-normal hover:bg-success-active'
             break;
+        case ButtonTypeEnum.EDIT:
+            bgColor = 'bg-badge-yellow'
+            break;
+        case ButtonTypeEnum.VIEW:
+            bgColor = 'bg-badge-green'
+            break;
         default:
             break;
     }

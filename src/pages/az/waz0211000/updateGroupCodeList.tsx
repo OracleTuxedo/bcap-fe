@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import Loading from '../../../components/organisms/Loading';
 import { SAZ02F111UInSub1Vo, SAZ02F111UInSub2Vo, SAZ02F111UInVo } from '@/dto';
 import { callSAZ02F111U } from '@/services';
+import { systemDivisionData } from './AddGroupCodeList';
 
 export type GroupCodeMessageList = {
   biz_cd: string;
@@ -150,16 +151,24 @@ export const UpdateGroupCodeList = ({
             <form className="flex flex-1 flex-col">
               <div className={containerStyle}>
                 <label className={labelStyle}>System Division</label>
-                <input
-                  id="biz_ctgo_cd"
-                  className={inputStyle}
-                  type="text"
-                  value={updateValue.biz_ctgo_id}
+                <select
+                  name={'grup-code'}
+                  className={`
+                      mx-2
+                      p-1
+                      border border-sidebar-normal
+                      shadow-sm
+                  `}
                   {...register('biz_ctgo_id', {
                     required: 'required',
-                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, biz_ctgo_id : e.target.value}))
                   })}
-                />
+                >
+                    {systemDivisionData.map((option, index) => (
+                        <option key={index} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
                 <label>
                   {errors['biz_ctgo_id'] ? errors['biz_ctgo_id'].message : ''}
                 </label>

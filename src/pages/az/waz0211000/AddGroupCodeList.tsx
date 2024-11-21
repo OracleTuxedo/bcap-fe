@@ -32,6 +32,20 @@ export type addNewGroupCode = Pick<
 > &
   Pick<GroupCodeMessageList, 'msg_nm'>;
 
+export const systemDivisionData: dropdownOptionsInterface[] = [
+    { value: '', label: 'Please Choose' },
+    { value: 'SFA', label: 'SFA' },
+    { value: 'MCA', label: 'Merchant' },
+    { value: 'MMP', label: 'MMP' },
+    { value: 'TMS', label: 'TMS' },
+    { value: 'WDS', label: 'WDS' },
+    { value: 'AUT', label: 'Authorization' },
+    { value: 'ACA', label: 'Clearing & Settlement' },
+    { value: 'MTA', label: 'Metering' },
+    { value: 'AZA', label: 'Admin & Common' },
+    { value: 'EXT', label: 'External' },
+  ];
+
 const useStatusData: dropdownOptionsInterface[] = [
   { value: 'U', label: 'Valid' },
   { value: 'D', label: 'Not Valid' },
@@ -139,14 +153,24 @@ export const AddGroupCodeList = ({
             <form className="flex flex-1 flex-col">
               <div className={containerStyle}>
                 <label className={labelStyle}>System Division</label>
-                <input
-                  id="biz_ctgo_cd"
-                  className={inputStyle}
-                  type="text"
+                <select
+                  name={'grup-code'}
+                  className={`
+                      mx-2
+                      p-1
+                      border border-sidebar-normal
+                      shadow-sm
+                  `}
                   {...register('biz_ctgo_cd', {
                     required: 'required',
                   })}
-                />
+                >
+                  {systemDivisionData.map((option, index) => (
+                      <option key={index} value={option.value}>
+                          {option.label}
+                      </option>
+                  ))}
+                </select>
                 <label>
                   {errors['biz_ctgo_cd'] ? errors['biz_ctgo_cd'].message : ''}
                 </label>

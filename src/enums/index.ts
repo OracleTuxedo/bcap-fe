@@ -4,6 +4,8 @@ export enum ButtonTypeEnum {
     DANGER = 'danger',
     SUCCESS = 'success',
     DISABLE = 'disable',
+    VIEW = 'view',
+    EDIT = 'edit',
 }
 
 export enum TextColorEnum {

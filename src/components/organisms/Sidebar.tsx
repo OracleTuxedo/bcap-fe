@@ -15,13 +15,14 @@ export interface MenuItem {
     children?: MenuItem[];
 }
 
-const menuItems: MenuItem[] = [
-    { name: 'Merchant', children: [{ name: 'Merchant Info. Change History' }]},
-];
+export interface SidebarInterface {
+    menuItems : MenuItem[]
+    initial : string
+}
 
-const Sidebar = () => {
+const Sidebar = ({ menuItems, initial } : SidebarInterface) => {
 
-    const [activeItem, setActiveItem] = useState<string | null>('Merchant');
+    const [activeItem, setActiveItem] = useState<string | null>(initial);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [favoriteTab, setFavoriteTab] = useState<MenuTabEnum>(MenuTabEnum.MENU);
 

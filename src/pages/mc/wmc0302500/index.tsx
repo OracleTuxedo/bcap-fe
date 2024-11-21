@@ -1,7 +1,8 @@
 import { Button, DateRange, InputText, Loading } from "@/components";
+import { MenuItem } from "@/components/organisms/Sidebar";
 import { SMC03F054ROutVo } from "@/dto/SMC03F054R";
 import { SMC03F055ROutVo } from "@/dto/SMC03F055R";
-import { ButtonTypeEnum } from "@/enums";
+import { ButtonTypeEnum, TabEnum } from "@/enums";
 import { MainLayout } from "@/layout";
 import { callSMC03F054R, callSMC03F055R } from "@/services";
 import { exportToExcel } from "@/utils";
@@ -12,6 +13,10 @@ export interface queryDataInterface {
   start: string;
   end: string;
 }
+
+const menuItems: MenuItem[] = [
+  { name: 'Merchant', children: [{ name: 'Merchant Info. Change History' }]},
+];
 
 const WMC0302500 = () => {
   const screenId = "WMC0302500";
@@ -130,8 +135,11 @@ const WMC0302500 = () => {
     <MainLayout
       screenId="MC0302500"
       screenName="Merchant Info. Change History"
+      activeTabScreen={TabEnum.MERCHANT}
       isFavorite={isFavorite}
       favoriteHandler={favoriteHandler}
+      menuItems={menuItems}
+      initial="Merchant"
     >
       <div
         id="content"

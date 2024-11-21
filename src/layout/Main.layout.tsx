@@ -1,4 +1,5 @@
 import { Header, Navbar, Seo, Sidebar } from '@/components';
+import { MenuItem } from '@/components/organisms/Sidebar';
 import { TabEnum } from '@/enums';
 import { ReactNode, useState } from 'react';
 
@@ -6,12 +7,15 @@ export interface MainLayoutInterface {
     screenId : string;
     screenName : string;
     isFavorite : boolean;
+    activeTabScreen : TabEnum;
     favoriteHandler : () => void;
     children : ReactNode;
+    menuItems : MenuItem[];
+    initial : string;
 }
 
-const MainLayout = ({ screenId, screenName, isFavorite, favoriteHandler, children } : MainLayoutInterface) => {
-    const [activeTab, setActiveTab] = useState<TabEnum>(TabEnum.MERCHANT);
+const MainLayout = ({ screenId, screenName, isFavorite, activeTabScreen, menuItems, initial, favoriteHandler, children } : MainLayoutInterface) => {
+    const [activeTab, setActiveTab] = useState<TabEnum>(activeTabScreen);
 
     return (
         <div
@@ -26,7 +30,7 @@ const MainLayout = ({ screenId, screenName, isFavorite, favoriteHandler, childre
                     flex flex-1 flex-row
                 `}
             >
-                <Sidebar />
+                <Sidebar menuItems={menuItems} initial={initial} />
                 <div
                     className={`
                         flex flex-1 flex-col

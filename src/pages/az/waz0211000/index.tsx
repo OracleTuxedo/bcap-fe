@@ -1,5 +1,5 @@
 import { Button, Dropdown, InputText, Loading } from '@/components';
-import { ButtonTypeEnum } from '@/enums';
+import { ButtonTypeEnum, TabEnum } from '@/enums';
 import { MainLayout } from '@/layout';
 import { dropdownOptionsInterface } from '@/types';
 import { ChangeEvent, ReactElement, useState } from 'react';
@@ -18,6 +18,7 @@ import {
   UpdateDetailCodeList,
   UpdateNewDetailCode,
 } from './updateDetailCodeList';
+import { MenuItem } from '@/components/organisms/Sidebar';
 
 const systemDivisionData: dropdownOptionsInterface[] = [
   { value: '', label: 'All' },
@@ -49,6 +50,10 @@ export interface detailGroupCredential {
   biz_ctgo_cd: string;
   grup_cd_id: string;
 }
+
+const menuItems: MenuItem[] = [
+  { name: 'Admin', children: [{ name: 'Common Code Management' }]},
+];
 
 const WAZ021100 = () => {
   const screenId = 'WSZ0211000';
@@ -203,10 +208,13 @@ const WAZ021100 = () => {
 
   return (
     <MainLayout
+      activeTabScreen={TabEnum.ADMIN}
       screenId="AZ0211000"
       screenName="Common Code Management"
       isFavorite={isFavorite}
+      menuItems={menuItems}
       favoriteHandler={favoriteHandler}
+      initial="Admin"
     >
       <div
         id="content"
@@ -421,7 +429,7 @@ const WAZ021100 = () => {
                       <tr
                         key={`list-data-SMC03F054R-${index}`}
                         className={`
-                          even:bg-main-active
+                          even:even:bg-badge-sky
                         `}
                       >
                         <td className={`px-2 py-1`}>{index + 1}</td>
@@ -436,7 +444,7 @@ const WAZ021100 = () => {
                         </td>
                         <td className={`px-2 py-1 flex flex-1`}>
                           <Button
-                            type={ButtonTypeEnum.SUCCESS}
+                            type={ButtonTypeEnum.VIEW}
                             onClickHandler={() => {
                               setDetailCredential((prev) => ({
                                 ...prev,
@@ -454,7 +462,7 @@ const WAZ021100 = () => {
                             View
                           </Button>
                           <Button
-                            type={ButtonTypeEnum.WARNING}
+                            type={ButtonTypeEnum.EDIT}
                             onClickHandler={handleOpenUpdateModal}
                             small
                           >
@@ -462,11 +470,11 @@ const WAZ021100 = () => {
                           </Button>
                           <UpdateGroupCodeList
                             data={{
-                              biz_ctgo_id: item.biz_ctgo_cd,
-                              group_cd_id: item.grup_cd_id,
-                              cd_expl: item.cd_expl,
-                              data_stat_cd: item.data_stat_cd,
-                              msg_nm: [item.msg_nm, item.msg_nm],
+                              biz_ctgo_id: outVoSAZ02F110R.sub1_vos[index].biz_ctgo_cd,
+                              group_cd_id: outVoSAZ02F110R.sub1_vos[index].grup_cd_id,
+                              cd_expl: outVoSAZ02F110R.sub1_vos[index].cd_expl,
+                              data_stat_cd: outVoSAZ02F110R.sub1_vos[index].data_stat_cd,
+                              msg_nm: [outVoSAZ02F110R.sub1_vos[index].msg_nm, outVoSAZ02F110R.sub1_vos[index].msg_nm],
                             }}
                             onClose={handlerCloseUpdateModal}
                             screenId={screenId}
@@ -581,7 +589,7 @@ const WAZ021100 = () => {
                       <tr
                         key={`list-detail-data-SAZ02F114R-${++index}`}
                         className={`
-                          even:bg-main-active
+                          even:bg-badge-sky
                         `}
                       >
                         <td className={`px-2 py-1`}>
@@ -605,7 +613,7 @@ const WAZ021100 = () => {
                         <td className={`px-2 py-1`}>{item.clss_info_val3}</td>
                         <td className={`px-2 py-1`}>
                           <Button
-                            type={ButtonTypeEnum.WARNING}
+                            type={ButtonTypeEnum.EDIT}
                             onClickHandler={() => {
                               handleOpenDetailCodeUpdateModal();
                             }}
@@ -630,7 +638,7 @@ const WAZ021100 = () => {
                             onClose={handlerCloseDetailCodeUpdateModal}
                             screenId={screenId}
                             open={openDetailCodeUpdateModal}
-            />
+                        />
                         </td>
                       </tr>
                     );
