@@ -61,8 +61,7 @@ export const UpdateGroupCodeList = ({
   onClose,
   data,
 }: UpdateGroupCodeListProps) => {
-
-  console.log("data", data);
+  console.log('data', data);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [updateValue, setUpdateValue] = useState<addNewGroupCode>(data);
@@ -172,9 +171,16 @@ export const UpdateGroupCodeList = ({
                       border border-sidebar-normal
                       shadow-sm
                   `}
-                  {...register('biz_ctgo_id', {
-                    required: 'required',
-                  })}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        biz_ctgo_id: e.target.value,
+                      }));
+                    } else {
+                      errors['group_cd_id.message'] = 'Required';
+                    }
+                  }}
                 >
                   {systemDivisionData.map((option, index) => (
                     <option key={index} value={option.value}>
@@ -195,9 +201,13 @@ export const UpdateGroupCodeList = ({
                   value={updateValue.group_cd_id}
                   onChange={(e) => {
                     if (e.target.value && /^\d*$/.test(e.target.value)) {
-                      setUpdateValue((prev) => ({...prev, group_cd_id : e.target.value}))
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        group_cd_id: e.target.value,
+                      }));
                     } else {
-                      errors['group_cd_id.message'] = "Required and has to be numeric"
+                      errors['group_cd_id.message'] =
+                        'Required and has to be numeric';
                     }
                   }}
                   type="text"
@@ -220,9 +230,10 @@ export const UpdateGroupCodeList = ({
                         id={`msg_nm_${index}`}
                         {...register(`msg_nm`, {
                           required: 'required',
-                          onChange : (e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => {
-                              return {...prev, msg_nm : [e.target.value]}
-                          })
+                          onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                            setUpdateValue((prev) => {
+                              return { ...prev, msg_nm: [e.target.value] };
+                            }),
                         })}
                       />
                       <label>
