@@ -43,6 +43,7 @@ const Button = ( { type, white, small, disable = false, onClickHandler, children
                 rounded-lg
                 ${bgColor}
                 ${white ? 'text-white' : 'text-black'}
+                justify-center
             `}
             disabled={disable}
         >
