@@ -9,6 +9,7 @@ import {
   SAZ02F110ROutSub1Vo,
   SAZ02F110ROutVo,
   SAZ02F114RInVo,
+  SAZ02F114ROutSub1Vo,
   SAZ02F114ROutVo,
 } from '@/dto';
 import { mockupCallSAZ02F110R, mockupCallSAZ02F114R } from '@/services/mockup';
@@ -52,6 +53,27 @@ export interface detailGroupCredential {
   grup_cd_id: string;
 }
 
+export interface groupListModal {
+  isOpen : boolean;
+  biz_ctgo_cd : string
+  group_cd_id : string
+  cd_expl : string
+  data_stat_cd : string
+  msg_nm : string[]
+}
+export interface groupDetailModal {
+  isOpen : boolean;
+  cd_expl : string
+  cmmn_cd_id : string
+  data_stat_cd : string
+  dtl_cd_id : string
+  sort_req : number
+  msg_nm : string[]
+  clss_info_val1 : string
+  clss_info_val2 : string
+  clss_info_val3 : string
+}
+
 const menuItems: MenuItem[] = [
   { name: 'Admin', children: [{ name: 'Common Code Management' }]},
 ];
@@ -70,19 +92,14 @@ const WAZ021100 = () => {
   const [msgNm, setMsgNm] = useState<string>('');
   const [pageNo, setPageNo] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(20);
+  const [selectedRow, setSelectedRow] = useState<string[]>([]);
+  const [selectAll, setSelectAll] = useState<boolean>(false);
+  const [openGroupCodeModal, setOpenGroupCodeModal] = useState<boolean>(false);
+  const [openDetailCodeModal, setOpenDetailCodeModal] = useState<boolean>(false);
 
   const favoriteHandler = () => {
     setIsFavorite((prev) => !prev);
   };
-  const [selectedRow, setSelectedRow] = useState<string[]>([]);
-  const [selectAll, setSelectAll] = useState<boolean>(false);
-  const [openGroupCodeModal, setOpenGroupCodeModal] = useState<boolean>(false);
-  const [openDetailCodeModal, setOpenDetailCodeModal] =
-    useState<boolean>(false);
-  const [openGroupCodeUpdateModal, setOpenGroupCodeUpdateModal] =
-    useState<boolean>(false);
-  const [openDetailCodeUpdateModal, setOpenDetailCodeUpdateModal] =
-    useState<boolean>(false);
 
   const [detailCredential, setDetailCredential] =
     useState<detailGroupCredential>({
@@ -101,13 +118,26 @@ const WAZ021100 = () => {
       },
     });
 
-    const [updateListValue, setUpdateListValue] = useState({
+    const [updateListValue, setUpdateListValue] = useState<groupListModal>({
       isOpen : false,
       biz_ctgo_cd : '',
       group_cd_id : '',
       cd_expl : '',
       data_stat_cd : '',
       msg_nm : ['', '']
+    })
+    
+    const [updateDetailValue, setUpdateDetailValue] = useState<groupDetailModal>({
+      isOpen : false,
+      cd_expl : '',
+      cmmn_cd_id : '',
+      data_stat_cd : '',
+      dtl_cd_id : '',
+      sort_req : 0,
+      msg_nm : ['',''],
+      clss_info_val1 : '',
+      clss_info_val2 : '',
+      clss_info_val3 : '',
     })
   
 
@@ -128,33 +158,55 @@ const WAZ021100 = () => {
   };
 
   const handlerCloseUpdateModal = () => {
-    setUpdateListValue(() => ({
+    setUpdateListValue({
       isOpen : false,
       biz_ctgo_cd : '',
       cd_expl : '',
       data_stat_cd : '',
       group_cd_id : '',
       msg_nm : ['',''],
-    }));
+    });
   };
 
   const handleOpenUpdateModal = (data : SAZ02F110ROutSub1Vo) => {
-    setUpdateListValue(() => ({
+    setUpdateListValue({
       isOpen : true,
       biz_ctgo_cd : data.biz_ctgo_cd,
       cd_expl : data.cd_expl,
       data_stat_cd : data.data_stat_cd,
       group_cd_id : data.grup_cd_id,
       msg_nm : [data.msg_nm[0], data.msg_nm[1]],
-    }));
+    });
   };
 
   const handlerCloseDetailCodeUpdateModal = () => {
-    setOpenDetailCodeUpdateModal(false);
+    setUpdateDetailValue({
+      isOpen : false,
+      cd_expl : '',
+      cmmn_cd_id : '',
+      data_stat_cd : '',
+      dtl_cd_id : '',
+      sort_req : 0,
+      msg_nm : ['',''],
+      clss_info_val1 : '',
+      clss_info_val2 : '',
+      clss_info_val3 : '',
+    })
   };
 
-  const handleOpenDetailCodeUpdateModal = () => {
-    setOpenDetailCodeUpdateModal(true);
+  const handleOpenDetailCodeUpdateModal = (data : SAZ02F114ROutSub1Vo, index : number) => {
+    setUpdateDetailValue({
+      isOpen : true,
+      cd_expl : data.cd_expl,
+      cmmn_cd_id : data.cmmn_cd_id,
+      data_stat_cd : data.data_stat_cd,
+      dtl_cd_id : data.dtl_cd_id,
+      sort_req : index,
+      msg_nm : [data.msg_nm[0],data.msg_nm[0]],
+      clss_info_val1 : data.clss_info_val1,
+      clss_info_val2 : data.clss_info_val2,
+      clss_info_val3 : data.clss_info_val3,
+    })
   };
 
   const handleSelectRow = (id: string) => {
@@ -640,29 +692,19 @@ const WAZ021100 = () => {
                           <Button
                             type={ButtonTypeEnum.EDIT}
                             onClickHandler={() => {
-                              handleOpenDetailCodeUpdateModal();
+                              handleOpenDetailCodeUpdateModal(item, index+1);
                             }}
                             small
                           >
                             Edit
                           </Button>
                           <UpdateDetailCodeList
-                            data={{
-                              cd_expl : outVoSAZ02F114R.sub1_vos[index].cd_expl,
-                              cmmn_cd_id : outVoSAZ02F114R.sub1_vos[index].cmmn_cd_id,
-                              data_stat_cd : outVoSAZ02F114R.sub1_vos[index].data_stat_cd,
-                              dtl_cd_id : outVoSAZ02F114R.sub1_vos[index].dtl_cd_id,
-                              sort_req : index+1,
-                              msg_nm : [outVoSAZ02F114R.sub1_vos[index].msg_nm[0], outVoSAZ02F114R.sub1_vos[index].msg_nm[1]],
-                              clss_info_val1 : outVoSAZ02F114R.sub1_vos[index].clss_info_val1,
-                              clss_info_val2 : outVoSAZ02F114R.sub1_vos[index].clss_info_val2,
-                              clss_info_val3 : outVoSAZ02F114R.sub1_vos[index].clss_info_val3,
-                            }}
+                            data={updateDetailValue}
                             biz_ctgo_cd={detailCredential.biz_ctgo_cd}
                             grup_cd_id={detailCredential.grup_cd_id}
                             onClose={handlerCloseDetailCodeUpdateModal}
                             screenId={screenId}
-                            open={openDetailCodeUpdateModal}
+                            open={updateDetailValue.isOpen}
                         />
                         </td>
                       </tr>
