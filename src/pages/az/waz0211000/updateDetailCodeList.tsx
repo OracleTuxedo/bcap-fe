@@ -75,7 +75,6 @@ export const UpdateDetailCodeList = ({
 }: UpdateGroupCodeListProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [updateValue, setUpdateValue] = useState<UpdateNewDetailCode>(data);
-  console.log('updateValue', updateValue);
 
   const {
     register,

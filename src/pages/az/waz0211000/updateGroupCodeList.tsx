@@ -67,7 +67,15 @@ export const UpdateGroupCodeList = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<addNewGroupCode>();
+  } = useForm<addNewGroupCode>({
+    defaultValues : {
+      biz_ctgo_id : '',
+      cd_expl : '',
+      data_stat_cd : '',
+      group_cd_id : '',
+      msg_nm : ['', ],
+    }
+  });
 
   const onSubmit = async (value: addNewGroupCode) => {
     setLoading(true);
@@ -145,9 +153,9 @@ export const UpdateGroupCodeList = ({
                   className={inputStyle}
                   type="text"
                   value={updateValue.biz_ctgo_id}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, biz_ctgo_id : e.target.value}))}
                   {...register('biz_ctgo_id', {
                     required: 'required',
+                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, biz_ctgo_id : e.target.value}))
                   })}
                 />
                 <label>
@@ -161,10 +169,10 @@ export const UpdateGroupCodeList = ({
                   id="group_cd_id"
                   className={inputStyle}
                   value={updateValue.group_cd_id}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, group_cd_id : e.target.value}))}
                   type="text"
                   {...register('group_cd_id', {
                     required: 'required',
+                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, group_cd_id : e.target.value}))
                   })}
                 />
                 <label>
@@ -182,14 +190,14 @@ export const UpdateGroupCodeList = ({
                         className={inputStyle}
                         type="text"
                         value={updateValue.msg_nm[index]}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => {
-                            const updatedMsgNm = [...prev.msg_nm];
-                            updatedMsgNm[index] = e.target.value;
-                            return {...prev, msg_nm : updatedMsgNm}
-                        })}
                         id={`msg_nm_${index}`}
                         {...register(`msg_nm.${index}`, {
                           required: 'required',
+                          onChange : (e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => {
+                              const updatedMsgNm = [...prev.msg_nm];
+                              updatedMsgNm[index] = e.target.value;
+                              return {...prev, msg_nm : updatedMsgNm}
+                          })
                         })}
                       />
                       <label>
@@ -204,10 +212,10 @@ export const UpdateGroupCodeList = ({
                 <label className={labelStyle}>Use Status</label>
                 <select
                     value={updateValue.data_stat_cd}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, data_stat_cd : e.target.value}))}
-                  className={inputStyle}
-                  {...register('data_stat_cd', {
-                    required: 'required',
+                    className={inputStyle}
+                    {...register('data_stat_cd', {
+                      required: 'required',
+                      onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, data_stat_cd : e.target.value}))
                   })}
                 >
                   {useStatusData.map((item, index) => (
@@ -227,10 +235,10 @@ export const UpdateGroupCodeList = ({
                   id="cd_expl"
                   className={inputStyle}
                   value={updateValue.cd_expl}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, cd_expl : e.target.value}))}
                   type="text"
                   {...register('cd_expl', {
                     required: 'required',
+                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, cd_expl : e.target.value}))
                   })}
                 />
                 <label>
