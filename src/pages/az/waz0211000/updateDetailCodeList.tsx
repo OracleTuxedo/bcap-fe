@@ -1,5 +1,5 @@
 import { dropdownOptionsInterface } from '@/types';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Loading from '../../../components/organisms/Loading';
 import { SAZ02F111UInSub3Vo, SAZ02F111UInSub4Vo, SAZ02F111UInVo } from '@/dto';
@@ -62,7 +62,7 @@ export interface UpdateGroupCodeListProps {
   grup_cd_id: string;
   onClose: () => void;
   screenId: string;
-  data : UpdateNewDetailCode;
+  data: UpdateNewDetailCode;
 }
 
 export const UpdateDetailCodeList = ({
@@ -77,20 +77,34 @@ export const UpdateDetailCodeList = ({
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<UpdateNewDetailCode>({
     defaultValues: {
       cmmn_cd_id: updateValue.cmmn_cd_id,
-      cd_expl : updateValue.cd_expl,
-      data_stat_cd : updateValue.data_stat_cd,
-      dtl_cd_id : updateValue.dtl_cd_id,
-      sort_req : updateValue.sort_req,
-      msg_nm : updateValue.msg_nm,
-      clss_info_val1 : updateValue.clss_info_val1,
-      clss_info_val2 : updateValue.clss_info_val2,
-      clss_info_val3 : updateValue.clss_info_val3,
+      cd_expl: updateValue.cd_expl,
+      data_stat_cd: updateValue.data_stat_cd,
+      dtl_cd_id: updateValue.dtl_cd_id,
+      sort_req: updateValue.sort_req,
+      msg_nm: updateValue.msg_nm,
+      clss_info_val1: updateValue.clss_info_val1,
+      clss_info_val2: updateValue.clss_info_val2,
+      clss_info_val3: updateValue.clss_info_val3,
     },
   });
+
+  useEffect(() => {
+    setValue('cmmn_cd_id', data.cmmn_cd_id);
+    setValue('cd_expl', data.cd_expl);
+    setValue('data_stat_cd', data.data_stat_cd);
+    setValue('dtl_cd_id', data.dtl_cd_id);
+    setValue('sort_req', data.sort_req);
+    setValue('msg_nm.0', data.msg_nm[0]);
+    setValue('msg_nm.1', data.msg_nm[1]);
+    setValue('clss_info_val1', data.clss_info_val1);
+    setValue('clss_info_val2', data.clss_info_val2);
+    setValue('clss_info_val3', data.clss_info_val3);
+  }, [setValue, data]);
 
   const onSubmit = async (value: UpdateNewDetailCode) => {
     setLoading(true);
@@ -109,14 +123,16 @@ export const UpdateDetailCodeList = ({
 
       const detailCodeMessageEn = new SAZ02F111UInSub4Vo();
       detailCodeMessageEn.biz_clcd = 'U';
-      detailCodeMessageEn.msg_id =  detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
+      detailCodeMessageEn.msg_id =
+        detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
       detailCodeMessageEn.lang_clcd = 'EN';
       detailCodeMessageEn.msg_nm = value.msg_nm[0];
       detailCodeMessageEn.data_stat_cd = value.data_stat_cd;
 
       const detailCodeMessageId = new SAZ02F111UInSub4Vo();
       detailCodeMessageId.biz_clcd = 'U';
-      detailCodeMessageId.msg_id =  detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
+      detailCodeMessageId.msg_id =
+        detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
       detailCodeMessageId.lang_clcd = 'ID';
       detailCodeMessageId.msg_nm = value.msg_nm[1];
       detailCodeMessageId.data_stat_cd = value.data_stat_cd;
@@ -177,7 +193,11 @@ export const UpdateDetailCodeList = ({
                   type="text"
                   {...register('cmmn_cd_id', {
                     required: 'required',
-                    onChange: (e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, cmmn_cd_id : e.target.value}))
+                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        cmmn_cd_id: e.target.value,
+                      })),
                   })}
                 />
                 <label>
@@ -194,7 +214,11 @@ export const UpdateDetailCodeList = ({
                   type="text"
                   {...register('dtl_cd_id', {
                     required: 'required',
-                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, dtl_cd_id : e.target.value}))
+                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        dtl_cd_id: e.target.value,
+                      })),
                   })}
                 />
                 <label>
@@ -215,11 +239,12 @@ export const UpdateDetailCodeList = ({
                         id={`msg_nm_${index}`}
                         {...register(`msg_nm.${index}`, {
                           required: 'required',
-                          onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => {
+                          onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                            setUpdateValue((prev) => {
                               const updatedMsgNm = [...prev.msg_nm];
                               updatedMsgNm[index] = e.target.value;
-                              return {...prev, msg_nm : updatedMsgNm}
-                          })
+                              return { ...prev, msg_nm: updatedMsgNm };
+                            }),
                         })}
                       />
                       <label>
@@ -239,7 +264,11 @@ export const UpdateDetailCodeList = ({
                   type="text"
                   {...register('sort_req', {
                     required: 'required',
-                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, sort_req : +e.target.value}))
+                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        sort_req: +e.target.value,
+                      })),
                   })}
                 />
                 <label>
@@ -276,7 +305,11 @@ export const UpdateDetailCodeList = ({
                   type="text"
                   {...register('cd_expl', {
                     required: 'required',
-                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, cd_expl : e.target.value}))
+                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        cd_expl: e.target.value,
+                      })),
                   })}
                 />
                 <label>
@@ -292,7 +325,11 @@ export const UpdateDetailCodeList = ({
                   value={updateValue.clss_info_val1}
                   type="text"
                   {...register('clss_info_val1', {
-                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, clss_info_val1 : e.target.value}))
+                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        clss_info_val1: e.target.value,
+                      })),
                   })}
                 />
                 <label>
@@ -310,7 +347,11 @@ export const UpdateDetailCodeList = ({
                   value={updateValue.clss_info_val2}
                   type="text"
                   {...register('clss_info_val2', {
-                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, biz_ctgo_id : e.target.value}))
+                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        biz_ctgo_id: e.target.value,
+                      })),
                   })}
                 />
                 <label>
@@ -328,7 +369,11 @@ export const UpdateDetailCodeList = ({
                   type="text"
                   {...register('clss_info_val3', {
                     required: 'required',
-                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, clss_info_val3 : e.target.value}))
+                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        clss_info_val3: e.target.value,
+                      })),
                   })}
                 />
                 <label>
