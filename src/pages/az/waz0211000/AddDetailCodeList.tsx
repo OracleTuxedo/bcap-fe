@@ -75,6 +75,7 @@ export const AddDetailCodeList = ({
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<addNewDetailCode>();
 
   const onSubmit = async (value: addNewDetailCode) => {
@@ -94,14 +95,16 @@ export const AddDetailCodeList = ({
 
       const detailCodeMessageEn = new SAZ02F111UInSub4Vo();
       detailCodeMessageEn.biz_clcd = 'I';
-      detailCodeMessageEn.msg_id = detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
+      detailCodeMessageEn.msg_id =
+        detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
       detailCodeMessageEn.lang_clcd = 'EN';
       detailCodeMessageEn.msg_nm = value.msg_nm[0];
       detailCodeMessageEn.data_stat_cd = value.data_stat_cd;
 
       const detailCodeMessageId = new SAZ02F111UInSub4Vo();
       detailCodeMessageId.biz_clcd = 'I';
-      detailCodeMessageId.msg_id = detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
+      detailCodeMessageId.msg_id =
+        detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
       detailCodeMessageId.lang_clcd = 'ID';
       detailCodeMessageId.msg_nm = value.msg_nm[1];
       detailCodeMessageId.data_stat_cd = value.data_stat_cd;
@@ -112,11 +115,11 @@ export const AddDetailCodeList = ({
       inVo.sub3_vos = [detailCodeList];
       inVo.sub4_vos = [detailCodeMessageEn, detailCodeMessageId];
 
-      
       await callSAZ02F111U(inVo, screenId).catch((err) => {
         throw new Error(err);
       });
       setLoading(false);
+      reset();
       onClose();
     } catch (err: unknown) {
       console.log(err);
@@ -261,8 +264,7 @@ export const AddDetailCodeList = ({
                   id="clss_info_val1"
                   className={inputStyle}
                   type="text"
-                  {...register('clss_info_val1', {
-                  })}
+                  {...register('clss_info_val1', {})}
                 />
                 <label>
                   {errors['clss_info_val1']
@@ -277,8 +279,7 @@ export const AddDetailCodeList = ({
                   id="clss_info_val2"
                   className={inputStyle}
                   type="text"
-                  {...register('clss_info_val2', {
-                  })}
+                  {...register('clss_info_val2', {})}
                 />
                 <label>
                   {errors['clss_info_val2']
@@ -292,8 +293,14 @@ export const AddDetailCodeList = ({
                   id="clss_info_val3"
                   className={inputStyle}
                   type="text"
+                  maxLength={20}
+                  minLength={20}
                   {...register('clss_info_val3', {
                     required: 'required',
+                    pattern: {
+                      value: /^[01]{20,20}$/,
+                      message: 'Only 0 or 1 is allowed (min and max 20 chars)',
+                    },
                   })}
                 />
                 <label>
@@ -306,7 +313,10 @@ export const AddDetailCodeList = ({
 
             <div className={`flex justify-end space-x-2`}>
               <button
-                onClick={onClose}
+                onClick={() => {
+                  reset();
+                  onClose();
+                }}
                 className={`px-4 py-2 bg-gray-300 rounded hover:bg-gray-400`}
               >
                 Close

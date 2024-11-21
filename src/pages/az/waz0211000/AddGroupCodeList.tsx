@@ -33,18 +33,18 @@ export type addNewGroupCode = Pick<
   Pick<GroupCodeMessageList, 'msg_nm'>;
 
 export const systemDivisionData: dropdownOptionsInterface[] = [
-    { value: '', label: 'Please Choose' },
-    { value: 'SFA', label: 'SFA' },
-    { value: 'MCA', label: 'Merchant' },
-    { value: 'MMP', label: 'MMP' },
-    { value: 'TMS', label: 'TMS' },
-    { value: 'WDS', label: 'WDS' },
-    { value: 'AUT', label: 'Authorization' },
-    { value: 'ACA', label: 'Clearing & Settlement' },
-    { value: 'MTA', label: 'Metering' },
-    { value: 'AZA', label: 'Admin & Common' },
-    { value: 'EXT', label: 'External' },
-  ];
+  { value: '', label: 'Please Choose' },
+  { value: 'SFA', label: 'SFA' },
+  { value: 'MCA', label: 'Merchant' },
+  { value: 'MMP', label: 'MMP' },
+  { value: 'TMS', label: 'TMS' },
+  { value: 'WDS', label: 'WDS' },
+  { value: 'AUT', label: 'Authorization' },
+  { value: 'ACA', label: 'Clearing & Settlement' },
+  { value: 'MTA', label: 'Metering' },
+  { value: 'AZA', label: 'Admin & Common' },
+  { value: 'EXT', label: 'External' },
+];
 
 const useStatusData: dropdownOptionsInterface[] = [
   { value: 'U', label: 'Valid' },
@@ -78,6 +78,7 @@ export const AddGroupCodeList = ({
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<addNewGroupCode>();
 
   const onSubmit = async (value: addNewGroupCode) => {
@@ -114,6 +115,7 @@ export const AddGroupCodeList = ({
         throw new Error(err);
       });
       setLoading(false);
+      reset();
       onClose();
     } catch (err: unknown) {
       console.log(err);
@@ -166,9 +168,9 @@ export const AddGroupCodeList = ({
                   })}
                 >
                   {systemDivisionData.map((option, index) => (
-                      <option key={index} value={option.value}>
-                          {option.label}
-                      </option>
+                    <option key={index} value={option.value}>
+                      {option.label}
+                    </option>
                   ))}
                 </select>
                 <label>
@@ -250,7 +252,10 @@ export const AddGroupCodeList = ({
 
             <div className={`flex justify-end space-x-2`}>
               <button
-                onClick={onClose}
+                onClick={() => {
+                  reset();
+                  onClose();
+                }}
                 className={`px-4 py-2 bg-gray-300 rounded hover:bg-gray-400`}
               >
                 Close
