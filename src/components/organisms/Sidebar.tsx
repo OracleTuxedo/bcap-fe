@@ -37,7 +37,7 @@ const Sidebar = ({ menuItems, initial } : SidebarInterface) => {
     return (
         <div
             className={`
-                h-[94.8vh]
+                flex flex-col
                 bg-sidebar-normal
                 text-white
                 ${isCollapsed ? 'w-12' : 'w-60'}
@@ -47,7 +47,7 @@ const Sidebar = ({ menuItems, initial } : SidebarInterface) => {
         >
             <div
                 className={`
-                    flex flex-1 flex-row
+                    flex flex-row
                     items-center
                 `}
             >

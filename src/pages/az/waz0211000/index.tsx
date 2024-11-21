@@ -552,7 +552,7 @@ const WAZ021100 = () => {
             flex flex-col
             justify-start
             border
-            h-80
+            h-72
             m-2
             text-lg
           `}

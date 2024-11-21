@@ -20,14 +20,15 @@ const MainLayout = ({ screenId, screenName, isFavorite, activeTabScreen, menuIte
     return (
         <div
             className={`
-                h-full w-full
+                flex flex-1 flex-col
+                h-screen w-full
             `}
         >
             <Seo title={screenName} />
             <Navbar activeTab={activeTab} setState={setActiveTab} />
             <div
                 className={`
-                    flex flex-1 flex-row
+                    flex flex-row
                 `}
             >
                 <Sidebar menuItems={menuItems} initial={initial} />
