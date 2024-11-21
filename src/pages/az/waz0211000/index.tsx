@@ -160,7 +160,8 @@ const WAZ021100 = () => {
       const listData = await callSAZ02F110R(screenId, data).catch((err) => {
         throw new Error(err);
       });
-      // const listData = await mockupCallSAZ02F110R()
+      // const listData = await mockupCallSAZ02F110R();
+
       setOutVoSAZ02F110R(listData);
       setLoading(() => false);
     } catch (error) {
@@ -606,40 +607,36 @@ const WAZ021100 = () => {
                           <Button
                             type={ButtonTypeEnum.WARNING}
                             onClickHandler={() => {
-                              setDetailCredential((prev) => ({
-                                ...prev,
-                                data: {
-                                  cd_expl: item.cd_expl,
-                                  cmmn_cd_id: item.cmmn_cd_id,
-                                  dtl_cd_id: item.dtl_cd_id,
-                                  data_stat_cd: item.data_stat_cd,
-                                  msg_nm: [item.msg_nm, item.msg_nm],
-                                  sort_req: 1,
-                                  clss_info_val1: item.clss_info_val1,
-                                  clss_info_val2: item.clss_info_val2,
-                                  clss_info_val3: item.clss_info_val3,
-                                },
-                              }));
                               handleOpenDetailCodeUpdateModal();
                             }}
                             small
                           >
                             Edit
                           </Button>
+                          <UpdateDetailCodeList
+                            data={{
+                              cd_expl : outVoSAZ02F114R.sub1_vos[index].cd_expl,
+                              cmmn_cd_id : outVoSAZ02F114R.sub1_vos[index].cmmn_cd_id,
+                              data_stat_cd : outVoSAZ02F114R.sub1_vos[index].data_stat_cd,
+                              dtl_cd_id : outVoSAZ02F114R.sub1_vos[index].dtl_cd_id,
+                              sort_req : index+1,
+                              msg_nm : [outVoSAZ02F114R.sub1_vos[index].msg_nm[0], outVoSAZ02F114R.sub1_vos[index].msg_nm[1]],
+                              clss_info_val1 : outVoSAZ02F114R.sub1_vos[index].clss_info_val1,
+                              clss_info_val2 : outVoSAZ02F114R.sub1_vos[index].clss_info_val2,
+                              clss_info_val3 : outVoSAZ02F114R.sub1_vos[index].clss_info_val3,
+                            }}
+                            biz_ctgo_cd={detailCredential.biz_ctgo_cd}
+                            grup_cd_id={detailCredential.grup_cd_id}
+                            onClose={handlerCloseDetailCodeUpdateModal}
+                            screenId={screenId}
+                            open={openDetailCodeUpdateModal}
+            />
                         </td>
                       </tr>
                     );
                   })}
               </tbody>
             </table>
-            <UpdateDetailCodeList
-              data={detailCredential.data}
-              biz_ctgo_cd={detailCredential.biz_ctgo_cd}
-              grup_cd_id={detailCredential.grup_cd_id}
-              onClose={handlerCloseDetailCodeUpdateModal}
-              screenId={screenId}
-              open={openDetailCodeUpdateModal}
-            />
           </div>
         </div>
       </div>

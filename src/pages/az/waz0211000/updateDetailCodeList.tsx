@@ -173,6 +173,7 @@ export const UpdateDetailCodeList = ({
                 <input
                   id="cmmn_cd_id"
                   className={inputStyle}
+                  value={updateValue.cmmn_cd_id}
                   type="text"
                   {...register('cmmn_cd_id', {
                     required: 'required',
@@ -189,6 +190,7 @@ export const UpdateDetailCodeList = ({
                 <input
                   id="dtl_cd_id"
                   className={inputStyle}
+                  value={updateValue.dtl_cd_id}
                   type="text"
                   {...register('dtl_cd_id', {
                     required: 'required',
@@ -209,6 +211,7 @@ export const UpdateDetailCodeList = ({
                       <input
                         className={inputStyle}
                         type="text"
+                        value={updateValue.msg_nm[index]}
                         id={`msg_nm_${index}`}
                         {...register(`msg_nm.${index}`, {
                           required: 'required',
@@ -232,6 +235,7 @@ export const UpdateDetailCodeList = ({
                 <input
                   id="sort_req"
                   className={inputStyle}
+                  value={updateValue.sort_req}
                   type="text"
                   {...register('sort_req', {
                     required: 'required',
@@ -247,6 +251,7 @@ export const UpdateDetailCodeList = ({
                 <label className={labelStyle}>Use Status</label>
                 <select
                   className={inputStyle}
+                  value={updateValue.data_stat_cd}
                   {...register('data_stat_cd', {
                     required: 'required',
                   })}
@@ -267,6 +272,7 @@ export const UpdateDetailCodeList = ({
                 <input
                   id="cd_expl"
                   className={inputStyle}
+                  value={updateValue.cd_expl}
                   type="text"
                   {...register('cd_expl', {
                     required: 'required',
@@ -283,6 +289,7 @@ export const UpdateDetailCodeList = ({
                 <input
                   id="clss_info_val1"
                   className={inputStyle}
+                  value={updateValue.clss_info_val1}
                   type="text"
                   {...register('clss_info_val1', {
                     required: 'required',
@@ -301,6 +308,7 @@ export const UpdateDetailCodeList = ({
                 <input
                   id="clss_info_val2"
                   className={inputStyle}
+                  value={updateValue.clss_info_val2}
                   type="text"
                   {...register('clss_info_val2', {
                     required: 'required',
@@ -318,6 +326,7 @@ export const UpdateDetailCodeList = ({
                 <input
                   id="clss_info_val3"
                   className={inputStyle}
+                  value={updateValue.clss_info_val3}
                   type="text"
                   {...register('clss_info_val3', {
                     required: 'required',
