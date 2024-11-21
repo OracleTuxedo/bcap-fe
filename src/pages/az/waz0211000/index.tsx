@@ -207,7 +207,7 @@ const WAZ021100 = () => {
       data_stat_cd : data.data_stat_cd,
       dtl_cd_id : data.dtl_cd_id,
       sort_req : index,
-      msg_nm : [data.msg_nm[0],data.msg_nm[0]],
+      msg_nm : [data.msg_nm,data.msg_nm],
       clss_info_val1 : data.clss_info_val1,
       clss_info_val2 : data.clss_info_val2,
       clss_info_val3 : data.clss_info_val3,

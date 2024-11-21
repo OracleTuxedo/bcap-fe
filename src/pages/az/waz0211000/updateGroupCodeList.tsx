@@ -67,8 +67,6 @@ export const UpdateGroupCodeList = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [updateValue, setUpdateValue] = useState<addNewGroupCode>(data);
 
-  console.log(data.biz_ctgo_id);
-
   const {
     register,
     handleSubmit,
@@ -195,15 +193,14 @@ export const UpdateGroupCodeList = ({
                   id="group_cd_id"
                   className={inputStyle}
                   value={updateValue.group_cd_id}
+                  onChange={(e) => {
+                    if (e.target.value && /^\d*$/.test(e.target.value)) {
+                      setUpdateValue((prev) => ({...prev, group_cd_id : e.target.value}))
+                    } else {
+                      errors['group_cd_id.message'] = "Required and has to be numeric"
+                    }
+                  }}
                   type="text"
-                  {...register('group_cd_id', {
-                    required: 'required',
-                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
-                      setUpdateValue((prev) => ({
-                        ...prev,
-                        group_cd_id: e.target.value,
-                      })),
-                  })}
                 />
                 <label>
                   {errors['group_cd_id'] ? errors['group_cd_id'].message : ''}
