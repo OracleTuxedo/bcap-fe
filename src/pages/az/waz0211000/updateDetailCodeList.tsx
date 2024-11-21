@@ -291,7 +291,6 @@ export const UpdateDetailCodeList = ({
                   value={updateValue.clss_info_val1}
                   type="text"
                   {...register('clss_info_val1', {
-                    required: 'required',
                     onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, clss_info_val1 : e.target.value}))
                   })}
                 />
@@ -310,7 +309,6 @@ export const UpdateDetailCodeList = ({
                   value={updateValue.clss_info_val2}
                   type="text"
                   {...register('clss_info_val2', {
-                    required: 'required',
                     onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, biz_ctgo_id : e.target.value}))
                   })}
                 />
