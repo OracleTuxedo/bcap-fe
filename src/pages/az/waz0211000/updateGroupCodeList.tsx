@@ -1,5 +1,5 @@
 import { dropdownOptionsInterface } from '@/types';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Loading from '../../../components/organisms/Loading';
 import { SAZ02F111UInSub1Vo, SAZ02F111UInSub2Vo, SAZ02F111UInVo } from '@/dto';
@@ -61,25 +61,36 @@ export const UpdateGroupCodeList = ({
   onClose,
   data,
 }: UpdateGroupCodeListProps) => {
+  console.log('data', data);
 
-  console.log("data", data);
-  
   const [loading, setLoading] = useState<boolean>(false);
   const [updateValue, setUpdateValue] = useState<addNewGroupCode>(data);
+
+  console.log(data.biz_ctgo_id);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<addNewGroupCode>({
-    defaultValues : {
-      biz_ctgo_id : '',
-      group_cd_id : '',
-      cd_expl : '',
-      data_stat_cd : '',
-      msg_nm : ['', ''],
-    }
+    defaultValues: {
+      biz_ctgo_id: data.biz_ctgo_id,
+      group_cd_id: data.group_cd_id,
+      cd_expl: '',
+      data_stat_cd: '',
+      msg_nm: ['', ''],
+    },
   });
+
+  useEffect(() => {
+    setValue('biz_ctgo_id', data.biz_ctgo_id);
+    setValue('group_cd_id', data.group_cd_id);
+    setValue('cd_expl', data.cd_expl);
+    setValue('data_stat_cd', data.data_stat_cd);
+    setValue('msg_nm.0', data.msg_nm[0]);
+    setValue('msg_nm.1', data.msg_nm[1]);
+  }, [setValue, data]);
 
   const onSubmit = async (value: addNewGroupCode) => {
     setLoading(true);
@@ -166,11 +177,11 @@ export const UpdateGroupCodeList = ({
                     required: 'required',
                   })}
                 >
-                    {systemDivisionData.map((option, index) => (
-                        <option key={index} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
+                  {systemDivisionData.map((option, index) => (
+                    <option key={index} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
                 </select>
                 <label>
                   {errors['biz_ctgo_id'] ? errors['biz_ctgo_id'].message : ''}
@@ -186,7 +197,11 @@ export const UpdateGroupCodeList = ({
                   type="text"
                   {...register('group_cd_id', {
                     required: 'required',
-                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, group_cd_id : e.target.value}))
+                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        group_cd_id: e.target.value,
+                      })),
                   })}
                 />
                 <label>
@@ -207,11 +222,12 @@ export const UpdateGroupCodeList = ({
                         id={`msg_nm_${index}`}
                         {...register(`msg_nm.${index}`, {
                           required: 'required',
-                          onChange : (e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => {
+                          onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                            setUpdateValue((prev) => {
                               const updatedMsgNm = [...prev.msg_nm];
                               updatedMsgNm[index] = e.target.value;
-                              return {...prev, msg_nm : updatedMsgNm}
-                          })
+                              return { ...prev, msg_nm: updatedMsgNm };
+                            }),
                         })}
                       />
                       <label>
@@ -225,11 +241,15 @@ export const UpdateGroupCodeList = ({
               <div className={containerStyle}>
                 <label className={labelStyle}>Use Status</label>
                 <select
-                    value={updateValue.data_stat_cd}
-                    className={inputStyle}
-                    {...register('data_stat_cd', {
-                      required: 'required',
-                      onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, data_stat_cd : e.target.value}))
+                  value={updateValue.data_stat_cd}
+                  className={inputStyle}
+                  {...register('data_stat_cd', {
+                    required: 'required',
+                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        data_stat_cd: e.target.value,
+                      })),
                   })}
                 >
                   {useStatusData.map((item, index) => (
@@ -252,7 +272,11 @@ export const UpdateGroupCodeList = ({
                   type="text"
                   {...register('cd_expl', {
                     required: 'required',
-                    onChange:(e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => ({...prev, cd_expl : e.target.value}))
+                    onChange: (e: ChangeEvent<HTMLInputElement>) =>
+                      setUpdateValue((prev) => ({
+                        ...prev,
+                        cd_expl: e.target.value,
+                      })),
                   })}
                 />
                 <label>
