@@ -67,8 +67,6 @@ export interface UpdateGroupCodeListProps {
 
 export const UpdateDetailCodeList = ({
   open,
-  biz_ctgo_cd,
-  grup_cd_id,
   screenId,
   onClose,
   data,
@@ -84,13 +82,13 @@ export const UpdateDetailCodeList = ({
     defaultValues: {
       cmmn_cd_id: updateValue.cmmn_cd_id,
       cd_expl : updateValue.cd_expl,
-      clss_info_val1 : updateValue.clss_info_val1,
-      clss_info_val2 : updateValue.clss_info_val2,
-      clss_info_val3 : updateValue.clss_info_val3,
       data_stat_cd : updateValue.data_stat_cd,
       dtl_cd_id : updateValue.dtl_cd_id,
       sort_req : updateValue.sort_req,
       msg_nm : updateValue.msg_nm,
+      clss_info_val1 : updateValue.clss_info_val1,
+      clss_info_val2 : updateValue.clss_info_val2,
+      clss_info_val3 : updateValue.clss_info_val3,
     },
   });
 

@@ -70,10 +70,10 @@ export const UpdateGroupCodeList = ({
   } = useForm<addNewGroupCode>({
     defaultValues : {
       biz_ctgo_id : '',
+      group_cd_id : '',
       cd_expl : '',
       data_stat_cd : '',
-      group_cd_id : '',
-      msg_nm : ['', ],
+      msg_nm : ['', ''],
     }
   });
 

@@ -116,9 +116,6 @@ export const AddDetailCodeList = ({
       await callSAZ02F111U(inVo, screenId).catch((err) => {
         throw new Error(err);
       });
-      console.log('================================================')
-      console.log('inVo', inVo);
-      console.log('================================================')
       setLoading(false);
       onClose();
     } catch (err: unknown) {
