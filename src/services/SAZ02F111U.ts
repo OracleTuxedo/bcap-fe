@@ -75,7 +75,7 @@ const callSAZ02F111U = async (inVo: SAZ02F111UInVo, screenId: string) => {
   const body: EncryptDecryptParam = encryption(requestToTuxedo);
 
   try {
-    const response = await axios.post(`http://localhost:8080/message`, body, {
+    const response = await axios.post(`${BACKEND_ENDPOINT}/message`, body, {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",

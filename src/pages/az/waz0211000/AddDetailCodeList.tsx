@@ -81,6 +81,7 @@ export const AddDetailCodeList = ({
     setLoading(true);
     try {
       const detailCodeList = new SAZ02F111UInSub3Vo();
+      detailCodeList.biz_clcd = 'I';
       detailCodeList.cmmn_cd_id = value.cmmn_cd_id;
       detailCodeList.dtl_cd_id = value.dtl_cd_id;
       detailCodeList.msg_nm = '';
@@ -93,27 +94,31 @@ export const AddDetailCodeList = ({
 
       const detailCodeMessageEn = new SAZ02F111UInSub4Vo();
       detailCodeMessageEn.biz_clcd = 'I';
-      detailCodeMessageEn.msg_id =
-        detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
+      detailCodeMessageEn.msg_id = detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
       detailCodeMessageEn.lang_clcd = 'EN';
       detailCodeMessageEn.msg_nm = value.msg_nm[0];
       detailCodeMessageEn.data_stat_cd = value.data_stat_cd;
 
       const detailCodeMessageId = new SAZ02F111UInSub4Vo();
       detailCodeMessageId.biz_clcd = 'I';
-      detailCodeMessageId.msg_id =
-        detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
+      detailCodeMessageId.msg_id = detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
       detailCodeMessageId.lang_clcd = 'ID';
       detailCodeMessageId.msg_nm = value.msg_nm[1];
       detailCodeMessageId.data_stat_cd = value.data_stat_cd;
 
       const inVo = new SAZ02F111UInVo();
+      inVo.sub1_vos = null;
+      inVo.sub2_vos = null;
       inVo.sub3_vos = [detailCodeList];
       inVo.sub4_vos = [detailCodeMessageEn, detailCodeMessageId];
 
+      
       await callSAZ02F111U(inVo, screenId).catch((err) => {
         throw new Error(err);
       });
+      console.log('================================================')
+      console.log('inVo', inVo);
+      console.log('================================================')
       setLoading(false);
       onClose();
     } catch (err: unknown) {
@@ -260,7 +265,6 @@ export const AddDetailCodeList = ({
                   className={inputStyle}
                   type="text"
                   {...register('clss_info_val1', {
-                    required: 'required',
                   })}
                 />
                 <label>
@@ -277,7 +281,6 @@ export const AddDetailCodeList = ({
                   className={inputStyle}
                   type="text"
                   {...register('clss_info_val2', {
-                    required: 'required',
                   })}
                 />
                 <label>
