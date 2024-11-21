@@ -302,9 +302,9 @@ const WMC0302500 = () => {
                   `}
               >
                 <tr>
-                  <th className={`px-2 py-1`}>
+                  {/* <th className={`px-2 py-1`}>
                     <input type="checkbox" onChange={handleSelectAll} checked={selectAll} />
-                  </th>
+                  </th> */}
                   <th className={`px-2 py-1`}>No</th>
                   <th className={`px-2 py-1`}>Apply Sequence No</th>
                   <th className={`px-2 py-1`}>MID</th>
@@ -326,13 +326,13 @@ const WMC0302500 = () => {
                           even:bg-main-active
                         `}
                       >
-                        <td className={`px-2 py-1`}>
+                        {/* <td className={`px-2 py-1`}>
                           <input
                             type="checkbox"
                             checked={selectedRow.includes(item.aplc_seq_no)}
                             onChange={() => handleSelectRow(item.aplc_seq_no)}
                           />
-                        </td>
+                        </td> */}
                         <td
                           onClick={() => onRowClick(item.aplc_seq_no, '', 20)}
                           className={`px-2 py-1`}>
