@@ -92,8 +92,6 @@ const WAZ021100 = () => {
   const [msgNm, setMsgNm] = useState<string>('');
   const [pageNo, setPageNo] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(20);
-  const [selectedRow, setSelectedRow] = useState<string[]>([]);
-  const [selectAll, setSelectAll] = useState<boolean>(false);
   const [openGroupCodeModal, setOpenGroupCodeModal] = useState<boolean>(false);
   const [openDetailCodeModal, setOpenDetailCodeModal] = useState<boolean>(false);
 
@@ -207,24 +205,6 @@ const WAZ021100 = () => {
       clss_info_val2 : data.clss_info_val2,
       clss_info_val3 : data.clss_info_val3,
     })
-  };
-
-  const handleSelectRow = (id: string) => {
-    if (selectedRow.includes(id)) {
-      setSelectedRow(selectedRow.filter((rowId) => rowId !== id));
-    } else {
-      setSelectedRow([...selectedRow, id]);
-    }
-  };
-
-  const handleSelectAll = () => {
-    if (selectAll) {
-      setSelectedRow([]);
-    } else {
-      setSelectedRow(outVoSAZ02F110R.sub1_vos.map((item) => item.grup_cd_id));
-    }
-
-    setSelectAll(!selectAll);
   };
 
   const onClickSearch = async () => {
@@ -639,13 +619,6 @@ const WAZ021100 = () => {
                   `}
               >
                 <tr>
-                  <th className={`px-2 py-1`}>
-                    <input
-                      type="checkbox"
-                      onChange={handleSelectAll}
-                      checked={selectAll}
-                    />
-                  </th>
                   <th className={`px-2 py-1`}>No</th>
                   <th className={`px-2 py-1`}>Group Code ID</th>
                   <th className={`px-2 py-1`}>Detail Code ID</th>
@@ -669,13 +642,6 @@ const WAZ021100 = () => {
                           even:bg-badge-sky
                         `}
                       >
-                        <td className={`px-2 py-1`}>
-                          <input
-                            type="checkbox"
-                            checked={selectedRow.includes(item.cmmn_cd_id)}
-                            onChange={() => handleSelectRow(item.cmmn_cd_id)}
-                          />
-                        </td>
                         <td className={`px-2 py-1`}>{index + 1}</td>
                         <td className={`px-2 py-1`}>{item.cmmn_cd_id}</td>
                         <td className={`px-2 py-1`}>{item.dtl_cd_id}</td>

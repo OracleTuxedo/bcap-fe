@@ -68,6 +68,8 @@ export const AddDetailCodeList = ({
   open,
   screenId,
   onClose,
+  biz_ctgo_cd,
+  grup_cd_id,
 }: AddGroupCodeListProps) => {
   const [loading, setLoading] = useState<boolean>(false);
 
