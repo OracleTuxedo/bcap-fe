@@ -98,6 +98,7 @@ export const UpdateDetailCodeList = ({
     setLoading(true);
     try {
       const detailCodeList = new SAZ02F111UInSub3Vo();
+      detailCodeList.biz_clcd = 'U';
       detailCodeList.cmmn_cd_id = value.cmmn_cd_id;
       detailCodeList.dtl_cd_id = value.dtl_cd_id;
       detailCodeList.msg_nm = '';
@@ -109,14 +110,14 @@ export const UpdateDetailCodeList = ({
       detailCodeList.cd_expl = value.cd_expl;
 
       const detailCodeMessageEn = new SAZ02F111UInSub4Vo();
-      detailCodeMessageEn.biz_clcd = 'I';
+      detailCodeMessageEn.biz_clcd = 'U';
       detailCodeMessageEn.msg_id = biz_ctgo_cd + grup_cd_id;
       detailCodeMessageEn.lang_clcd = 'EN';
       detailCodeMessageEn.msg_nm = value.msg_nm[0];
       detailCodeMessageEn.data_stat_cd = value.data_stat_cd;
 
       const detailCodeMessageId = new SAZ02F111UInSub4Vo();
-      detailCodeMessageId.biz_clcd = 'I';
+      detailCodeMessageId.biz_clcd = 'U';
       detailCodeMessageId.msg_id = biz_ctgo_cd + grup_cd_id;
       detailCodeMessageId.lang_clcd = 'ID';
       detailCodeMessageId.msg_nm = value.msg_nm[1];

@@ -81,21 +81,21 @@ export const UpdateGroupCodeList = ({
     setLoading(true);
     try {
       const groupCodeList = new SAZ02F111UInSub1Vo();
-      groupCodeList.biz_clcd = 'I';
+      groupCodeList.biz_clcd = 'U';
       groupCodeList.biz_ctgo_cd = value.biz_ctgo_id;
       groupCodeList.grup_cd_id = value.group_cd_id;
       groupCodeList.data_stat_cd = value.data_stat_cd;
       groupCodeList.cd_expl = value.cd_expl;
 
       const groupCodeMessageEn = new SAZ02F111UInSub2Vo();
-      groupCodeMessageEn.biz_clcd = 'I';
+      groupCodeMessageEn.biz_clcd = 'U';
       groupCodeMessageEn.msg_id = value.biz_ctgo_id + value.group_cd_id;
       groupCodeMessageEn.lang_clcd = 'EN';
       groupCodeMessageEn.msg_nm = value.msg_nm[0];
       groupCodeMessageEn.data_stat_cd = value.data_stat_cd;
 
       const groupCodeMessageId = new SAZ02F111UInSub2Vo();
-      groupCodeMessageId.biz_clcd = 'I';
+      groupCodeMessageId.biz_clcd = 'U';
       groupCodeMessageId.msg_id = value.biz_ctgo_id + value.group_cd_id;
       groupCodeMessageId.lang_clcd = 'ID';
       groupCodeMessageId.msg_nm = value.msg_nm[1];
