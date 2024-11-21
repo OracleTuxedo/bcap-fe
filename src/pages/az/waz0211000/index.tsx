@@ -6,6 +6,7 @@ import { ChangeEvent, ReactElement, useState } from 'react';
 import { callSAZ02F110R, callSAZ02F114R } from '@/services';
 import {
   SAZ02F110RInVo,
+  SAZ02F110ROutSub1Vo,
   SAZ02F110ROutVo,
   SAZ02F114RInVo,
   SAZ02F114ROutVo,
@@ -100,6 +101,16 @@ const WAZ021100 = () => {
       },
     });
 
+    const [updateListValue, setUpdateListValue] = useState({
+      isOpen : false,
+      biz_ctgo_cd : '',
+      group_cd_id : '',
+      cd_expl : '',
+      data_stat_cd : '',
+      msg_nm : ['', '']
+    })
+  
+
   const handlerCloseGroupCodeModal = () => {
     setOpenGroupCodeModal(false);
   };
@@ -117,11 +128,25 @@ const WAZ021100 = () => {
   };
 
   const handlerCloseUpdateModal = () => {
-    setOpenGroupCodeUpdateModal(false);
+    setUpdateListValue(() => ({
+      isOpen : false,
+      biz_ctgo_cd : '',
+      cd_expl : '',
+      data_stat_cd : '',
+      group_cd_id : '',
+      msg_nm : ['',''],
+    }));
   };
 
-  const handleOpenUpdateModal = () => {
-    setOpenGroupCodeUpdateModal(true);
+  const handleOpenUpdateModal = (data : SAZ02F110ROutSub1Vo) => {
+    setUpdateListValue(() => ({
+      isOpen : true,
+      biz_ctgo_cd : data.biz_ctgo_cd,
+      cd_expl : data.cd_expl,
+      data_stat_cd : data.data_stat_cd,
+      group_cd_id : data.grup_cd_id,
+      msg_nm : [data.msg_nm[0], data.msg_nm[1]],
+    }));
   };
 
   const handlerCloseDetailCodeUpdateModal = () => {
@@ -429,7 +454,7 @@ const WAZ021100 = () => {
                       <tr
                         key={`list-data-SMC03F054R-${index}`}
                         className={`
-                          even:even:bg-badge-sky
+                          even:bg-badge-sky
                         `}
                       >
                         <td className={`px-2 py-1`}>{index + 1}</td>
@@ -463,22 +488,22 @@ const WAZ021100 = () => {
                           </Button>
                           <Button
                             type={ButtonTypeEnum.EDIT}
-                            onClickHandler={handleOpenUpdateModal}
+                            onClickHandler={() => handleOpenUpdateModal(item)}
                             small
                           >
                             Edit
                           </Button>
                           <UpdateGroupCodeList
                             data={{
-                              biz_ctgo_id: outVoSAZ02F110R.sub1_vos[index].biz_ctgo_cd,
-                              group_cd_id: outVoSAZ02F110R.sub1_vos[index].grup_cd_id,
-                              cd_expl: outVoSAZ02F110R.sub1_vos[index].cd_expl,
-                              data_stat_cd: outVoSAZ02F110R.sub1_vos[index].data_stat_cd,
-                              msg_nm: [outVoSAZ02F110R.sub1_vos[index].msg_nm, outVoSAZ02F110R.sub1_vos[index].msg_nm],
+                              biz_ctgo_id : updateListValue.biz_ctgo_cd,
+                              cd_expl : updateListValue.cd_expl,
+                              data_stat_cd : updateListValue.data_stat_cd,
+                              group_cd_id : updateListValue.group_cd_id,
+                              msg_nm : [updateListValue.msg_nm[0], updateListValue.msg_nm[1]],
                             }}
                             onClose={handlerCloseUpdateModal}
                             screenId={screenId}
-                            open={openGroupCodeUpdateModal}
+                            open={updateListValue.isOpen}
                           />
                         </td>
                       </tr>
