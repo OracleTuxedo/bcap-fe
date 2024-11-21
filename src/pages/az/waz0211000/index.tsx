@@ -99,6 +99,13 @@ const WAZ021100 = () => {
     setIsFavorite((prev) => !prev);
   };
 
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setGrupCdId(value);
+    }
+  };
+
   const [detailCredential, setDetailCredential] =
     useState<detailGroupCredential>({
       biz_ctgo_cd: '',
@@ -328,12 +335,17 @@ const WAZ021100 = () => {
               >
                 Group Code
               </label>
-              <InputText
-                name="group-code"
+              <input
+                name={"group-code"}
+                type="text"
+                className={`
+                  mx-2
+                  p-1
+                  border border-sidebar-normal
+                  shadow-sm
+                `}
                 value={grupCdId}
-                onChangeHandler={(e: ChangeEvent<HTMLInputElement>) =>
-                  setGrupCdId(e.target.value)
-                }
+                onChange={handleInputChange}
               />
             </div>
             <div
