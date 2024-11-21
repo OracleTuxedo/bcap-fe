@@ -104,6 +104,8 @@ export const UpdateGroupCodeList = ({
       const inVo = new SAZ02F111UInVo();
       inVo.sub1_vos = [groupCodeList];
       inVo.sub2_vos = [groupCodeMessageEn, groupCodeMessageId];
+      inVo.sub3_vos = null;
+      inVo.sub4_vos = null;
 
       await callSAZ02F111U(inVo, screenId).catch((err) => {
         throw new Error(err);

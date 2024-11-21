@@ -111,19 +111,21 @@ export const UpdateDetailCodeList = ({
 
       const detailCodeMessageEn = new SAZ02F111UInSub4Vo();
       detailCodeMessageEn.biz_clcd = 'U';
-      detailCodeMessageEn.msg_id = biz_ctgo_cd + grup_cd_id;
+      detailCodeMessageEn.msg_id =  detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
       detailCodeMessageEn.lang_clcd = 'EN';
       detailCodeMessageEn.msg_nm = value.msg_nm[0];
       detailCodeMessageEn.data_stat_cd = value.data_stat_cd;
 
       const detailCodeMessageId = new SAZ02F111UInSub4Vo();
       detailCodeMessageId.biz_clcd = 'U';
-      detailCodeMessageId.msg_id = biz_ctgo_cd + grup_cd_id;
+      detailCodeMessageId.msg_id =  detailCodeList.cmmn_cd_id + detailCodeList.dtl_cd_id;
       detailCodeMessageId.lang_clcd = 'ID';
       detailCodeMessageId.msg_nm = value.msg_nm[1];
       detailCodeMessageId.data_stat_cd = value.data_stat_cd;
 
       const inVo = new SAZ02F111UInVo();
+      inVo.sub1_vos = null;
+      inVo.sub2_vos = null;
       inVo.sub3_vos = [detailCodeList];
       inVo.sub4_vos = [detailCodeMessageEn, detailCodeMessageId];
 
