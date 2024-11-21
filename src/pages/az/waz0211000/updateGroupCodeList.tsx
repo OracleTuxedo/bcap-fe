@@ -61,7 +61,8 @@ export const UpdateGroupCodeList = ({
   onClose,
   data,
 }: UpdateGroupCodeListProps) => {
-  console.log('data', data);
+
+  console.log("data", data);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [updateValue, setUpdateValue] = useState<addNewGroupCode>(data);
@@ -113,7 +114,7 @@ export const UpdateGroupCodeList = ({
       groupCodeMessageId.biz_clcd = 'U';
       groupCodeMessageId.msg_id = value.biz_ctgo_id + value.group_cd_id;
       groupCodeMessageId.lang_clcd = 'ID';
-      groupCodeMessageId.msg_nm = value.msg_nm[1];
+      groupCodeMessageId.msg_nm = value.msg_nm[0];
       groupCodeMessageId.data_stat_cd = value.data_stat_cd;
 
       const inVo = new SAZ02F111UInVo();
@@ -220,14 +221,11 @@ export const UpdateGroupCodeList = ({
                         type="text"
                         value={updateValue.msg_nm[index]}
                         id={`msg_nm_${index}`}
-                        {...register(`msg_nm.${index}`, {
+                        {...register(`msg_nm`, {
                           required: 'required',
-                          onChange: (e: ChangeEvent<HTMLInputElement>) =>
-                            setUpdateValue((prev) => {
-                              const updatedMsgNm = [...prev.msg_nm];
-                              updatedMsgNm[index] = e.target.value;
-                              return { ...prev, msg_nm: updatedMsgNm };
-                            }),
+                          onChange : (e: ChangeEvent<HTMLInputElement>) => setUpdateValue((prev) => {
+                              return {...prev, msg_nm : [e.target.value]}
+                          })
                         })}
                       />
                       <label>
