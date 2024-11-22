@@ -13,10 +13,12 @@
   "dependencies": {
     "@tanstack/react-query": "^5.59.16",
     "@tanstack/react-query-devtools": "^5.59.16",
+    "@types/crypto-js": "^4.2.2",
     "@types/uuid": "^10.0.0",
     "axios": "^1.7.7",
     "bcap-fe": "file:",
     "class-transformer": "^0.5.1",
+    "crypto-js": "^4.2.0",
     "i18next": "^23.16.3",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-chained-backend": "^4.6.2",
