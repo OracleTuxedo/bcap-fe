@@ -1,4 +1,5 @@
 import { ButtonTypeEnum } from '@/enums';
+import { Button } from '@nextui-org/react';
 import { ReactNode } from 'react';
 
 export interface ButtonInterface {
@@ -7,7 +8,7 @@ export interface ButtonInterface {
   onClickHandler: () => void;
 }
 
-const Button = ({ type, onClickHandler, children }: ButtonInterface) => {
+const CustomButton = ({ type, onClickHandler, children }: ButtonInterface) => {
   let color: string = 'bg-main-normal hover:bg-main-active';
   switch (type) {
     case ButtonTypeEnum.WARNING:
@@ -27,7 +28,7 @@ const Button = ({ type, onClickHandler, children }: ButtonInterface) => {
   }
 
   return (
-    <button
+    <Button
       onClick={onClickHandler}
       className={`
                 flex flex-1
@@ -38,8 +39,8 @@ const Button = ({ type, onClickHandler, children }: ButtonInterface) => {
             `}
     >
       {children}
-    </button>
+    </Button>
   );
 };
 
-export default Button;
+export default CustomButton;
