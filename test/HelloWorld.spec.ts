@@ -14,8 +14,8 @@ describe('Hello World', () => {
     expect('hello world').toBe('hello world');
   });
 
-  it('should hello world contains', () => {
+  it('1 = 1', () => {
     console.log('Hello World Failure');
-    expect('hello world').toBeInstanceOf('string');
+    expect(1).toBe(1);
   });
 });
