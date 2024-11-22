@@ -1,40 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Rules
 
-## Getting Started
+## Commitlint
 
-First, run the development server:
+**Commitlint** is a tool used to enforce a consistent commit message format, helping teams maintain clear commit history and making it easier to understand what changes have been made. Below are detailed explanations of common commit message types that can be enforced by **Commitlint**, with examples and use cases:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 1. **chore**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Routine tasks that don't change application functionality or features.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- **Example Commit Message:**
+  `chore: update project README with contributing guidelines`
+- **Use Case:**
+  Updating documentation, renaming files, or other maintenance tasks that don't directly affect code execution.
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### 2. **docs**
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+Changes to documentation (e.g., `README.md`, inline comments).
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Example Commit Message:**
+  `docs: add API usage examples for the authentication service`
+- **Use Case:**
+  Adding or updating documentation without modifying the application code, making it easier for new developers or end-users to understand the project.
 
-## Learn More
+### 5. **feat**
 
-To learn more about Next.js, take a look at the following resources:
+A new feature that enhances the application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+- **Example Commit Message:**
+  `feat: add a dark mode toggle to the settings page`
+- **Use Case:**
+  Introducing new user-visible functionality, such as adding a new API endpoint or UI component.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 6. **fix**
 
-## Deploy on Vercel
+A bug fix for the application.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Example Commit Message:**
+  `fix: resolve login error when using invalid credentials`
+- **Use Case:**
+  Correcting unexpected behavior in the system, such as fixing logic errors, typos in the code, or runtime exceptions.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+### 8. **refactor**
+
+Code changes that neither fix a bug nor add a feature but improve code structure.
+
+- **Example Commit Message:**
+  `refactor: modularize user authentication logic`
+- **Use Case:**
+  Improving maintainability by restructuring code, splitting functions into smaller ones, or following better design patterns.
+
+### 9. **revert**
+
+Revert a previous commit.
+
+- **Example Commit Message:**
+  `revert: revert "feat: add a new analytics dashboard"`
+- **Use Case:**
+  Undoing changes introduced in an earlier commit, often due to bugs or unintended side effects.
+
+### 10. **style**
+
+Changes that do not affect application functionality but improve code style (e.g., formatting, spacing).
+
+- **Example Commit Message:**
+  `style: fix indentation and remove trailing spaces`
+- **Use Case:**
+  Enforcing consistent code formatting, such as adhering to a specific style guide, without changing the program's behavior.
+
+---
+
+### 11. **test**
+
+Adding or modifying tests (unit, integration, or end-to-end).
+
+- **Example Commit Message:**
+  `test: add unit tests for user service methods``
+- **Use Case:**
+  Adding new test cases, fixing existing ones, or improving coverage for better reliability.
+
+---
+
+## Benefits of Commitlint Rules
+
+- Enforce consistent commit message conventions.
+- Help generate automated changelogs using tools like **semantic-release**.
+- Improve readability and traceability of changes in the codebase.
