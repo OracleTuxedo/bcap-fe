@@ -1,3 +1,3 @@
-export * from './Decoder';
+export * from './SkyDecoder';
 
-export * from './Encoder';
+export * from './SkyEncoder';
