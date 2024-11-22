@@ -33,6 +33,10 @@ const config: Config = {
         normal: '#DC2626',
         active: '#991b1b',
       },
+      homepage: {
+        first: '#013066',
+        second: '#6386AF',
+      },
     },
   },
   plugins: [nextui()],
