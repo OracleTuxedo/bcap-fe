@@ -1,5 +1,3 @@
-import InputCell from "./InputCell";
+import InputCell from './InputCell';
 
-export {
-    InputCell,
-}
+export { InputCell };

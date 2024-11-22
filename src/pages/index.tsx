@@ -4,7 +4,6 @@ import { ReactElement } from 'react';
 import { Seo } from '@/components';
 
 const LandingPage = () => {
-
   return (
     <>
       <Seo title="MAAS" />

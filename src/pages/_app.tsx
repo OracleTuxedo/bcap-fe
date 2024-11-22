@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import '@/styles/globals.css';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import { AppProvider } from '@/provider/app';
