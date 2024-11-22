@@ -5,6 +5,7 @@ const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/features/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
@@ -17,6 +18,10 @@ const config: Config = {
       gray: '#D1D1D1',
       white: '#ffffff',
       black: '#000000',
+      homepage: {
+        primary: '#013066',
+        secondary: '#6386AF',
+      },
       main: {
         normal: '#4DACD8',
         active: '#36A1D3',
@@ -32,10 +37,6 @@ const config: Config = {
       danger: {
         normal: '#DC2626',
         active: '#991b1b',
-      },
-      homepage: {
-        first: '#013066',
-        second: '#6386AF',
       },
     },
   },
