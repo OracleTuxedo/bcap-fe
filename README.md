@@ -85,3 +85,27 @@ Adding or modifying tests (unit, integration, or end-to-end).
 - Enforce consistent commit message conventions.
 - Help generate automated changelogs using tools like **semantic-release**.
 - Improve readability and traceability of changes in the codebase.
+
+---
+
+# Prettier conflict with existing files
+
+## Converting the End of Line Sequence from CRLF to LF in any of your project files
+### Execute the following commands in your root of your project folder
+### NOTE: Do not do the following steps without committing your data. As it clears all the git cache and it will clear all your changes in your project.
+
+1. First disable the autoCRLF in the git config by running the following command in your terminal
+  `git config core.autocrlf false`
+
+2. Then remove the cached files in the git. Run the following command:
+  `git rm --cached -r .`
+
+3. Then reset the project files by executing the following command to complete conversion.
+  `git reset --hard`
+
+
+That's it now all the files that have CRLF will be converted to LF.
+
+Additionally you can add `"files.eol": "\n"` in your Vscode settings.
+
+---
