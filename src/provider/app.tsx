@@ -1,3 +1,4 @@
+import { NextUIProvider } from '@nextui-org/react';
 import { ReactNode } from 'react';
 
 type AppProviderProps = {
@@ -5,5 +6,5 @@ type AppProviderProps = {
 };
 
 export const AppProvider = ({ children }: AppProviderProps) => {
-  return <div>{children}</div>;
+  return <NextUIProvider>{children}</NextUIProvider>;
 };
