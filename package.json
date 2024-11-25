@@ -7,10 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:dev": "eslint --ext .ts,.tsx --no-error-on-unmatched-pattern ./src",
+    "lint:fix": "eslint --ext .ts,.tsx --no-error-on-unmatched-pattern --fix ./src",
+    "lint:report": "eslint --ext .ts,.tsx -f json -o eslint-report.json --no-error-on-unmatched-pattern ./src",
+    "prettier": "prettier \"**/*.+(json|ts|tsx)\"",
+    "format:check": "npm run prettier -- --check",
+    "format:fix": "npm run prettier -- --write",
     "prepare": "husky install",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "@nextui-org/react": "^2.4.8",
@@ -60,15 +67,11 @@
     "ts-jest": "^29.2.5",
     "typescript": "^5"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
-      "prettier --write"
+      "prettier --write",
+      "git add"
     ]
   }
 }
