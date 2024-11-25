@@ -8,7 +8,11 @@ export interface ButtonInterface {
   onClickHandler: () => void;
 }
 
-const CustomButton = ({ type, onClickHandler, children }: ButtonInterface) => {
+const CustomButton = ({
+  type,
+  onClickHandler,
+  children,
+}: ButtonInterface) => {
   let color: string = 'bg-main-normal hover:bg-main-active';
   switch (type) {
     case ButtonTypeEnum.WARNING:

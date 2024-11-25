@@ -21,7 +21,9 @@ export interface DecoderParam<T> {
  * @param param DecoderParam
  * @returns T | Object | null
  */
-export function convertStringToObject<T>(param: DecoderParam<T>): T | null {
+export function convertStringToObject<T>(
+  param: DecoderParam<T>,
+): T | null {
   const { input, classInstance } = param;
 
   /// Blueprint object that we want to create and casting to Object
@@ -82,11 +84,10 @@ export function convertStringToObject<T>(param: DecoderParam<T>): T | null {
         tempSubset = tempSubset.trimStart();
 
         /// Find number metadata within a class based on what property to be gives value
-        const fieldNumber: FieldNumberParam | undefined = fieldNumbers?.find(
-          (fieldNumber) => {
+        const fieldNumber: FieldNumberParam | undefined =
+          fieldNumbers?.find((fieldNumber) => {
             return fieldNumber.propertyKey === propertyKey;
-          },
-        );
+          });
 
         if (fieldNumber === undefined) return null;
 
@@ -108,11 +109,10 @@ export function convertStringToObject<T>(param: DecoderParam<T>): T | null {
         if (trim != 'NONE') return null;
 
         /// Find list metadata within a class based on what property to be gives value
-        const fieldList: FieldListParam<Object> | undefined = fieldLists?.find(
-          (fieldList) => {
+        const fieldList: FieldListParam<Object> | undefined =
+          fieldLists?.find((fieldList) => {
             return fieldList.propertyKey === propertyKey;
-          },
-        );
+          });
 
         /// Pass by reference
         const paramList: ParseFieldListParam = {
@@ -238,10 +238,8 @@ function parseFieldList(paramList: ParseFieldListParam): boolean {
     Meta.FIELD,
     childObject,
   );
-  const fieldNumbers: Array<FieldNumberParam> | undefined = Reflect.getMetadata(
-    Meta.FIELD_NUMBER,
-    childObject,
-  );
+  const fieldNumbers: Array<FieldNumberParam> | undefined =
+    Reflect.getMetadata(Meta.FIELD_NUMBER, childObject);
   const fieldLists: Array<FieldListParam<typeof childObject>> | undefined =
     Reflect.getMetadata(Meta.FIELD_LIST, childObject);
 
@@ -331,10 +329,8 @@ function parseFieldVo(paramVo: ParseFieldVoParam): boolean {
     Meta.FIELD,
     paramVo.obj,
   );
-  const fieldNumbers: Array<FieldNumberParam> | undefined = Reflect.getMetadata(
-    Meta.FIELD_NUMBER,
-    paramVo.obj,
-  );
+  const fieldNumbers: Array<FieldNumberParam> | undefined =
+    Reflect.getMetadata(Meta.FIELD_NUMBER, paramVo.obj);
   const fieldLists: Array<FieldListParam<typeof paramVo.obj>> | undefined =
     Reflect.getMetadata(Meta.FIELD_LIST, paramVo.obj);
 

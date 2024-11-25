@@ -11,7 +11,10 @@ export function Field(metadata: FieldMeta) {
     if (!Reflect.hasMetadata(Meta.FIELD, target))
       Reflect.defineMetadata(Meta.FIELD, [], target);
 
-    const fields: Array<FieldParam> = Reflect.getMetadata(Meta.FIELD, target);
+    const fields: Array<FieldParam> = Reflect.getMetadata(
+      Meta.FIELD,
+      target,
+    );
     fields.push({ propertyKey, metadata });
     Reflect.defineMetadata(Meta.FIELD, fields, target);
   };

@@ -7,4 +7,13 @@ import Checkbox from './Checkbox';
 import Date from './Date';
 import Input from './Input';
 
-export { Seo, Container, CustomButton, Text, Badge, Checkbox, Date, Input };
+export {
+  Seo,
+  Container,
+  CustomButton,
+  Text,
+  Badge,
+  Checkbox,
+  Date,
+  Input,
+};

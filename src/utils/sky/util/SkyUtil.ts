@@ -39,10 +39,8 @@ export function getPacketSize(obj: Object): number | null {
     Meta.FIELD,
     obj,
   );
-  const fieldNumbers: Array<FieldNumberParam> | undefined = Reflect.getMetadata(
-    Meta.FIELD_NUMBER,
-    obj,
-  );
+  const fieldNumbers: Array<FieldNumberParam> | undefined =
+    Reflect.getMetadata(Meta.FIELD_NUMBER, obj);
   const fieldLists: Array<FieldListParam<typeof obj>> | undefined =
     Reflect.getMetadata(Meta.FIELD_LIST, obj);
   // console.log(fields);
@@ -59,11 +57,10 @@ export function getPacketSize(obj: Object): number | null {
         break;
 
       case 'NUMBER':
-        const fieldNumber: FieldNumberParam | undefined = fieldNumbers?.find(
-          (fieldNumber) => {
+        const fieldNumber: FieldNumberParam | undefined =
+          fieldNumbers?.find((fieldNumber) => {
             return fieldNumber.propertyKey === propertyKey;
-          },
-        );
+          });
 
         if (!fieldNumber) {
           // console.log("propertyKey :" + propertyKey);

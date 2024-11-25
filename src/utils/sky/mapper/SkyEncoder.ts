@@ -11,10 +11,8 @@ export function convertObjectToString(obj: Object): string | null {
     Meta.FIELD,
     obj,
   );
-  const fieldNumbers: Array<FieldNumberParam> | undefined = Reflect.getMetadata(
-    Meta.FIELD_NUMBER,
-    obj,
-  );
+  const fieldNumbers: Array<FieldNumberParam> | undefined =
+    Reflect.getMetadata(Meta.FIELD_NUMBER, obj);
   const fieldLists: Array<FieldListParam<typeof obj>> | undefined =
     Reflect.getMetadata(Meta.FIELD_LIST, obj);
 
@@ -30,16 +28,16 @@ export function convertObjectToString(obj: Object): string | null {
     switch (type) {
       case 'STRING':
         if (!obj[propertyKey]) resultString += ''.padEnd(length, ' ');
-        else resultString += (obj[propertyKey] as string).padEnd(length, ' ');
+        else
+          resultString += (obj[propertyKey] as string).padEnd(length, ' ');
         // resultString += (obj[propertyKey] as string).padEnd(length, " ");
         break;
 
       case 'NUMBER':
-        const fieldNumber: FieldNumberParam | undefined = fieldNumbers?.find(
-          (fieldNumber) => {
+        const fieldNumber: FieldNumberParam | undefined =
+          fieldNumbers?.find((fieldNumber) => {
             return fieldNumber.propertyKey === propertyKey;
-          },
-        );
+          });
 
         if (fieldNumber === undefined) return null;
 
@@ -86,7 +84,9 @@ function parseFieldNumber(
     case 'DOUBLE':
     case 'FLOAT':
       if (!value) return ''.padStart(length, '0');
-      return (value * Math.pow(10, decimal)).toString().padStart(length, '0');
+      return (value * Math.pow(10, decimal))
+        .toString()
+        .padStart(length, '0');
 
     case 'LONG':
     case 'INT':
