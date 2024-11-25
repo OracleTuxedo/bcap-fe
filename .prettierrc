@@ -2,6 +2,7 @@
   "semi": true,
   "singleQuote": true,
   "tabWidth": 2,
+  "printWidth": 75,
   "useTabs": false,
   "endOfLine": "lf"
 }
