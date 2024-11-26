@@ -12,4 +12,4 @@ export * from './SkyOut';
 
 export * from './SkyOutData';
 
-export * from './SkyUserDataInput';
+export * from './SkyUserDataIn';
