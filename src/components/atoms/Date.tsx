@@ -1,12 +1,14 @@
+import { DatePicker, DatePickerProps, DateValue } from '@nextui-org/react';
+
 export interface DateInterface {
   name: string;
   value?: string;
-  onChangeHandler: (e: React.FormEvent<HTMLInputElement>) => void;
+  onChangeHandler: (e: DateValue) => void;
 }
 
 const Date = ({ name, value, onChangeHandler }: DateInterface) => {
   return (
-    <input
+    <DatePicker
       className={`
                 flex
                 flex-1
@@ -18,9 +20,10 @@ const Date = ({ name, value, onChangeHandler }: DateInterface) => {
                 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent
                 hover:border-gray transition duration-150 ease-in-out
             `}
-      type="date"
       name={name}
-      value={value}
+      label="Date"
+      labelPlacement="outside-left"
+      showMonthAndYearPickers
       onChange={onChangeHandler}
     />
   );

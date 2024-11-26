@@ -2,17 +2,17 @@ import { ButtonTypeEnum } from '@/enums';
 import { Button } from '@nextui-org/react';
 import { ReactNode } from 'react';
 
-export interface ButtonInterface {
+export interface ButtonInterface<T> {
   type?: ButtonTypeEnum;
   children: ReactNode;
-  onClickHandler: () => void;
+  onClickHandler: (value: T) => void;
 }
 
-const CustomButton = ({
+const CustomButton = <T,>({
   type,
   onClickHandler,
   children,
-}: ButtonInterface) => {
+}: ButtonInterface<T>) => {
   let color: string = 'bg-main-normal hover:bg-main-active';
   switch (type) {
     case ButtonTypeEnum.WARNING:

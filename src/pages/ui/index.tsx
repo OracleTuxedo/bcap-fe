@@ -5,11 +5,12 @@ import {
   Seo,
   Text,
   Date,
-  Input,
+  InputText,
   CustomButton,
 } from '@/components';
 import { InputCell } from '@/components/molecules';
 import { InputTypeEnum, SizeEnum, TextColorEnum } from '@/enums';
+import { DateValue } from '@nextui-org/react';
 import { useState } from 'react';
 
 const UiPage = () => {
@@ -49,12 +50,10 @@ const UiPage = () => {
         <Date
           name="date-test"
           value={DateState}
-          onChangeHandler={(e: React.FormEvent<HTMLInputElement>) =>
-            setDateState(e.currentTarget.value)
-          }
+          onChangeHandler={(e: DateValue) => console.log(e)}
         />
 
-        <Input
+        <InputText
           name="input-test"
           type={InputTypeEnum.TEXT}
           value={InputState}
@@ -75,7 +74,7 @@ const UiPage = () => {
           </InputCell>
 
           <InputCell label="Test Input">
-            <Input
+            <InputText
               name="input-test-cell"
               type={InputTypeEnum.TEXT}
               value={InputCellState}

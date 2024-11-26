@@ -22,7 +22,7 @@ export const Main = () => {
       <div className="grid grid-cols-4 gap-x-80 gap-y-20">
         {merchants.map((merchant) => (
           <Button
-            className="h-auto w-auto flex flex-col items-center justify-center bg-white rounded-lg shadow-md p-4"
+            className="h-auto w-auto flex flex-col items-center justify-center bg-white rounded-lg shadow-xl p-4"
             key={merchant.id}
           >
             <div className="w-24 h-12 flex items-center justify-center bg-gray-200 rounded-full">
