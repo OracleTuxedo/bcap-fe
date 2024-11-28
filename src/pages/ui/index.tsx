@@ -11,7 +11,7 @@ import {
 } from '@/components';
 import { InputCell } from '@/components/molecules';
 import { InputTypeEnum, SizeEnum, TextColorEnum } from '@/enums';
-import { DateValue } from '@nextui-org/react';
+import { DateValue, Input } from '@nextui-org/react';
 import { useState } from 'react';
 
 const UiPage = () => {
@@ -28,9 +28,7 @@ const UiPage = () => {
       <Container>
         <Text>MAAS Web Front End and UI Page</Text>
 
-        <CustomButton
-          onClickHandler={() => console.log('button is pressed')}
-        >
+        <CustomButton onClickHandler={(e) => console.log(e)}>
           <Text color={TextColorEnum.WHITE} size={SizeEnum.NORMAL}>
             TEST
           </Text>
@@ -49,15 +47,14 @@ const UiPage = () => {
           }}
         />
 
-        <Date
-          name="date-test"
-          value={DateState}
-          onChangeHandler={(e: DateValue) => console.log(e)}
+        <Input
+          type="date"
+          label="Date"
+          onChange={(e) => console.log(e.target.value)}
         />
 
         <InputText
           name="input-test"
-          type={InputTypeEnum.TEXT}
           value={InputState}
           onChangeHandler={(e: React.FormEvent<HTMLInputElement>) =>
             setInputState(e.currentTarget.value)
@@ -78,7 +75,6 @@ const UiPage = () => {
           <InputCell label="Test Input">
             <InputText
               name="input-test-cell"
-              type={InputTypeEnum.TEXT}
               value={InputCellState}
               onChangeHandler={(e: React.FormEvent<HTMLInputElement>) =>
                 setInputCellState(e.currentTarget.value)

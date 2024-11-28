@@ -1,9 +1,14 @@
-import { DatePicker, DatePickerProps, DateValue } from '@nextui-org/react';
+import {
+  CalendarDate,
+  DatePicker,
+  DatePickerProps,
+  DateValue,
+} from '@nextui-org/react';
 
 export interface DateInterface {
   name: string;
   value?: string;
-  onChangeHandler: (e: DateValue) => void;
+  onChangeHandler: (e) => void;
 }
 
 const Date = ({ name, value, onChangeHandler }: DateInterface) => {

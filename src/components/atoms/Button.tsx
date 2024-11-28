@@ -1,11 +1,11 @@
 import { ButtonTypeEnum } from '@/enums';
 import { Button } from '@nextui-org/react';
-import { ReactNode } from 'react';
+import { MouseEventHandler, ReactNode } from 'react';
 
 export interface ButtonInterface<T> {
   type?: ButtonTypeEnum;
   children: ReactNode;
-  onClickHandler: (value: T) => void;
+  onClickHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const CustomButton = <T,>({
