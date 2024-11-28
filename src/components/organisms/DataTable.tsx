@@ -10,6 +10,26 @@ const DataTable = () => {
   const data2: SMC03F055ROutSub1Vo[] = Array.from(
     { length: 50 },
     (_, index) => ({
+      chng_usr_id: `chng_usr_id test${index + 21}`,
+      apfm_auth_stat_cd: `apfm_auth_stat_cd test${index + 21}`,
+      aplc_seq_no: `aplc_seq_no test${index + 21}`,
+      auth_date: `auth_date test${index + 21}`,
+      auth_lev_clcd: `auth_lev_clcd test${index + 21}`,
+      chng_aftr_ctnts: `chng_aftr_ctnts test${index + 21}`,
+      chng_bef_ctnts: `chng_bef_ctnts test${index + 21}`,
+      chng_pgm_id: `chng_pgm_id test${index + 21}`,
+      data_chng_dttm: `data_chng_dttm test${index + 21}`,
+      data_inp_dttm: `data_inp_dttm test${index + 21}`,
+      info_chng_tp_cd: `info_chng_tp_cd test${index + 21}`,
+      inp_pgm_id: `inp_pgm_id test${index + 21}`,
+      inp_usr_id: `inp_usr_id test${index + 21}`,
+      mid: `mid test${index + 21}`,
+    }),
+  );
+
+  const data1: SMC03F055ROutSub1Vo[] = Array.from(
+    { length: 20 },
+    (_, index) => ({
       chng_usr_id: `chng_usr_id test${index + 1}`,
       apfm_auth_stat_cd: `apfm_auth_stat_cd test${index + 1}`,
       aplc_seq_no: `aplc_seq_no test${index + 1}`,
@@ -24,26 +44,6 @@ const DataTable = () => {
       inp_pgm_id: `inp_pgm_id test${index + 1}`,
       inp_usr_id: `inp_usr_id test${index + 1}`,
       mid: `mid test${index + 1}`,
-    }),
-  );
-
-  const data1: SMC03F055ROutSub1Vo[] = Array.from(
-    { length: 25 },
-    (_, index) => ({
-      chng_usr_id: `chng_usr_id test${index + 51}`,
-      apfm_auth_stat_cd: `apfm_auth_stat_cd test${index + 51}`,
-      aplc_seq_no: `aplc_seq_no test${index + 51}`,
-      auth_date: `auth_date test${index + 51}`,
-      auth_lev_clcd: `auth_lev_clcd test${index + 51}`,
-      chng_aftr_ctnts: `chng_aftr_ctnts test${index + 51}`,
-      chng_bef_ctnts: `chng_bef_ctnts test${index + 51}`,
-      chng_pgm_id: `chng_pgm_id test${index + 51}`,
-      data_chng_dttm: `data_chng_dttm test${index + 51}`,
-      data_inp_dttm: `data_inp_dttm test${index + 51}`,
-      info_chng_tp_cd: `info_chng_tp_cd test${index + 51}`,
-      inp_pgm_id: `inp_pgm_id test${index + 51}`,
-      inp_usr_id: `inp_usr_id test${index + 51}`,
-      mid: `mid test${index + 51}`,
     }),
   );
 
@@ -82,6 +82,7 @@ const DataTable = () => {
     enableColumnFilters: false,
     enablePagination: true,
     enableSorting: false,
+    manualPagination: true,
     enableBottomToolbar: true,
     paginateExpandedRows: false,
     mantineTableProps: {
@@ -101,15 +102,27 @@ const DataTable = () => {
         }}
       >
         <button
-          onClick={() => table.previousPage()}
+          onClick={() => {
+            table.previousPage();
+            console.log(table.getCanPreviousPage());
+          }}
           disabled={!table.getCanPreviousPage()}
           style={{ marginRight: '8px' }}
         >
           Previous
         </button>
         <button
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
+          onClick={() => {
+            if (table.getCanNextPage()) {
+              table.nextPage();
+            } else {
+              setListData((prev) => {
+                const updatedList = [...prev, ...data2];
+                table.setPageIndex(table.getPageCount());
+                return updatedList;
+              });
+            }
+          }}
         >
           Next
         </button>

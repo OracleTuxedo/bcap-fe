@@ -16,7 +16,8 @@ import { useState } from 'react';
 
 const UiPage = () => {
   const [CheckboxState, setCheckboxState] = useState<boolean>(false);
-  const [CheckboxCellState, setCheckboxCellState] = useState<boolean>(false);
+  const [CheckboxCellState, setCheckboxCellState] =
+    useState<boolean>(false);
   const [DateState, setDateState] = useState<string>('');
   const [InputState, setInputState] = useState<string>('');
   const [InputCellState, setInputCellState] = useState<string>('');
@@ -27,7 +28,9 @@ const UiPage = () => {
       <Container>
         <Text>MAAS Web Front End and UI Page</Text>
 
-        <CustomButton onClickHandler={() => console.log('button is pressed')}>
+        <CustomButton
+          onClickHandler={() => console.log('button is pressed')}
+        >
           <Text color={TextColorEnum.WHITE} size={SizeEnum.NORMAL}>
             TEST
           </Text>
