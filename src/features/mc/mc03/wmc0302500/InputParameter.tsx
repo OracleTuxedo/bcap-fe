@@ -31,6 +31,18 @@ export const InputParameterWMC0302500 = ({
     set_end_date(value);
   };
 
+  const searchHandler = () => {
+    const value = new SMC03F054RInVo();
+    value.apfm_pgrs_stat_cd = apfm_pgrs_stat_cd;
+    value.mid = mid;
+    value.std_date = std_date;
+    value.end_date = end_date;
+    value.page_size = page_size;
+    value.next_key_val = next_key_val;
+
+    onClickSearch(value);
+  };
+
   return (
     <div
       id="search"
@@ -68,21 +80,14 @@ export const InputParameterWMC0302500 = ({
           id="mid"
           className={`
                 mx-2
-                flex flex-row
+                flex
                 items-center
                 font-medium
-                text-gray-700
               `}
         >
-          <label
-            className={`
-                  mx-2
-                `}
-          >
-            MID
-          </label>
           <InputText
             name="mid"
+            label="MID"
             value={mid}
             onChangeHandler={(e) => setMid(e.target.value)}
           />
@@ -97,16 +102,7 @@ export const InputParameterWMC0302500 = ({
       >
         <CustomButton
           type={ButtonTypeEnum.DEFAULT}
-          onClickHandler={() =>
-            onClickSearch({
-              mid,
-              apfm_pgrs_stat_cd,
-              end_date,
-              std_date,
-              next_key_val,
-              page_size,
-            })
-          }
+          onClickHandler={searchHandler}
         >
           Search
         </CustomButton>

@@ -8,7 +8,7 @@ import {
 export interface DateInterface {
   name: string;
   value?: string;
-  onChangeHandler: (e) => void;
+  onChangeHandler: (e: DateValue) => void;
 }
 
 const Date = ({ name, value, onChangeHandler }: DateInterface) => {

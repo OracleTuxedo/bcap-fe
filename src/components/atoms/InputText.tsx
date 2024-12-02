@@ -5,19 +5,19 @@ import { ChangeEvent } from 'react';
 export interface InputInterface {
   name: string;
   value: string;
+  label: string;
   onChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void;
 }
-const InputText = ({ name, value, onChangeHandler }: InputInterface) => {
+const InputText = ({
+  name,
+  value,
+  label,
+  onChangeHandler,
+}: InputInterface) => {
   return (
     <Input
-      className={`
-                flex
-                flex-1
-                border border-gray
-                shadow-sm
-                focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent
-                hover:border-gray transition duration-150 ease-in-out
-            `}
+      label={label}
+      labelPlacement="outside-left"
       name={name}
       type="text"
       value={value}
