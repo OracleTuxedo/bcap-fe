@@ -6,6 +6,7 @@ import Badge from './Badge';
 import Checkbox from './Checkbox';
 import Date from './Date';
 import InputText from './InputText';
+import CustomCard from './Card';
 
 export {
   Seo,
@@ -16,4 +17,5 @@ export {
   Checkbox,
   Date,
   InputText,
+  CustomCard,
 };

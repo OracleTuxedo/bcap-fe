@@ -7,6 +7,7 @@ import {
   InputText,
   CustomButton,
   DataTable,
+  CustomCard,
 } from '@/components';
 import { InputCell } from '@/components/molecules';
 import { SizeEnum, TextColorEnum } from '@/enums';
@@ -185,6 +186,34 @@ const UiPage = () => {
           previousHandler={previousHandler}
         />
       </Container>
+      <CustomCard>
+        <Container>
+          <ul>
+            <li>
+              List List List List List List List List List List List List
+              List List List List List List List List List List List List
+              List List
+            </li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+            <li>List</li>
+          </ul>
+        </Container>
+      </CustomCard>
     </Container>
   );
 };
