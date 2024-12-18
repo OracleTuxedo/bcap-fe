@@ -6,7 +6,7 @@ export interface TextInterface {
   children: string;
 }
 
-const Text = ({ color, size, children }: TextInterface) => {
+const LabelText = ({ color, size, children }: TextInterface) => {
   let textColor = 'text-black';
   let textSize = 'text-base';
 
@@ -52,4 +52,4 @@ const Text = ({ color, size, children }: TextInterface) => {
   );
 };
 
-export default Text;
+export default LabelText;

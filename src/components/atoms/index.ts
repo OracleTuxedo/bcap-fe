@@ -1,21 +1,18 @@
-import Seo from './Seo';
-import Container from './Container';
-import CustomButton from './Button';
-import Text from './Text';
-import Badge from './Badge';
-import Checkbox from './Checkbox';
-import Date from './Date';
-import InputText from './InputText';
-import CustomCard from './Card';
+import Seo from './seo';
+import { CustomContainer, CustomCard } from './container';
+import { ButtonBase } from './button';
+import { LabelText } from './label';
+import Badge from './container/badge';
+import { InputText, InputDate, InputCheckbox } from './input';
 
 export {
   Seo,
-  Container,
-  CustomButton,
-  Text,
+  CustomContainer,
+  ButtonBase,
+  LabelText,
   Badge,
-  Checkbox,
-  Date,
-  InputText,
+  InputCheckbox,
   CustomCard,
+  InputText,
+  InputDate,
 };

@@ -1,18 +1,12 @@
 import { Checkbox } from '@nextui-org/react';
+import { AtomCheckboxI } from './input-checkbox.interface';
 
-export interface CheckBoxInterface {
-  name: string;
-  label?: string;
-  value: boolean;
-  onChangeHandler: () => void;
-}
-
-const CheckBox = ({
+const InputCheckbox = ({
   name,
   label,
   value,
   onChangeHandler,
-}: CheckBoxInterface) => {
+}: AtomCheckboxI) => {
   return (
     <div className={` flex flex-1 px-6 items-center`}>
       <Checkbox
@@ -28,4 +22,4 @@ const CheckBox = ({
   );
 };
 
-export default CheckBox;
+export default InputCheckbox;

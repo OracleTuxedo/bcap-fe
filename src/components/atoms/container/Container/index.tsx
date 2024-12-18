@@ -1,20 +1,12 @@
-import { ReactNode } from 'react';
+import { AtomContainerI } from './container.interface';
 
-export interface ContainerInterface {
-  row?: boolean;
-  gap?: boolean;
-  border?: boolean;
-  round?: boolean;
-  children: ReactNode;
-}
-
-const Container = ({
+const CustomContainer = ({
   row = false,
   gap = false,
   border = false,
   round = false,
   children,
-}: ContainerInterface) => {
+}: AtomContainerI) => {
   return (
     <div
       className={`
@@ -31,4 +23,4 @@ const Container = ({
   );
 };
 
-export default Container;
+export default CustomContainer;

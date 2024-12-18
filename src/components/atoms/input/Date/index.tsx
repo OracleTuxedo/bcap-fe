@@ -1,17 +1,7 @@
-import {
-  CalendarDate,
-  DatePicker,
-  DatePickerProps,
-  DateValue,
-} from '@nextui-org/react';
+import { DatePicker } from '@nextui-org/react';
+import { atomInputDateI } from './input-date.interface';
 
-export interface DateInterface {
-  name: string;
-  value?: string;
-  onChangeHandler: (e: DateValue) => void;
-}
-
-const Date = ({ name, value, onChangeHandler }: DateInterface) => {
+const InputDate = ({ name, value, onChangeHandler }: atomInputDateI) => {
   return (
     <DatePicker
       className={`
@@ -26,6 +16,7 @@ const Date = ({ name, value, onChangeHandler }: DateInterface) => {
                 hover:border-gray transition duration-150 ease-in-out
             `}
       name={name}
+      value={value}
       label="Date"
       labelPlacement="outside-left"
       showMonthAndYearPickers
@@ -34,4 +25,4 @@ const Date = ({ name, value, onChangeHandler }: DateInterface) => {
   );
 };
 
-export default Date;
+export default InputDate;

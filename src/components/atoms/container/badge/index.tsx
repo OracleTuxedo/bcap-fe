@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
+import { AtomBadgeI } from './badge.interface';
 
-export interface BadgeInterface {
-  children: ReactNode;
-}
-
-const Badge = ({ children }: BadgeInterface) => {
+const Badge = ({ children }: AtomBadgeI) => {
   return (
     <div
       className={`

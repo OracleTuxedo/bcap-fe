@@ -1,19 +1,13 @@
 import { ButtonTypeEnum } from '@/enums';
 import { Button } from '@nextui-org/react';
-import { MouseEventHandler, ReactNode } from 'react';
+import { AtomButtonBaseI } from './button-base.interface';
 
-export interface ButtonInterface<T> {
-  type?: ButtonTypeEnum;
-  children: ReactNode;
-  onClickHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
-}
-
-const CustomButton = <T,>({
+const ButtonBase = ({
   type,
   onClickHandler,
   children,
-}: ButtonInterface<T>) => {
-  let color: string = 'bg-main-normal hover:bg-main-active';
+}: AtomButtonBaseI) => {
+  let color: string = 'bg-primary hover:bg-main-active';
   switch (type) {
     case ButtonTypeEnum.WARNING:
       color = 'bg-warning-normal hover:bg-warning-active';
@@ -38,7 +32,7 @@ const CustomButton = <T,>({
                 flex flex-1
                 mx-2 my-1
                 px-8 py-2
-                rounded-full
+                rounded-lg
                 ${color}
             `}
     >
@@ -47,4 +41,4 @@ const CustomButton = <T,>({
   );
 };
 
-export default CustomButton;
+export default ButtonBase;

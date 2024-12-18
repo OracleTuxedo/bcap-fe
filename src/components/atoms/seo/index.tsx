@@ -1,10 +1,7 @@
 import Head from 'next/head';
+import { AtomSeoI } from './seo.interface';
 
-type SeoProps = {
-  title: string;
-};
-
-const Seo = ({ title }: SeoProps) => {
+const Seo = ({ title }: AtomSeoI) => {
   return (
     <Head>
       <title>{title}</title>

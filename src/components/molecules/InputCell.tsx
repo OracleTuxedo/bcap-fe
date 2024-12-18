@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Container, Text } from '../atoms';
+import { CustomContainer, LabelText } from '../atoms';
 import { HiCog8Tooth } from 'react-icons/hi2';
 
 export interface InputCellInterface {
@@ -14,7 +14,7 @@ const InputCell = ({
   children,
 }: InputCellInterface) => {
   return (
-    <Container border row round>
+    <CustomContainer border row round>
       <div
         className={`
                 flex
@@ -26,10 +26,10 @@ const InputCell = ({
             `}
       >
         <div>{required && <HiCog8Tooth color="#DC2626" />}</div>
-        <Text>{label}</Text>
+        <LabelText>{label}</LabelText>
       </div>
       {children}
-    </Container>
+    </CustomContainer>
   );
 };
 

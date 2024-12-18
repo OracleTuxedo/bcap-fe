@@ -1,14 +1,15 @@
 import {
   Badge,
-  Container,
-  Checkbox,
+  CustomContainer,
   Seo,
-  Text,
   InputText,
-  CustomButton,
   DataTable,
   CustomCard,
+  InputCheckbox,
+  LabelText,
+  ButtonBase,
 } from '@/components';
+import LabelTitle from '@/components/atoms/label/title';
 import { InputCell } from '@/components/molecules';
 import { SizeEnum, TextColorEnum } from '@/enums';
 import { SMC03F055ROutSub1Vo } from '@/service/mc/mc03/SMC03F055R';
@@ -89,7 +90,7 @@ const UiPage = () => {
     [],
   );
 
-  const [listData, setListData] = useState<SMC03F055ROutSub1Vo[]>([]);
+  const [listData, setListData] = useState<SMC03F055ROutSub1Vo[]>(data1);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -118,22 +119,24 @@ const UiPage = () => {
   };
 
   return (
-    <Container>
+    <CustomContainer>
       <Seo title="MAAS UI" />
-      <Container>
-        <Text>MAAS Web Front End and UI Page</Text>
+      <CustomContainer>
+        <LabelText>MAAS Web Front End and UI Page</LabelText>
 
-        <CustomButton onClickHandler={(e) => console.log(e)}>
-          <Text color={TextColorEnum.WHITE} size={SizeEnum.NORMAL}>
+        <LabelTitle>Title</LabelTitle>
+
+        <ButtonBase onClickHandler={(e) => console.log(e)}>
+          <LabelText color={TextColorEnum.WHITE} size={SizeEnum.NORMAL}>
             TEST
-          </Text>
-        </CustomButton>
+          </LabelText>
+        </ButtonBase>
 
         <Badge>
-          <Text>Tester</Text>
+          <LabelText>Tester</LabelText>
         </Badge>
 
-        <Checkbox
+        <InputCheckbox
           label="Test Checkbox"
           name="test"
           value={CheckboxState}
@@ -157,9 +160,9 @@ const UiPage = () => {
           }
         />
 
-        <Container gap>
+        <CustomContainer gap>
           <InputCell label="Test Checkbox" required>
-            <Checkbox
+            <InputCheckbox
               name="test-checkbox-cell"
               onChangeHandler={() => {
                 setCheckboxCellState((prev) => !prev);
@@ -178,7 +181,7 @@ const UiPage = () => {
               }
             />
           </InputCell>
-        </Container>
+        </CustomContainer>
         <DataTable<SMC03F055ROutSub1Vo>
           data={listData}
           columns={columns}
@@ -187,9 +190,9 @@ const UiPage = () => {
           nextHandler={nextHandler}
           previousHandler={previousHandler}
         />
-      </Container>
+      </CustomContainer>
       <CustomCard>
-        <Container>
+        <CustomContainer>
           <ul>
             <li>
               List List List List List List List List List List List List
@@ -214,9 +217,9 @@ const UiPage = () => {
             <li>List</li>
             <li>List</li>
           </ul>
-        </Container>
+        </CustomContainer>
       </CustomCard>
-    </Container>
+    </CustomContainer>
   );
 };
 
