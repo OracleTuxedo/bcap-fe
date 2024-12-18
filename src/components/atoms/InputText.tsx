@@ -6,9 +6,9 @@ import Text from './Text';
 export interface InputInterface {
   name: string;
   value: string;
+  label: string;
   onChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void;
   full?: boolean;
-  label?: string;
 }
 const InputText = ({
   name,
@@ -18,23 +18,22 @@ const InputText = ({
   label,
 }: InputInterface) => {
   return (
-    <>
-      {label && <Text>{label}</Text>}
-      <Input
-        className={`
-                  flex
-                  ${full && 'flex-1'}
-                  border border-gray
-                  shadow-sm
-                  focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent
-                  hover:border-gray transition duration-150 ease-in-out
-              `}
-        name={name}
-        type="text"
-        value={value}
-        onChange={onChangeHandler}
-      />
-    </>
+    <Input
+      label={label}
+      className={`
+        flex
+        ${full && 'flex-1'}
+        border border-gray
+        shadow-sm
+        focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent
+        hover:border-gray transition duration-150 ease-in-out
+    `}
+      labelPlacement="outside-left"
+      name={name}
+      type="text"
+      value={value}
+      onChange={onChangeHandler}
+    />
   );
 };
 

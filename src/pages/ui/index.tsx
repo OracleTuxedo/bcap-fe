@@ -149,6 +149,7 @@ const UiPage = () => {
         />
 
         <InputText
+          label="input-test"
           name="input-test"
           value={InputState}
           onChangeHandler={(e: React.FormEvent<HTMLInputElement>) =>
@@ -170,6 +171,7 @@ const UiPage = () => {
           <InputCell label="Test Input">
             <InputText
               name="input-test-cell"
+              label="input-test-cell"
               value={InputCellState}
               onChangeHandler={(e: React.FormEvent<HTMLInputElement>) =>
                 setInputCellState(e.currentTarget.value)
